@@ -1,0 +1,21 @@
+@CHARSET "UTF-8";
+#panel-login{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 320px;
+	height: 150px; 
+	margin-left: -160px;
+	margin-top: -75px;
+}
+
+#panel-login inputText{
+	margin: 2px;
+}
+
+
+.ui-widget{
+	font-family: Verdana,Arial,sans-serif;
+	font-size: 0.8em;
+}
+
