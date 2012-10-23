@@ -6,28 +6,27 @@
 	  xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       >
-	<h:head>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-        <title>Login de Acesso ao Sistema</title>
-        <link rel="stylesheet" type="text/css" href="css/geral.css" />
-        <link rel="stylesheet" type="text/css" href="css/reset.css" />
-	</h:head>
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <title>Login de Acesso ao Sistema</title>
+    <link rel="stylesheet" type="text/css" href="css/geral.css" />
+    <link rel="stylesheet" type="text/css" href="css/reset.css" />
+</h:head>
 <f:view>
-  <p:panel header="Login" id="panel-login" >
-	<h:form id="form-geral" >
-      <h:panelGrid columns="3">
-        <h:outputLabel value="Login: " for="login" />
-        <p:inputText id="login" value="" required="true" requiredMessage="Campo obrigatório" />
-        <p:message for="login"/>
-
-    	<h:outputLabel value="Senha: " for="senha" />
-        <p:password id="senha" value="" required="true" requiredMessage="Campo obrigatório" />
-        <p:message for="senha"/>
-        
-        <p:commandButton value="Logar" update="form-geral" ajax="true"/>       
-      </h:panelGrid>
-      <p:messages globalOnly="true" />
-    </h:form>
-  </p:panel>
+	<p:panel header="Login" id="panel-login" >
+		<h:form id="form-geral" >
+			<h:panelGrid columns="3">
+				<h:outputLabel value="Login: " for="login" />
+				<p:inputText id="login" value="" required="true" requiredMessage="Campo obrigatório" />
+				<p:message for="login"/>
+	
+				<h:outputLabel value="Senha: " for="senha" />
+				<p:password id="senha" value="" required="true" requiredMessage="Campo obrigatório" />
+				<p:message for="senha"/>
+				<p:commandButton value="Logar" update="form-geral" ajax="true"/>       
+      		</h:panelGrid>
+      		<p:messages globalOnly="true" />
+      	</h:form>
+	</p:panel>
 </f:view>
 </html>
