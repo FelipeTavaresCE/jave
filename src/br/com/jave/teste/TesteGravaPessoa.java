@@ -9,7 +9,7 @@ import org.apache.log4j.BasicConfigurator;
 public class TesteGravaPessoa {
 	
 	public static void main(String[] args) {
-		BasicConfigurator.configure();
+		//BasicConfigurator.configure();
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("jave");
 		EntityManager manager = factory.createEntityManager();	
 	}

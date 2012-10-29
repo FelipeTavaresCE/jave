@@ -15,7 +15,7 @@
             <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/jave" />  
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
             <property name="hibernate.show_sql" value="true" />
-            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <!-- <property name="hibernate.hbm2ddl.auto" value="create"/> -->
             
  			<property name="hibernate.connection.provider_class" value="org.hibernate.connection.C3P0ConnectionProvider" /> 
  			<property name="hibernate.c3p0.minPoolSize" value="0" />

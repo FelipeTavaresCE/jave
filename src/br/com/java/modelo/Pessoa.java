@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,8 +30,10 @@ public class Pessoa implements Serializable{
 	private Long id;
 	private String nome;
 	private Date dataNascimento;
+	
 	//@OneToOne
-	//private Sexo sexo;
+	@Enumerated(EnumType.STRING)
+	private Sexo sexo;
 	private String cpf;
 	private String cnpj;
 	private Date dataCadastro;
@@ -61,13 +65,13 @@ public class Pessoa implements Serializable{
 	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
-/*	public Sexo getSexo() {
+	public Sexo getSexo() {
 		return sexo;
 	}
 	public void setSexo(Sexo sexo) {
 		this.sexo = sexo;
 	}
-*/	public String getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
 	public void setCpf(String cpf) {
@@ -104,5 +108,64 @@ public class Pessoa implements Serializable{
 		this.emails = emails;
 	}
 	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cnpj == null) ? 0 : cnpj.hashCode());
+		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
+		result = prime * result
+				+ ((dataCadastro == null) ? 0 : dataCadastro.hashCode());
+		result = prime * result
+				+ ((dataNascimento == null) ? 0 : dataNascimento.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((sexo == null) ? 0 : sexo.hashCode());
+		return result;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Pessoa other = (Pessoa) obj;
+		if (cnpj == null) {
+			if (other.cnpj != null)
+				return false;
+		} else if (!cnpj.equals(other.cnpj))
+			return false;
+		if (cpf == null) {
+			if (other.cpf != null)
+				return false;
+		} else if (!cpf.equals(other.cpf))
+			return false;
+		if (dataCadastro == null) {
+			if (other.dataCadastro != null)
+				return false;
+		} else if (!dataCadastro.equals(other.dataCadastro))
+			return false;
+		if (dataNascimento == null) {
+			if (other.dataNascimento != null)
+				return false;
+		} else if (!dataNascimento.equals(other.dataNascimento))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		if (sexo != other.sexo)
+			return false;
+		return true;
+	}
 
 }
