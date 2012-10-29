@@ -2,6 +2,7 @@ package br.com.java.modelo;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,7 +13,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tb_contato")
+@Table(name = "tb_telefone")
 @NamedQuery(name = "telefoneListarTodos", query = "SELECT t FROM Telefone t")
 public class Telefone implements Serializable{
 	
@@ -22,8 +23,9 @@ public class Telefone implements Serializable{
 	@SequenceGenerator(name = "seq_id_telefone", sequenceName = "seq_id_telefone", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id_telefone")
 	private Long id;
+	private String codigoDeArea;
 	private String numero;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Pessoa pessoa;	
 	
 	public Long getId() {
@@ -31,6 +33,12 @@ public class Telefone implements Serializable{
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}	
+	public String getCodigoDeArea() {
+		return codigoDeArea;
+	}
+	public void setCodigoDeArea(String codigoDeArea) {
+		this.codigoDeArea = codigoDeArea;
 	}
 	public String getNumero() {
 		return numero;

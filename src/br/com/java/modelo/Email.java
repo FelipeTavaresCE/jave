@@ -2,6 +2,7 @@ package br.com.java.modelo;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,7 +24,7 @@ public class Email implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id_email")
 	private Long id;
 	private String email;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Pessoa pessoa;
 	
 	public Long getId() {

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -11,15 +12,23 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import br.com.jave.enums.Sexo;
+
 @Entity
 @Table(name = "tb_pessoa")
-@NamedQuery(name = "pessoaListarTodos", query = "SELECT p FROM Pessoa p")
+@NamedQueries({
+	@NamedQuery(name = "pessoaListarTodos", query = "SELECT p FROM Pessoa p"),
+	@NamedQuery(name = "pessoaPesquisarPorId", query = "SELECT p FROM Pessoa p WHERE p.id = :id")
+})
+
+
 public class Pessoa implements Serializable{
 	
 	@Transient
@@ -37,13 +46,13 @@ public class Pessoa implements Serializable{
 	private String cpf;
 	private String cnpj;
 	private Date dataCadastro;
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "pessoa_id")
 	private List<Endereco> enderecos;
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "pessoa_id")
 	private List<Telefone> contatos;
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "pessoa_id")	
 	private List<Email> emails;
 	

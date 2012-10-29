@@ -2,6 +2,7 @@ package br.com.java.modelo;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,7 +33,7 @@ public class Endereco implements Serializable{
 	private Uf uf;
 	private String pontoDeReferencia; 
 	private String complemento;	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Pessoa pessoa;
 	
 	public Long getId() {
