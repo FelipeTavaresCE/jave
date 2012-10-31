@@ -9,18 +9,21 @@ import br.com.java.modelo.Email;
 import br.com.java.modelo.Endereco;
 import br.com.java.modelo.Pessoa;
 import br.com.java.modelo.Telefone;
+import br.com.java.modelo.Uf;
 import br.com.jave.dao.GenericDao;
 import br.com.jave.dao.PessoaDaoImpl;
+import br.com.jave.dao.UfDaoImpl;
 import br.com.jave.enums.Sexo;
 
-public class TesteGravaPessoa {
+public class TesteManterPessoa {
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NoResultException, Exception {
 		//BasicConfigurator.configure();
 		Pessoa pessoa = new Pessoa();
 		List<Telefone> telefones = new ArrayList<Telefone>();
 		List<Email> emails = new ArrayList<Email>();
 		List<Endereco> enderecos = new ArrayList<Endereco>();
+		GenericDao<Uf> uf = new UfDaoImpl();
 		
 		//-------- Telefones ----------------------------
 		Telefone tel1 = new Telefone();
@@ -65,7 +68,7 @@ public class TesteGravaPessoa {
 		endereco1.setBairro("Colonia");
 		endereco1.setCep("60333-745");
 		endereco1.setCidade("Fortaleza");
-		endereco1.setUf(null);
+		endereco1.setUf(uf.pesquisarPorId((long)1));
 		endereco1.setPontoDeReferencia("Perto da Praia dos Arpoadores");
 		endereco1.setComplemento("Apartamento 10000");
 		enderecos.add(endereco1);
@@ -73,15 +76,13 @@ public class TesteGravaPessoa {
 		GenericDao<Pessoa> pessoaDao = new PessoaDaoImpl();
 		
 		try{
-			//pessoaDao.gravar(pessoa);
+			pessoaDao.gravar(pessoa);
 /*			for(Pessoa pessoas : pessoaDao.listarTodos()){
 				System.out.println(pessoas.getNome());
 			}
 */		
-		System.out.println(pessoaDao.pesquisarPorId((long)10).getNome());
+		//System.out.println(pessoaDao.pesquisarPorId((long)10).getNome());
 			
-		}catch(NoResultException nre){
-			System.out.println("Nenhum registro encontrado!");
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 			e.printStackTrace();

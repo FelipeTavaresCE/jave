@@ -9,7 +9,7 @@ import br.com.java.modelo.Pessoa;
 
 public class PessoaDaoImpl implements GenericDao<Pessoa>{
 
-	EntityManager entityManager;
+	private EntityManager entityManager;
 	
 	public void gravar(Pessoa pessoa){
 		entityManager = new EntityManagerFabrica().obterEntityManager();

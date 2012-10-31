@@ -58,6 +58,7 @@ public class Uf implements Serializable{
 		result = prime * result + ((sigla == null) ? 0 : sigla.hashCode());
 		return result;
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -85,7 +86,4 @@ public class Uf implements Serializable{
 		return true;
 	}
 	
-	
-
-
 }
