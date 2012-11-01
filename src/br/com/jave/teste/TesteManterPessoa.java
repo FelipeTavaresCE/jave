@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.persistence.NoResultException;
 
+//import org.apache.log4j.BasicConfigurator;
+
 import br.com.java.modelo.Email;
 import br.com.java.modelo.Endereco;
 import br.com.java.modelo.Pessoa;
@@ -19,17 +21,15 @@ import br.com.jave.enums.Sexo;
 
 public class TesteManterPessoa {
 	
-	//BasicConfigurator.configure();
 	private Pessoa pessoa = new Pessoa();
 	private List<Telefone> telefones = new ArrayList<Telefone>();
 	private List<Email> emails = new ArrayList<Email>();
 	private List<Endereco> enderecos = new ArrayList<Endereco>();
 	private GenericDao<Uf> uf = new UfDaoImpl();
 	private GenericDao<Pessoa> pessoaDao = new PessoaDaoImpl();
-
-
 	
 	public static void main(String[] args) throws NoResultException, Exception {
+		//BasicConfigurator.configure();
 		
 		TesteManterPessoa teste = new TesteManterPessoa();
 		
