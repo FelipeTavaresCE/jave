@@ -27,6 +27,7 @@ public class UfDaoImpl implements GenericDao<Uf>{
 		throw new ExclusaoNaoPermitidaException("Não é permitido excluir uma Unidade Federativa.");		
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Uf> listarTodos() throws Exception {
 		entityManager = new EntityManagerFabrica().obterEntityManager(); 

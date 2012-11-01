@@ -84,7 +84,8 @@ CREATE TABLE tb_pessoa (
     datacadastro timestamp without time zone,
     datanascimento timestamp without time zone,
     nome varchar(100),
-    sexo varchar(10)
+    sexo varchar(10),
+    foto bytea
 );
 
 drop table if exists tb_uf;

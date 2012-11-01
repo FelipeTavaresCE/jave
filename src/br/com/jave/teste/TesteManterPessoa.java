@@ -1,5 +1,7 @@
 package br.com.jave.teste;
 
+import java.io.FileOutputStream;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,13 +19,33 @@ import br.com.jave.enums.Sexo;
 
 public class TesteManterPessoa {
 	
+	//BasicConfigurator.configure();
+	private Pessoa pessoa = new Pessoa();
+	private List<Telefone> telefones = new ArrayList<Telefone>();
+	private List<Email> emails = new ArrayList<Email>();
+	private List<Endereco> enderecos = new ArrayList<Endereco>();
+	private GenericDao<Uf> uf = new UfDaoImpl();
+	private GenericDao<Pessoa> pessoaDao = new PessoaDaoImpl();
+
+
+	
 	public static void main(String[] args) throws NoResultException, Exception {
-		//BasicConfigurator.configure();
-		Pessoa pessoa = new Pessoa();
-		List<Telefone> telefones = new ArrayList<Telefone>();
-		List<Email> emails = new ArrayList<Email>();
-		List<Endereco> enderecos = new ArrayList<Endereco>();
-		GenericDao<Uf> uf = new UfDaoImpl();
+		
+		TesteManterPessoa teste = new TesteManterPessoa();
+		
+		try{
+			teste.salvarPessoa();
+			teste.listarTodos();
+			
+			
+		}catch(NoResultException e){
+			System.out.println(e.getMessage());
+		}catch(Exception e){
+			e.printStackTrace();
+		}	
+	}
+	
+	public void salvarPessoa() throws NoResultException, Exception{
 		
 		//-------- Telefones ----------------------------
 		Telefone tel1 = new Telefone();
@@ -52,6 +74,12 @@ public class TesteManterPessoa {
 		//-----------------------------------------------
 		
 		//-------- Pessoa ----------------------------
+
+		RandomAccessFile arquivoEntrada = new RandomAccessFile("/home/desenv/livre/carro.jpg", "r");
+		byte[] arquivoFoto = new byte[(int)arquivoEntrada.length()];
+		arquivoEntrada.read(arquivoFoto);
+		arquivoEntrada.close();
+		
 		pessoa.setCnpj("02852963000109");
 		pessoa.setContatos(telefones);
 		pessoa.setCpf("00434926302");
@@ -60,6 +88,7 @@ public class TesteManterPessoa {
 		pessoa.setEnderecos(enderecos);
 		pessoa.setNome("Paulo Gomes");
 		pessoa.setSexo(Sexo.FEMINO);
+		pessoa.setFoto(arquivoFoto);
 		//-----------------------------------------------
 		
 		Endereco endereco1 = new Endereco();
@@ -71,22 +100,21 @@ public class TesteManterPessoa {
 		endereco1.setUf(uf.pesquisarPorId((long)1));
 		endereco1.setPontoDeReferencia("Perto da Praia dos Arpoadores");
 		endereco1.setComplemento("Apartamento 10000");
-		enderecos.add(endereco1);
+		enderecos.add(endereco1);		
 		
-		GenericDao<Pessoa> pessoaDao = new PessoaDaoImpl();
+		pessoaDao.gravar(pessoa);
 		
-		try{
-			pessoaDao.gravar(pessoa);
-/*			for(Pessoa pessoas : pessoaDao.listarTodos()){
-				System.out.println(pessoas.getNome());
-			}
-*/		
-		//System.out.println(pessoaDao.pesquisarPorId((long)10).getNome());
-			
-		}catch(Exception e){
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		}
+		byte[] byteFoto = pessoaDao.pesquisarPorId((long)1).getFoto();
+		
+		FileOutputStream fileOuputStream = new FileOutputStream("/home/desenv/livre/carroBanco.jpg");
+		fileOuputStream.write(byteFoto);
+		fileOuputStream.close();
+	}
+	
+	public void listarTodos() throws Exception{
+		for(Pessoa pessoas : pessoaDao.listarTodos()){
+			System.out.println(pessoas.getNome());
+		}		
 	}
 
 }

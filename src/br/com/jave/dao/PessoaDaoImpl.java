@@ -32,7 +32,7 @@ public class PessoaDaoImpl implements GenericDao<Pessoa>{
 	
 	public Pessoa pesquisarPorId(Long id){
 		entityManager = new EntityManagerFabrica().obterEntityManager();
-		Query query = entityManager.createNamedQuery("pessoaPesquisarPorId", Pessoa.class);
+		Query query = entityManager.createNamedQuery("pessoaPesquisarPorId");
 		query.setParameter("id", id);
 		return (Pessoa)query.getSingleResult();
 	}

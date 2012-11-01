@@ -1,6 +1,7 @@
 package br.com.java.modelo;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -27,8 +28,6 @@ import br.com.jave.enums.Sexo;
 	@NamedQuery(name = "pessoaListarTodos", query = "SELECT p FROM Pessoa p"),
 	@NamedQuery(name = "pessoaPesquisarPorId", query = "SELECT p FROM Pessoa p WHERE p.id = :id")
 })
-
-
 public class Pessoa implements Serializable{
 	
 	@Transient
@@ -55,6 +54,8 @@ public class Pessoa implements Serializable{
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "pessoa_id")	
 	private List<Email> emails;
+	//@Lob
+	private byte[] foto; 
 	
 	public Long getId() {
 		return id;
@@ -117,16 +118,31 @@ public class Pessoa implements Serializable{
 		this.emails = emails;
 	}
 	
+	public byte[] getFoto() {
+		return foto;
+	}
+	public void setFoto(byte[] foto) {
+		this.foto = foto;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((cnpj == null) ? 0 : cnpj.hashCode());
+		result = prime * result
+				+ ((contatos == null) ? 0 : contatos.hashCode());
 		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
 		result = prime * result
 				+ ((dataCadastro == null) ? 0 : dataCadastro.hashCode());
 		result = prime * result
 				+ ((dataNascimento == null) ? 0 : dataNascimento.hashCode());
+		result = prime * result + ((emails == null) ? 0 : emails.hashCode());
+		result = prime * result
+				+ ((enderecos == null) ? 0 : enderecos.hashCode());
+		result = prime * result + Arrays.hashCode(foto);
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
 		result = prime * result + ((sexo == null) ? 0 : sexo.hashCode());
@@ -147,6 +163,11 @@ public class Pessoa implements Serializable{
 				return false;
 		} else if (!cnpj.equals(other.cnpj))
 			return false;
+		if (contatos == null) {
+			if (other.contatos != null)
+				return false;
+		} else if (!contatos.equals(other.contatos))
+			return false;
 		if (cpf == null) {
 			if (other.cpf != null)
 				return false;
@@ -161,6 +182,18 @@ public class Pessoa implements Serializable{
 			if (other.dataNascimento != null)
 				return false;
 		} else if (!dataNascimento.equals(other.dataNascimento))
+			return false;
+		if (emails == null) {
+			if (other.emails != null)
+				return false;
+		} else if (!emails.equals(other.emails))
+			return false;
+		if (enderecos == null) {
+			if (other.enderecos != null)
+				return false;
+		} else if (!enderecos.equals(other.enderecos))
+			return false;
+		if (!Arrays.equals(foto, other.foto))
 			return false;
 		if (id == null) {
 			if (other.id != null)
