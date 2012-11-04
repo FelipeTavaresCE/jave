@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import br.com.java.modelo.Pessoa;
+import br.com.jave.excecoes.ExclusaoNaoPermitidaException;
 
 public class PessoaDaoImpl implements GenericDao<Pessoa>{
 
@@ -19,7 +20,7 @@ public class PessoaDaoImpl implements GenericDao<Pessoa>{
 		entityManager.close();		
 	}	
 	
-	public void exluir(Pessoa pessoa)throws Exception{
+	public void exluir(Pessoa pessoa)throws Exception, ExclusaoNaoPermitidaException{
 		throw new Exception("Não é possível apagar essa informação do sistema!");
 	}
 	

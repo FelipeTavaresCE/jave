@@ -3,11 +3,10 @@ package br.com.jave.teste;
 import java.io.FileOutputStream;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.NoResultException;
-
-//import org.apache.log4j.BasicConfigurator;
 
 import br.com.java.modelo.Email;
 import br.com.java.modelo.Endereco;
@@ -18,6 +17,11 @@ import br.com.jave.dao.GenericDao;
 import br.com.jave.dao.PessoaDaoImpl;
 import br.com.jave.dao.UfDaoImpl;
 import br.com.jave.enums.Sexo;
+import br.com.jave.excecoes.ExclusaoNaoPermitidaException;
+import br.com.jave.fachada.Fachada;
+import br.com.jave.fachada.PessoaFachadaImpl;
+//import org.apache.log4j.BasicConfigurator;
+import br.com.jave.util.DataHoraUtil;
 
 public class TesteManterPessoa {
 	
@@ -26,7 +30,7 @@ public class TesteManterPessoa {
 	private List<Email> emails = new ArrayList<Email>();
 	private List<Endereco> enderecos = new ArrayList<Endereco>();
 	private GenericDao<Uf> uf = new UfDaoImpl();
-	private GenericDao<Pessoa> pessoaDao = new PessoaDaoImpl();
+	private Fachada<Pessoa> pessoaFachada = new PessoaFachadaImpl();
 	
 	public static void main(String[] args) throws NoResultException, Exception {
 		//BasicConfigurator.configure();
@@ -35,13 +39,16 @@ public class TesteManterPessoa {
 		
 		try{
 			teste.salvarPessoa();
-			teste.listarTodos();
-			
-			
+			//teste.listarTodos();
+			//teste.pesquisarPorId(9);
+			//teste.excluir(null);
+			//teste.alterar();
 		}catch(NoResultException e){
 			System.out.println(e.getMessage());
+			System.out.println("dado não localizado");
 		}catch(Exception e){
 			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}	
 	}
 	
@@ -50,12 +57,12 @@ public class TesteManterPessoa {
 		//-------- Telefones ----------------------------
 		Telefone tel1 = new Telefone();
 		tel1.setCodigoDeArea("085");
-		tel1.setNumero("87297857");
+		tel1.setNumero("8785-0188");
 		tel1.setPessoa(pessoa);
 		
 		Telefone tel2 = new Telefone();
-		tel2.setCodigoDeArea("088");
-		tel2.setNumero("88110036");
+		tel2.setCodigoDeArea("085");
+		tel2.setNumero("32865592");
 		tel2.setPessoa(pessoa);
 		
 		telefones.add(tel1);
@@ -64,10 +71,10 @@ public class TesteManterPessoa {
 		
 		//-------- Email ----------------------------
 		Email email1 = new Email();
-		email1.setEmail("adejanny.feitosa@gmail.com");
+		email1.setEmail("paulogomes.tec@gmail.com");
 
 		Email email2 = new Email();
-		email2.setEmail("adejanny.quixeramobim@gmail.com");
+		email2.setEmail("paulo.gomes@arce.ce.gov.br");
 
 		emails.add(email1);
 		emails.add(email2);
@@ -75,19 +82,20 @@ public class TesteManterPessoa {
 		
 		//-------- Pessoa ----------------------------
 
-		RandomAccessFile arquivoEntrada = new RandomAccessFile("/home/desenv/livre/carro.jpg", "r");
+		RandomAccessFile arquivoEntrada = new RandomAccessFile("C:/Users/Paulo/Dropbox/Photos/Fotos Formatura/DSC00182.JPG", "r");
 		byte[] arquivoFoto = new byte[(int)arquivoEntrada.length()];
 		arquivoEntrada.read(arquivoFoto);
 		arquivoEntrada.close();
 		
-		pessoa.setCnpj("02852963000109");
+		pessoa.setCnpj(null);
 		pessoa.setContatos(telefones);
 		pessoa.setCpf("00434926302");
-		pessoa.setDataCadastro(null);
+		pessoa.setDataCadastro(new Date());
+		pessoa.setDataNascimento(DataHoraUtil.criarData("14/08/1986"));
 		pessoa.setEmails(emails);
 		pessoa.setEnderecos(enderecos);
-		pessoa.setNome("Paulo Gomes");
-		pessoa.setSexo(Sexo.FEMINO);
+		pessoa.setNome("Francisco Paulo Ferreira Gomes");
+		pessoa.setSexo(Sexo.MASCULINO);
 		pessoa.setFoto(arquivoFoto);
 		//-----------------------------------------------
 		
@@ -102,19 +110,35 @@ public class TesteManterPessoa {
 		endereco1.setComplemento("Apartamento 10000");
 		enderecos.add(endereco1);		
 		
-		pessoaDao.gravar(pessoa);
+		pessoaFachada.gravar(pessoa);
 		
-		byte[] byteFoto = pessoaDao.pesquisarPorId((long)1).getFoto();
+		byte[] byteFoto = pessoaFachada.pesquisarPorId((long)4).getFoto();
 		
-		FileOutputStream fileOuputStream = new FileOutputStream("/home/desenv/livre/carroBanco.jpg");
+		FileOutputStream fileOuputStream = new FileOutputStream("d:/fotoBanco.jpg");
 		fileOuputStream.write(byteFoto);
 		fileOuputStream.close();
 	}
 	
 	public void listarTodos() throws Exception{
-		for(Pessoa pessoas : pessoaDao.listarTodos()){
+		for(Pessoa pessoas : pessoaFachada.listarTodos()){
 			System.out.println(pessoas.getNome());
 		}		
+	}
+
+	public void pesquisarPorId(long id) throws NoResultException, Exception{
+		System.out.println(pessoaFachada.pesquisarPorId(id).getNome());
+	}
+
+	public void excluir(Pessoa pessoa) throws ExclusaoNaoPermitidaException, Exception{
+		pessoaFachada.exluir(pessoa);
+	}
+
+	public void alterar() throws Exception{
+		Pessoa pessoa = new PessoaDaoImpl().pesquisarPorId((long)2);
+		//pessoa.setNome("Adejanny Feitosa");
+		//pessoa.setCpf("02985696305");
+		//pessoa.setSexo(Sexo.MASCULINO);
+		pessoaFachada.gravar(pessoa);
 	}
 
 }
