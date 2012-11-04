@@ -8,13 +8,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_email")
-@NamedQuery(name = "emailListarTodos", query = "SELECT e FROM Email e")
+@NamedQueries({
+	@NamedQuery(name = "emailListarTodos", query = "SELECT e FROM Email e"),
+	@NamedQuery(name = "emailPesquisarPorId", query = "SELECT e FROM Email e WHERE e.id = :id")
+})
+
 public class Email implements Serializable {
 
 	private static final long serialVersionUID = 1L;
