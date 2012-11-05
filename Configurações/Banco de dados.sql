@@ -1,4 +1,4 @@
-﻿drop sequence if exists seq_id_email;
+﻿DROP SEQUENCE IF EXISTS seq_id_email;
 
 CREATE SEQUENCE seq_id_email
     START WITH 1
@@ -7,7 +7,7 @@ CREATE SEQUENCE seq_id_email
     NO MAXVALUE
     CACHE 1;
 
-drop sequence if exists seq_id_endereco;
+DROP SEQUENCE IF EXISTS seq_id_endereco;
 
 CREATE SEQUENCE seq_id_endereco
     START WITH 1
@@ -16,7 +16,7 @@ CREATE SEQUENCE seq_id_endereco
     NO MAXVALUE
     CACHE 1;
 
-drop sequence if exists seq_id_pessoa;
+DROP SEQUENCE IF EXISTS seq_id_pessoa;
 
 CREATE SEQUENCE seq_id_pessoa
     START WITH 1
@@ -25,7 +25,7 @@ CREATE SEQUENCE seq_id_pessoa
     NO MAXVALUE
     CACHE 1;
 
-drop sequence if exists seq_id_telefone;
+DROP SEQUENCE IF EXISTS seq_id_telefone;
 
 CREATE SEQUENCE seq_id_telefone
     START WITH 1
@@ -34,7 +34,7 @@ CREATE SEQUENCE seq_id_telefone
     NO MAXVALUE
     CACHE 1;
 
-drop sequence if exists seq_id_uf;
+DROP SEQUENCE IF EXISTS seq_id_uf;
 
 CREATE SEQUENCE seq_id_uf
     START WITH 1
@@ -43,7 +43,7 @@ CREATE SEQUENCE seq_id_uf
     NO MAXVALUE
     CACHE 1;
 
-drop table if exists tb_telefone;
+DROP TABLE IF EXISTS tb_telefone;
 
 CREATE TABLE tb_telefone (
     id bigint NOT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE tb_telefone (
     pessoa_id bigint
 );
 
-drop table if exists tb_email;
+DROP TABLE IF EXISTS tb_email;
 
 CREATE TABLE tb_email (
     id bigint NOT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE tb_email (
     pessoa_id bigint
 );
 
-drop table if exists tb_endereco;
+DROP TABLE IF EXISTS tb_endereco;
 
 CREATE TABLE tb_endereco (
     id bigint NOT NULL,
@@ -75,7 +75,7 @@ CREATE TABLE tb_endereco (
     uf_id bigint
 );
 
-drop table if exists tb_pessoa;
+DROP TABLE IF EXISTS tb_pessoa;
 
 CREATE TABLE tb_pessoa (
     id bigint NOT NULL,
@@ -88,7 +88,7 @@ CREATE TABLE tb_pessoa (
     foto bytea
 );
 
-drop table if exists tb_uf;
+DROP TABLE IF EXISTS tb_uf;
 
 CREATE TABLE tb_uf (
     id bigint NOT NULL,
@@ -123,6 +123,6 @@ ALTER TABLE ONLY tb_endereco
 ALTER TABLE ONLY tb_email
     ADD CONSTRAINT fk_email_id_pessoa FOREIGN KEY (pessoa_id) REFERENCES tb_pessoa(id);
 
-INSERT INTO tb_uf values(nextval('seq_id_uf'), 'Ceará', 'CE');
-INSERT INTO tb_uf values(nextval('seq_id_uf'), 'Bahia', 'BA');
-INSERT INTO tb_uf values(nextval('seq_id_uf'), 'Pernambuco', 'PE');
+INSERT INTO tb_uf VALUES(nextval('seq_id_uf'), 'Ceará', 'CE');
+INSERT INTO tb_uf VALUES(nextval('seq_id_uf'), 'Bahia', 'BA');
+INSERT INTO tb_uf VALUES(nextval('seq_id_uf'), 'Pernambuco', 'PE');
