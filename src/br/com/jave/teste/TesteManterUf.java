@@ -32,7 +32,7 @@ public class TesteManterUf {
 				System.out.println(uf.getId() + " - " + uf.getNome() + " - " + uf.getSigla());
 			}			
 
-			daoUf.exluir(ufUpdate);
+			daoUf.excluir(ufUpdate);
 
 			
 			System.out.println("Pesquisa com filtro de ID: " + daoUf.pesquisarPorId((long)4).getNome());		

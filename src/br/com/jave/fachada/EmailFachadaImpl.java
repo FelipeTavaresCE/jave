@@ -19,8 +19,8 @@ public class EmailFachadaImpl implements Fachada<Email>{
 	}
 
 	@Override
-	public void exluir(Email email) throws Exception, ExclusaoNaoPermitidaException {
-		emailDao.exluir(email);	
+	public void excluir(Email email) throws Exception, ExclusaoNaoPermitidaException {
+		emailDao.excluir(email);	
 	}
 
 	@Override

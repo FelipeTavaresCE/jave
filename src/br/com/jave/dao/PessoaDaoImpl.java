@@ -21,7 +21,7 @@ public class PessoaDaoImpl implements GenericDao<Pessoa>{
 		entityManager.close();		
 	}	
 	
-	public void exluir(Pessoa pessoa)throws Exception, ExclusaoNaoPermitidaException{
+	public void excluir(Pessoa pessoa)throws Exception, ExclusaoNaoPermitidaException{
 		throw new Exception("Não é possível apagar essa informação do sistema!");
 	}
 	

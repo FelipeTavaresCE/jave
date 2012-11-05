@@ -19,8 +19,8 @@ public class PessoaFachadaImpl implements Fachada<Pessoa>{
 	}
 
 	@Override
-	public void exluir(Pessoa entidade) throws Exception, ExclusaoNaoPermitidaException {
-		pessoaDao.exluir(entidade);		
+	public void excluir(Pessoa entidade) throws Exception, ExclusaoNaoPermitidaException {
+		pessoaDao.excluir(entidade);		
 	}
 
 	@Override

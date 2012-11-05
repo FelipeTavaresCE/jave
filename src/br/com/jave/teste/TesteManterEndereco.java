@@ -53,7 +53,7 @@ public class TesteManterEndereco {
 	
 	public static void excluir() throws NoResultException, Exception{
 		endereco = fachadaEndereco.pesquisarPorId(ID_PESQUISA);
-		fachadaEndereco.exluir(endereco);
+		fachadaEndereco.excluir(endereco);
 	}
 	
 	public static void listarTodos() throws Exception{

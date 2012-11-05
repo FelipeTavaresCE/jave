@@ -23,7 +23,7 @@ public class EmailDaoImpl implements GenericDao<Email>{
 	}
 
 	@Override
-	public void exluir(Email entidade) throws Exception, ExclusaoNaoPermitidaException {
+	public void excluir(Email entidade) throws Exception, ExclusaoNaoPermitidaException {
 		entityManager = new EntityManagerFabrica().obterEntityManager();
 		Email emailMerge;
 		entityManager.getTransaction().begin();

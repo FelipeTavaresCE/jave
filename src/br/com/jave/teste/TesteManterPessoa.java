@@ -129,7 +129,7 @@ public class TesteManterPessoa {
 	}
 
 	public void excluir(Pessoa pessoa) throws ExclusaoNaoPermitidaException, Exception{
-		pessoaFachada.exluir(pessoa);
+		pessoaFachada.excluir(pessoa);
 	}
 
 	public void alterar() throws Exception,NoResultException{

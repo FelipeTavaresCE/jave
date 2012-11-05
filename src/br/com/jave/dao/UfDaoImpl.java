@@ -23,7 +23,7 @@ public class UfDaoImpl implements GenericDao<Uf>{
 	}
 
 	@Override
-	public void exluir(Uf t) throws Exception , ExclusaoNaoPermitidaException{
+	public void excluir(Uf t) throws Exception , ExclusaoNaoPermitidaException{
 		throw new ExclusaoNaoPermitidaException("Não é permitido excluir uma Unidade Federativa.");		
 	}
 

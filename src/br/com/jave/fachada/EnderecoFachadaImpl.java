@@ -19,8 +19,8 @@ public class EnderecoFachadaImpl implements Fachada<Endereco>{
 	}
 
 	@Override
-	public void exluir(Endereco endereco) throws Exception, ExclusaoNaoPermitidaException {
-		enderecoDao.exluir(endereco);
+	public void excluir(Endereco endereco) throws Exception, ExclusaoNaoPermitidaException {
+		enderecoDao.excluir(endereco);
 	}
 
 	@Override

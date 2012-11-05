@@ -44,7 +44,7 @@ public class TesteManterEmail {
 	}
 
 	public void excluir(Email email) throws ExclusaoNaoPermitidaException, Exception{
-		emailFachada.exluir(email);
+		emailFachada.excluir(email);
 	}
 
 	public void listarTodos() throws Exception{

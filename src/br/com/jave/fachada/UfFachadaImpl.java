@@ -18,8 +18,8 @@ public class UfFachadaImpl implements Fachada<Uf>{
 	}
 
 	@Override
-	public void exluir(Uf uf) throws Exception , ExclusaoNaoPermitidaException{
-		UfDao.exluir(uf);
+	public void excluir(Uf uf) throws Exception , ExclusaoNaoPermitidaException{
+		UfDao.excluir(uf);
 	}
 
 	@Override
