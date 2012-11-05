@@ -14,14 +14,13 @@ import br.com.java.modelo.Pessoa;
 import br.com.java.modelo.Telefone;
 import br.com.java.modelo.Uf;
 import br.com.jave.dao.GenericDao;
-import br.com.jave.dao.PessoaDaoImpl;
 import br.com.jave.dao.UfDaoImpl;
 import br.com.jave.enums.Sexo;
 import br.com.jave.excecoes.ExclusaoNaoPermitidaException;
 import br.com.jave.fachada.Fachada;
 import br.com.jave.fachada.PessoaFachadaImpl;
-//import org.apache.log4j.BasicConfigurator;
 import br.com.jave.util.DataHoraUtil;
+//import org.apache.log4j.BasicConfigurator;
 
 public class TesteManterPessoa {
 	
@@ -39,10 +38,10 @@ public class TesteManterPessoa {
 		
 		try{
 			teste.salvarPessoa();
-			//teste.listarTodos();
-			//teste.pesquisarPorId(9);
-			//teste.excluir(null);
-			//teste.alterar();
+			teste.listarTodos();
+			teste.pesquisarPorId(1);
+			teste.excluir(null);
+			teste.alterar();
 		}catch(NoResultException e){
 			System.out.println(e.getMessage());
 			System.out.println("dado não localizado");
@@ -82,7 +81,7 @@ public class TesteManterPessoa {
 		
 		//-------- Pessoa ----------------------------
 
-		RandomAccessFile arquivoEntrada = new RandomAccessFile("C:/Users/Paulo/Dropbox/Photos/Fotos Formatura/DSC00182.JPG", "r");
+		RandomAccessFile arquivoEntrada = new RandomAccessFile("/home/desenv/livre/carro.jpg", "r");
 		byte[] arquivoFoto = new byte[(int)arquivoEntrada.length()];
 		arquivoEntrada.read(arquivoFoto);
 		arquivoEntrada.close();
@@ -112,9 +111,9 @@ public class TesteManterPessoa {
 		
 		pessoaFachada.gravar(pessoa);
 		
-		byte[] byteFoto = pessoaFachada.pesquisarPorId((long)4).getFoto();
+		byte[] byteFoto = pessoaFachada.pesquisarPorId((long)1).getFoto();
 		
-		FileOutputStream fileOuputStream = new FileOutputStream("d:/fotoBanco.jpg");
+		FileOutputStream fileOuputStream = new FileOutputStream("/home/desenv/livre/carroBanco.jpg");
 		fileOuputStream.write(byteFoto);
 		fileOuputStream.close();
 	}
@@ -133,9 +132,10 @@ public class TesteManterPessoa {
 		pessoaFachada.exluir(pessoa);
 	}
 
-	public void alterar() throws Exception{
-		Pessoa pessoa = new PessoaDaoImpl().pesquisarPorId((long)2);
-		//pessoa.setNome("Adejanny Feitosa");
+	public void alterar() throws Exception,NoResultException{
+		Pessoa pessoa;
+		pessoa = pessoaFachada.pesquisarPorId((long)1);
+		pessoa.setNome("Paulo Gomes");
 		//pessoa.setCpf("02985696305");
 		//pessoa.setSexo(Sexo.MASCULINO);
 		pessoaFachada.gravar(pessoa);

@@ -2,7 +2,6 @@ package br.com.java.modelo;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,7 +24,7 @@ public class Telefone implements Serializable{
 	private Long id;
 	private String codigoDeArea;
 	private String numero;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	private Pessoa pessoa;	
 	
 	public Long getId() {

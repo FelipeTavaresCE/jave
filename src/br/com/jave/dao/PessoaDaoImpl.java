@@ -3,6 +3,7 @@ package br.com.jave.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import br.com.java.modelo.Pessoa;
@@ -31,11 +32,9 @@ public class PessoaDaoImpl implements GenericDao<Pessoa>{
 		return query.getResultList();
 	}
 	
-	public Pessoa pesquisarPorId(Long id){
+	public Pessoa pesquisarPorId(Long id)throws NoResultException{
 		entityManager = new EntityManagerFabrica().obterEntityManager();
-		Query query = entityManager.createNamedQuery("pessoaPesquisarPorId");
-		query.setParameter("id", id);
-		return (Pessoa)query.getSingleResult();
+		return entityManager.find(Pessoa.class, id);
 	}
 
 }

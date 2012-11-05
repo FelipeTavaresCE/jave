@@ -37,9 +37,7 @@ public class UfDaoImpl implements GenericDao<Uf>{
 
 	@Override
 	public Uf pesquisarPorId(Long id) throws Exception, NoResultException {
-		entityManager = new EntityManagerFabrica().obterEntityManager(); 
-		Query query = entityManager.createNamedQuery("ufPesquisarPorId");
-		query.setParameter("id", id);
-		return (Uf)query.getSingleResult();
+		entityManager = new EntityManagerFabrica().obterEntityManager();
+		return entityManager.find(Uf.class, id);
 	}
 }

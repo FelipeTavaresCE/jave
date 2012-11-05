@@ -25,8 +25,10 @@ public class EmailDaoImpl implements GenericDao<Email>{
 	@Override
 	public void exluir(Email entidade) throws Exception, ExclusaoNaoPermitidaException {
 		entityManager = new EntityManagerFabrica().obterEntityManager();
+		Email emailMerge;
 		entityManager.getTransaction().begin();
-		entityManager.remove(entidade);
+		emailMerge = entityManager.merge(entidade);
+		entityManager.remove(emailMerge);
 		entityManager.getTransaction().commit();
 		entityManager.close();
 	}
@@ -42,9 +44,7 @@ public class EmailDaoImpl implements GenericDao<Email>{
 	@Override
 	public Email pesquisarPorId(Long id) throws Exception, NoResultException {
 		entityManager = new EntityManagerFabrica().obterEntityManager();
-		Query query = entityManager.createNamedQuery("emailPesquisarPorId");
-		query.setParameter("id", id);
-		return (Email)query.getSingleResult();
+		return entityManager.find(Email.class, id);
 	}
 
 }
