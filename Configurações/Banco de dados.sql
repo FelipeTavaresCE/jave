@@ -1,4 +1,5 @@
-﻿DROP SEQUENCE IF EXISTS seq_id_email;
+﻿--------------Criação das Sequences------------------------
+DROP SEQUENCE IF EXISTS seq_id_email;
 
 CREATE SEQUENCE seq_id_email
     START WITH 1
@@ -43,6 +44,17 @@ CREATE SEQUENCE seq_id_uf
     NO MAXVALUE
     CACHE 1;
 
+DROP SEQUENCE IF EXISTS seq_id_usuario_sistema;
+
+CREATE SEQUENCE seq_id_usuario_sistema
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+--------------Fim Criação das Sequences------------------------
+
+--------------Criação das tabelas------------------------
 DROP TABLE IF EXISTS tb_telefone;
 
 CREATE TABLE tb_telefone (
@@ -96,6 +108,18 @@ CREATE TABLE tb_uf (
     sigla varchar(2)
 );
 
+DROP TABLE IF EXISTS tb_usuario_sistema;
+
+CREATE TABLE tb_usuario_sistema(
+    id bigint NOT NULL,
+    login varchar(50) not null,
+    senha varchar(100) not null,
+    ativo boolean not null,
+    pessoa_id bigint not null
+);
+--------------Fim da Criação das tabelas------------------------
+
+-------------- Criação das Primary Keys ------------------------
 ALTER TABLE ONLY tb_telefone
     ADD CONSTRAINT pk_tb_telefone PRIMARY KEY (id);
 
@@ -111,6 +135,11 @@ ALTER TABLE ONLY tb_pessoa
 ALTER TABLE ONLY tb_uf
     ADD CONSTRAINT pk_tb_uf PRIMARY KEY (id);
 
+ALTER TABLE ONLY tb_usuario_sistema
+    ADD CONSTRAINT pk_usuario_sistema PRIMARY KEY (id);
+-------------- Fim da Criação das Primary Keys ------------------------
+
+-------------- Criação das Foreign Keys ------------------------
 ALTER TABLE ONLY tb_telefone
     ADD CONSTRAINT fk_telefone_pessoa_id FOREIGN KEY (pessoa_id) REFERENCES tb_pessoa(id);
 
@@ -122,6 +151,14 @@ ALTER TABLE ONLY tb_endereco
 
 ALTER TABLE ONLY tb_email
     ADD CONSTRAINT fk_email_id_pessoa FOREIGN KEY (pessoa_id) REFERENCES tb_pessoa(id);
+
+ALTER TABLE ONLY tb_usuario_sistema
+    ADD CONSTRAINT fk_usuario_sistema_id_pessoa FOREIGN KEY (pessoa_id) REFERENCES tb_pessoa(id);
+-------------- Fim Criação das Foreign Keys ------------------------
+
+-------------- Criação dos indices ------------------------
+CREATE UNIQUE INDEX unq_idx_login ON tb_usuario_sistema(login);
+-------------- Fim da Criação dos indices ------------------------
 
 INSERT INTO tb_uf VALUES(nextval('seq_id_uf'), 'Ceará', 'CE');
 INSERT INTO tb_uf VALUES(nextval('seq_id_uf'), 'Bahia', 'BA');
