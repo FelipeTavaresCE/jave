@@ -1,21 +1,49 @@
 @CHARSET "UTF-8";
+
+.ui-widget{
+	font-family: Verdana,Arial,sans-serif;
+	font-size: 0.7em;
+}
+
+#div-conteiner-geral{
+	margin: 5px;
+	min-height: 400px;
+	/* border: 0; */
+}
+
+#area-de-trabalho{
+	border: 0;
+	margin-top: 3px;	
+}
+
+#nome-sistema{
+	margin-top: 60px;
+	font-size: 8em;
+}
+
+#div-logo-inicial{
+	width: 100%;
+	text-align: center;
+}
+
+#sub-nome-sistema{
+	font-size: 5em;
+}
+
 #panel-login{
 	position: absolute;
 	left: 50%;
 	top: 50%;
-	width: 320px;
-	height: 150px; 
-	margin-left: -160px;
-	margin-top: -75px;
+	width: 210px;
+	height: 119px; 
+	margin-left: -105px;
+	margin-top: -90px;
 }
 
 #panel-login inputText{
 	margin: 2px;
 }
 
-
-.ui-widget{
-	font-family: Verdana,Arial,sans-serif;
-	font-size: 0.8em;
+.elemento-form{
+	margin: 2px;
 }
-

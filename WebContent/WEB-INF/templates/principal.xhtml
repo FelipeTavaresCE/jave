@@ -12,12 +12,13 @@
     <link rel="stylesheet" type="text/css" href="css/reset.css" />  
 </h:head>
 <h:body>
-  
-      <ui:insert name="menu">
-        <ui:include src="/menu.xhtml" />
-      </ui:insert>
-  
-      <ui:insert name="corpo-pagina">Este e o corpo da pagina</ui:insert>
-    
+	<p:panel id="div-conteiner-geral">
+		<ui:insert name="menu">
+        	<ui:include src="/menu.xhtml" />
+        </ui:insert>
+        <div id="area-de-trabalho">
+      		<ui:insert name="corpo-pagina">Este e o corpo da pagina</ui:insert>
+      	</div>
+     </p:panel>
 </h:body>
 </html>
