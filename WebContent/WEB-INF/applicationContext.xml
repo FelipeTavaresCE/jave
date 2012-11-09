@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<b:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:b="http://www.springframework.org/schema/beans"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+							http://www.springframework.org/schema/beans/spring-beans.xsd
+							http://www.springframework.org/schema/context 
+							http://www.springframework.org/schema/context/spring-context-3.0.xsd 
+							http://www.springframework.org/schema/tx 
+							http://www.springframework.org/schema/tx/spring-tx-3.0.xsd 
+							http://www.springframework.org/schema/security
+                            http://www.springframework.org/schema/security/spring-security.xsd">
+
+	
+	<!-- Activates scanning of @Autowired -->
+	<context:annotation-config />
+	<!-- Scans for @Repository, @Service and @Component -->
+	<context:component-scan base-package="br.com.thr3eworks" />
+	<!-- Enable @Transactional support -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+    <http auto-config="true" access-denied-page="/login.xhtml" use-expressions="true"> 
+		<intercept-url pattern="/index.xhtml" access="hasRole('ROLE_USER')" />
+       <!-- "isAuthenticated()" que diz que todas as páginas que estão dentro desse pacote só serão acessadas se o usuário tiver autenticado...
+		    Caso alguem tente acessar mudando a url que é o teu caso, ele não vai conseguir e será redirecionada para a página de login conforme foi definido na tag access-denied-page="/login.xhtml"
+     	<intercept-url pattern="/comAutenticacao/**" access="isAuthenticated()" /> -->
+		<form-login login-page="/login.xhtml"
+			authentication-failure-url="/login.xhtml?error=true" />
+	</http>
+
+	<authentication-manager>
+		<authentication-provider>
+			<jdbc-user-service data-source-ref="dataSource"
+				users-by-username-query="SELECT username, password, enable FROM Users WHERE username=?"
+				authorities-by-username-query="SELECT User_username AS username, Auth_authority AS authority FROM User_Auth WHERE User_username=?" />
+		</authentication-provider>
+	</authentication-manager>
+	
+	<b:bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<b:property name="dataSource" ref="dataSource"/>
+		<b:property name="jpaVendorAdapter">
+			<b:bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<b:property name="showSql" value="true" />
+				<b:property name="databasePlatform" value="org.hibernate.dialect.PostgreSQLDialect" />
+			</b:bean>
+		</b:property>
+		<b:property name="jpaProperties">
+			<b:props>
+				<b:prop key="hibernate.format_sql">true</b:prop>
+				<b:prop key="hibernate.default_schema">public</b:prop>
+				<b:prop key="hibernate.hbm2ddl.auto">update</b:prop> <!-- create | create-drop | validate | update -->
+				<b:prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</b:prop>
+			</b:props>
+		</b:property>
+	</b:bean>
+	
+<!-- ********************************************* -->
+	<!-- Configuração do DataSource -->
+	<!-- ********************************************* -->
+	
+	<!-- Replaces ${...} placeholders with values from a properties file -->
+	<!-- (in this case, JDBC-related settings for th edataSource definition below) -->
+	<context:property-placeholder location="classpath:jdbc.properties"/>
+	
+	<b:bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<b:property name="url" value="jdbc:postgresql://localhost:5432/estudo" />
+		<b:property name="driverClassName" value="org.postgresql.Driver" />
+		<b:property name="username" value="postgres" />
+		<b:property name="password" value="arce" />
+	</b:bean>
+	
+	
+<!-- 	   <bean id="dataSource" -->
+<!-- 		class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"> -->
+<!-- 		<property name="driverClass" value="${jdbc.driverClassName}" /> -->
+<!-- 		<property name="jdbcUrl" value="${jdbc.url}" /> -->
+<!--     		<property name="user" value="${jdbc.username}" /> -->
+<!-- 		<property name="password" value="${jdbc.password}" /> -->
+<!-- 		<property name="initialPoolSize" value="3" /> -->
+<!-- 		<property name="minPoolSize" value="6" /> -->
+<!-- 		<property name="maxPoolSize" value="20" /> -->
+<!-- 		<property name="acquireIncrement" value="3" /> -->
+<!-- 	</bean> -->
+	
+		<b:bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<b:property name="entityManagerFactory" ref="entityManagerFactory"/>
+		
+	</b:bean>
+	
+<!-- 	Exception translation bean post processor -->
+	<b:bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+	
+
+	
+</b:beans>
