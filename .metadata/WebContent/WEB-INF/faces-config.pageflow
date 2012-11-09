@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf13522264024190" configfile="/jave/WebContent/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="login.xhtml" x="24" y="24" id="pf13522272462781" outlinks="pf13522272462782" path="/login.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="inicial.xhtml" x="192" y="24" id="pf13522272462783" inlinks="pf13522272462782" path="/inicial.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="login.xhtml" x="24" y="24" id="pf13522272462781" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf13522272462782" inlinks="pf13524300134480" path="/login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="inicial.xhtml" x="192" y="24" id="pf13522272462783" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf13522272462782" path="/inicial.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="menu.xhtml" x="24" y="144" id="pf13524300134491" outlinks="pf13524300134480" path="/menu.xhtml"/>
   <links id="pf13522272462782" target="pf13522272462783" source="pf13522272462781" outcome="inicial" redirect="true" fromaction="#{usuarioSistemaMB.validaUsuario}"/>
+  <links id="pf13524300134480" target="pf13522272462781" source="pf13524300134491" outcome="login" redirect="true" fromaction="#{usuarioSistemaMB.sairDoSistema}">
+    <bendPoints d1Width="-1" d1Height="-95" d2Width="1" d2Height="25"/>
+    <bendPoints d1Height="-46" d2Width="2" d2Height="74"/>
+  </links>
 </pageflow:Pageflow>
