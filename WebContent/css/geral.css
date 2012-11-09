@@ -47,3 +47,32 @@
 .elemento-form{
 	margin: 2px;
 }
+
+#menu-conteiner{
+	border: 0;
+	
+}
+
+#menu-usuario-dados{
+	border: 0px solid gray;
+	height: 27px;
+	float: right;
+	width: 300px;
+	position: relative;
+	top: -33px;
+	margin: 0 4px 0 0;
+	text-align: right;
+	padding: 0 10px 0 0;
+}
+
+#menu-nome-usuario-sistema{
+	position: relative;
+	top: -6px;
+}
+
+#menu-icone-sair{
+	position: relative;
+	top: 2px;
+	margin-left: 5px;
+	border: 0px solid gray;
+}

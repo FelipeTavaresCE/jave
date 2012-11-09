@@ -15,5 +15,15 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
+	<navigation-rule>
+		<display-name>menu.xhtml</display-name>
+		<from-view-id>/menu.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{usuarioSistemaMB.sairDoSistema}</from-action>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/login.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
 
 </faces-config>

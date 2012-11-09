@@ -5,27 +5,46 @@
   xmlns:ui="http://java.sun.com/jsf/facelets"
   xmlns:p="http://primefaces.org/ui">
   
-  <h:form>  
-	<p:menubar autoDisplay="true">
-        <p:submenu label="Cadastro" icon="ui-icon-document">  
-            <p:menuitem value="Cliente" url="cliente.xhtml" />  
-            <p:menuitem value="Usuário do Sistema" url="#" />  
-            <p:menuitem value="Produto" url="#" />  
-            <p:menuitem value="Estoque" url="#" />
-            <p:menuitem value="Operador de Caixa" url="#" />
-        </p:submenu> 	
-        <p:submenu label="Venda" icon="ui-icon-document">  
-            <p:menuitem value="Cancelar Venda" url="#" />  
-        </p:submenu>
-        <p:submenu label="Operador" icon="ui-icon-document">  
-            <p:menuitem value="Abrir Caixa" url="#" />
-            <p:menuitem value="Fechar Caixa" url="#" />  
-        </p:submenu>        
-        <p:submenu label="Relatórios" icon="ui-icon-document">  
-            <p:menuitem value="Vendas Por Período" url="#" />
-            <p:menuitem value="Vendas Por Operador" url="#" />
-            <p:menuitem value="Produtos em Falta" url="#" />
-        </p:submenu> 	
-	</p:menubar>
+  <h:form>
+  	<div id="menu-conteiner">
+		<p:menubar autoDisplay="true">
+	        <p:submenu label="Cadastro" icon="ui-icon-folder-open">  
+	            <p:menuitem value="Cliente" url="cliente.xhtml" />  
+	            <p:menuitem value="Usuário do Sistema" url="#" />  
+	            <p:menuitem value="Produto" url="#" />  
+	            <p:menuitem value="Estoque" url="#" />
+	            <p:menuitem value="Operador de Caixa" url="#" />
+	        </p:submenu> 	
+	        <p:submenu label="Venda" icon="ui-icon-cart">  
+	            <p:menuitem value="Cancelar Venda" url="#" />  
+	        </p:submenu>
+	        <p:submenu label="Operador" icon="ui-icon-person">  
+	            <p:menuitem value="Abrir Caixa" url="#" />
+	            <p:menuitem value="Fechar Caixa" url="#" />  
+	        </p:submenu>        
+	        <p:submenu label="Relatórios" icon="ui-icon-document">  
+	            <p:menuitem value="Vendas Por Período" url="#" />
+	            <p:menuitem value="Vendas Por Operador" url="#" />
+	            <p:menuitem value="Produtos em Falta" url="#" />
+	        </p:submenu> 	
+		</p:menubar>
+		<div id="menu-usuario-dados">
+			<span id="menu-nome-usuario-sistema">Francisco Paulo Ferreira Gomes</span>
+			<span id="menu-icone-sair">
+				<p:commandLink onclick="confirmation.show()">  
+					<p:graphicImage value="/icones/sair.png" title="Sair do Sistema"/>
+	        	</p:commandLink>
+			</span>
+		</div>
+
+	    <p:confirmDialog id="confirmDialog" message="Tem certeza que deseja sair do sistems?"  
+	                header="Sair do Sistema" severity="alert" widgetVar="confirmation">  
+	                  
+	        <p:commandButton id="confirm" value="Sim"  action="#{usuarioSistemaMB.sairDoSistema}" ajax="false"/>  
+	        <p:commandButton id="decline" value="Cancelar" onclick="confirmation.hide()" type="button" />   
+	                  
+	    </p:confirmDialog>		
+		
+	</div>
   </h:form>  
 </ui:fragment>

@@ -17,17 +17,17 @@ public class TesteManterUsuarioSistema {
 	public static void main(String[] args) throws Exception {
 		TesteManterUsuarioSistema teste = new TesteManterUsuarioSistema();
 		
-		//teste.addNovo();
+		teste.addNovo();
 		//teste.atualizar();
 		//teste.remover();
 		//teste.listarTodos();
 		//teste.pesquisarId();
-		teste.validarUsuario();
+		//teste.validarUsuario();
 	}
 	
 	public void addNovo() throws Exception{
-		usuarioSistema.setLogin("adejanny");
-		usuarioSistema.setSenha("123456");
+		usuarioSistema.setLogin("admin");
+		usuarioSistema.setSenha("admin");
 		usuarioSistema.setAtivo(true);
 		usuarioSistema.setPessoa(new PessoaDaoImpl().pesquisarPorId(ID_PESSOA));
 		UsuarioSistemaFac.gravar(usuarioSistema);

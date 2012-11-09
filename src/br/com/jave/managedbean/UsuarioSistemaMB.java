@@ -27,7 +27,12 @@ public class UsuarioSistemaMB implements Serializable {
 			retorno = "";
 		}
 		return retorno;
-	}	
+	}
+	
+	public String sairDoSistema(){
+		String retorno = "login";
+		return retorno;
+	}
 	
 	public String getLogin() {
 		return login;
