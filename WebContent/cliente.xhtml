@@ -8,7 +8,55 @@
   <ui:define name="corpo-pagina">
   	<ui:param name="pagina-titulo" value="Cadastro de Cliente" />
 	<h:form id="form-geral">
-		<h1>novo cliente</h1>
+	<p:tabView id="tabView">  
+	  
+	    <p:tab id="cliente-tab-dados-pessoais" title="Dados Pessoais">  
+	        <h:panelGrid columns="2" cellpadding="10">
+	          
+	            <h:outputText value="Nome.: "/>
+	            <p:inputText id="nome" value="" styleClass="elemento-form"/>
+	            
+	            <h:outputText value="Tipo Pessoa.: " />
+	            <p:selectOneMenu id="tipo-pessoa" value="" styleClass="elemento-form">
+	            	<f:selectItem  itemValue="" itemLabel="Selecione..."/>
+	            	<f:selectItem  itemValue="FISICA" itemLabel="Fisica"/>
+	            	<f:selectItem  itemValue="FISICA" itemLabel="Fisica"/>
+	            </p:selectOneMenu>
+
+	            <h:outputText value="CPF.: "/>
+	            <p:inputText id="cpf" value="" styleClass="elemento-form"/>
+
+	            <h:outputText value="CNPJ.:"/>
+	            <p:inputText id="cnpj" value="" styleClass="elemento-form"/>
+
+	            <h:outputText value="Nascimento.: "/>
+	            <p:inputText id="data-nascimento" value="" styleClass="elemento-form"/>
+	            
+	            <h:outputText value="Sexo.: "/>
+	            <p:inputText id="sexo" value="" styleClass="elemento-form"/>
+
+	            <h:outputText value="Data Cadastro.: "/>
+	            <p:inputText id="data-cadastro" value="" disabled="true" styleClass="elemento-form"/>
+
+	        </h:panelGrid>
+	    </p:tab>  
+	  
+	    <p:tab id="tab2" title="Endereço">  
+	        <h:panelGrid columns="2" cellpadding="10">  
+	            <h:outputText id="tab2Text" value="Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film, The_Godfather, parallels the young Vito Corleone's rise with his son Michael's spiritual fall, deepening The_Godfather's depiction of the dark side of the American dream.  
+	            In the early 1900s, the child Vito flees his Sicilian village for America after the local Mafia kills his family. Vito struggles to make a living, legally or illegally, for his wife and growing brood in Little Italy,  
+	            killing the local Black Hand Fanucci after he demands his customary cut of the tyro's business. With Fanucci gone, Vito's communal stature grows."/>  
+	        </h:panelGrid>  
+	    </p:tab>  
+	  
+	    <p:tab id="tab3" title="Contatos">  
+	        <h:panelGrid columns="2" cellpadding="10">  
+	            <h:outputText id="tab3Text" value="After a break of more than 15 years, director Francis Ford Coppola and writer Mario Puzo returned to the well for this third and final story of the fictional Corleone crime family.  
+	                Two decades have passed, and crime kingpin Michael Corleone, now divorced from his wife Kay has nearly succeeded in keeping his promise that his family would one day be completely legitimate."/>  
+	        </h:panelGrid>  
+	    </p:tab>  
+	  
+	</p:tabView> 		
     </h:form>
   </ui:define>
 </ui:composition>
