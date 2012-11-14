@@ -7,7 +7,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 							http://www.springframework.org/schema/beans/spring-beans.xsd
 							http://www.springframework.org/schema/context 
-							http://www.springframework.org/schema/context/spring-context-3.0.xsd 
+							http://www.springframework.org/schema/context/spring-context-3.1.xsd 
 							http://www.springframework.org/schema/tx 
 							http://www.springframework.org/schema/tx/spring-tx-3.0.xsd 
 							http://www.springframework.org/schema/security
@@ -17,15 +17,17 @@
 	<!-- Activates scanning of @Autowired -->
 	<context:annotation-config />
 	<!-- Scans for @Repository, @Service and @Component -->
-	<context:component-scan base-package="br.com.thr3eworks" />
+	<context:component-scan base-package="br.com.jave" />
 	<!-- Enable @Transactional support -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	
     <http auto-config="true" access-denied-page="/login.xhtml" use-expressions="true"> 
-		<intercept-url pattern="/index.xhtml" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/inicial.xhtml" access="hasRole('ROLE_ADMIN')" />
+		
        <!-- "isAuthenticated()" que diz que todas as páginas que estão dentro desse pacote só serão acessadas se o usuário tiver autenticado...
 		    Caso alguem tente acessar mudando a url que é o teu caso, ele não vai conseguir e será redirecionada para a página de login conforme foi definido na tag access-denied-page="/login.xhtml"
      	<intercept-url pattern="/comAutenticacao/**" access="isAuthenticated()" /> -->
+     	
 		<form-login login-page="/login.xhtml"
 			authentication-failure-url="/login.xhtml?error=true" />
 	</http>
@@ -67,10 +69,10 @@
 	
 	<b:bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<b:property name="url" value="jdbc:postgresql://localhost:5432/estudo" />
+		<b:property name="url" value="jdbc:postgresql://localhost:5432/jave" />
 		<b:property name="driverClassName" value="org.postgresql.Driver" />
-		<b:property name="username" value="postgres" />
-		<b:property name="password" value="arce" />
+		<b:property name="username" value="jave" />
+		<b:property name="password" value="jave" />
 	</b:bean>
 	
 	

@@ -3,7 +3,9 @@
   xmlns:h="http://java.sun.com/jsf/html"
   xmlns:f="http://java.sun.com/jsf/core" 
   xmlns:ui="http://java.sun.com/jsf/facelets"
-  xmlns:p="http://primefaces.org/ui">
+  xmlns:p="http://primefaces.org/ui"
+  xmlns:sec= "http://www.springframework.org/security/tags"
+  >
   
   <h:form>
   	<div id="menu-conteiner">
@@ -29,7 +31,7 @@
 	        </p:submenu> 	
 		</p:menubar>
 		<div id="menu-usuario-dados">
-			<span id="menu-nome-usuario-sistema">Francisco Paulo Ferreira Gomes</span>
+			<span id="menu-nome-usuario-sistema"><h:outputLabel value="#{usuarioController.usuario.username}"></h:outputLabel></span>
 			<span id="menu-icone-sair">
 				<p:commandLink onclick="confirmation.show()">  
 					<p:graphicImage value="/icones/sair.png" title="Sair do Sistema"/>

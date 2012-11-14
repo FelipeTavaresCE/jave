@@ -6,7 +6,7 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd"
     version="2.1">
     
-    <application>
+  <application>
 		<!-- Spring EL Resolver -->
 		<el-resolver>
 			org.springframework.web.jsf.el.SpringBeanFacesELResolver
@@ -18,25 +18,35 @@
 		</locale-config>
     </application>
     
-	<navigation-rule>
-		<display-name>login.xhtml</display-name>
-		<from-view-id>/login.xhtml</from-view-id>
+    
+<!-- 	<navigation-rule> -->
+<!-- 		<display-name>login.xhtml</display-name> -->
+<!-- 		<from-view-id>/login.xhtml</from-view-id> -->
+<!-- 		<navigation-case> -->
+<!-- 			<from-action>#{usuarioSistemaMB.validaUsuario}</from-action> -->
+<!-- 			<from-outcome>inicial</from-outcome> -->
+<!-- 			<to-view-id>/inicial.xhtml</to-view-id> -->
+<!-- 			<redirect /> -->
+<!-- 		</navigation-case> -->
+<!-- 	</navigation-rule> -->
+<!-- 	<navigation-rule> -->
+<!-- 		<display-name>menu.xhtml</display-name> -->
+<!-- 		<from-view-id>/menu.xhtml</from-view-id> -->
+<!-- 		<navigation-case> -->
+<!-- 			<from-action>#{usuarioSistemaMB.sairDoSistema}</from-action> -->
+<!-- 			<from-outcome>login</from-outcome> -->
+<!-- 			<to-view-id>/login.xhtml</to-view-id> -->
+<!-- 			<redirect /> -->
+<!-- 		</navigation-case> -->
+<!-- 	</navigation-rule> -->
+
+<navigation-rule>
+		<from-view-id>*</from-view-id>
 		<navigation-case>
-			<from-action>#{usuarioSistemaMB.validaUsuario}</from-action>
-			<from-outcome>inicial</from-outcome>
-			<to-view-id>/inicial.xhtml</to-view-id>
-			<redirect />
-		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
-		<display-name>menu.xhtml</display-name>
-		<from-view-id>/menu.xhtml</from-view-id>
-		<navigation-case>
-			<from-action>#{usuarioSistemaMB.sairDoSistema}</from-action>
 			<from-outcome>login</from-outcome>
 			<to-view-id>/login.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
-	</navigation-rule>
+    </navigation-rule>
 
 </faces-config>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      >
+<h:head>
+	<link rel="Shortcut Icon" href="/favicon.ico" />
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <title>Login de Acesso ao Sistema</title>
+    <link rel="stylesheet" type="text/css" href="css/geral.css" />
+    <link rel="stylesheet" type="text/css" href="css/reset.css" />
+</h:head>
+<f:view>
+	<p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();"/>  
+	<p:dialog modal="true" widgetVar="statusDialog" header="Processando"   
+	        draggable="false" closable="false">  
+	    <p:graphicImage value="/imagens/ajaxloadingbar.gif" />  
+	</p:dialog>
+
+	<p:panel header="Login" id="panel-login" rendered="true">
+		<h:form id="form-geral" >
+		<p:growl />
+			<h:panelGrid columns="2">
+				<h:outputLabel value="Login: " for="login" />
+				<p:inputText id="login" value="#{usuarioSistemaMB.login}" required="true" requiredMessage="O Campo login é Obrigatório"
+				             styleClass="elemento-form"/>
+	
+				<h:outputLabel value="Senha: " for="senha" />
+				<p:password id="senha" value="#{usuarioSistemaMB.senha}" required="true" requiredMessage="O Campo Senha é Obrigatório"
+				            styleClass="elemento-form"/>
+				<p:focus for="login"/>
+				<p:commandButton value="Logar" action="#{usuarioSistemaMB.validaUsuario}" update="form-geral" ajax="true" styleClass="elemento-form" />       
+      		</h:panelGrid>
+      	</h:form>
+	</p:panel>
+</f:view>
+</html>

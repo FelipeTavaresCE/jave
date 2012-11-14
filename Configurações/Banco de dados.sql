@@ -1,4 +1,9 @@
-﻿--------------Criação das Sequences------------------------
+--------------Criação do Usuario---------------------------
+CREATE ROLE jave
+  SUPERUSER CREATEDB CREATEROLE REPLICATION
+   VALID UNTIL 'infinity';
+
+--------------Criação das Sequences------------------------
 DROP SEQUENCE IF EXISTS seq_id_email;
 
 CREATE SEQUENCE seq_id_email
@@ -63,6 +68,39 @@ CREATE TABLE tb_telefone (
     numero varchar(10),
     pessoa_id bigint
 );
+
+DROP TABLE IF EXISTS authority;
+
+CREATE TABLE authority
+(
+  name character varying(255) NOT NULL,
+  CONSTRAINT authority_pkey PRIMARY KEY (name )
+);
+
+DROP TABLE IF EXISTS users;
+
+CREATE TABLE users
+(
+  username character varying(40) NOT NULL,
+  enable boolean,
+  password character varying(40),
+  CONSTRAINT users_pkey PRIMARY KEY (username )
+);
+
+DROP TABLE IF EXISTS user_auth;
+
+CREATE TABLE user_auth
+(
+  user_username character varying(40) NOT NULL,
+  auth_authority character varying(255) NOT NULL,
+  CONSTRAINT fk1434519c4cf16b0b FOREIGN KEY (user_username)
+      REFERENCES users (username) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk1434519c7b6bb1f9 FOREIGN KEY (auth_authority)
+      REFERENCES authority (name) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+
 
 DROP TABLE IF EXISTS tb_email;
 
