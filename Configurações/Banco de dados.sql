@@ -1,7 +1,9 @@
---------------Criação do Usuario---------------------------
+﻿--------------Criação do Usuario---------------------------
 CREATE ROLE jave
   SUPERUSER CREATEDB CREATEROLE REPLICATION
    VALID UNTIL 'infinity';
+
+--------------- Fim da Criação do Usuario -----------------
 
 --------------Criação das Sequences------------------------
 DROP SEQUENCE IF EXISTS seq_id_email;
@@ -155,6 +157,21 @@ CREATE TABLE tb_usuario_sistema(
     ativo boolean not null,
     pessoa_id bigint not null
 );
+
+DROP TABLE IF EXISTS tb_perfil_acesso;
+
+CREATE TABLE tb_perfil_acesso(
+    nome varchar(20) not null
+);
+
+DROP TABLE IF EXISTS tb_usuario_sistema_perfil_acesso;
+
+CREATE TABLE tb_usuario_sistema_perfil_acesso(
+   usuario_login varchar(50) not null,
+   perfil_acesso_nome varchar(20) not null
+);
+
+
 --------------Fim da Criação das tabelas------------------------
 
 -------------- Criação das Primary Keys ------------------------
@@ -175,6 +192,10 @@ ALTER TABLE ONLY tb_uf
 
 ALTER TABLE ONLY tb_usuario_sistema
     ADD CONSTRAINT pk_usuario_sistema PRIMARY KEY (id);
+
+ALTER TABLE ONLY tb_perfil_acesso
+    ADD CONSTRAINT pk_perfil_acesso PRIMARY KEY (nome);
+
 -------------- Fim da Criação das Primary Keys ------------------------
 
 -------------- Criação das Foreign Keys ------------------------
@@ -192,6 +213,13 @@ ALTER TABLE ONLY tb_email
 
 ALTER TABLE ONLY tb_usuario_sistema
     ADD CONSTRAINT fk_usuario_sistema_id_pessoa FOREIGN KEY (pessoa_id) REFERENCES tb_pessoa(id);
+
+ALTER TABLE ONLY tb_usuario_sistema_perfil_acesso 
+    ADD CONSTRAINT fk_usu_sis_perfil_login FOREIGN KEY (usuario_login) REFERENCES tb_usuario_sistema(login);
+
+ALTER TABLE ONLY tb_usuario_sistema_perfil_acesso 
+    ADD CONSTRAINT fk_usu_sis_perfil_nome FOREIGN KEY (perfil_acesso_nome) REFERENCES tb_perfil_acesso(nome);
+
 -------------- Fim Criação das Foreign Keys ------------------------
 
 -------------- Criação dos indices ------------------------
@@ -201,3 +229,7 @@ CREATE UNIQUE INDEX unq_idx_login ON tb_usuario_sistema(login);
 INSERT INTO tb_uf VALUES(nextval('seq_id_uf'), 'Ceará', 'CE');
 INSERT INTO tb_uf VALUES(nextval('seq_id_uf'), 'Bahia', 'BA');
 INSERT INTO tb_uf VALUES(nextval('seq_id_uf'), 'Pernambuco', 'PE');
+
+INSERT INTO tb_perfil_acesso values('ROLE_ADMIN');
+INSERT INTO tb_usuario_sistema values(nextval('seq_id_usuario_sistema'), 'admin', md5('admin'), true, 1);
+INSERT INTO tb_usuario_sistema_perfil_acesso values('admin', 'ROLE_ADMIN');

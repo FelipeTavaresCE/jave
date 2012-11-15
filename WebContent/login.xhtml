@@ -5,22 +5,25 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui">
 
 <f:view>
 	<h:head>
-			<title>Gestão de Gastos</title>
-
+		<link rel="Shortcut Icon" href="/favicon.ico" />
+		<title>Jave - Login</title>
 		<style type="text/css">
-			.ui-widget {font-size: 10px; !important;}
+			.ui-widget {
+				font-size: 10px;!
+				important;
+			}
 		</style>
 	</h:head>
 
 	<h:body>
-		<p:dialog header="Gestão de Gastos - Faça login para entrar no sistema"
-			modal="false" closable="false" position="center"
-			widgetVar="modalLogin" minWidth="300" width="300" showEffect="slide"
-			draggable="false" resizable="false" visible="true">
+		<p:dialog header="Faça login para entrar no sistema"
+				  modal="false" closable="false" position="center"
+			      widgetVar="modalLogin" minWidth="300" width="300" showEffect="slide"
+			      draggable="false" resizable="false" visible="true">
 
 			<center>
 				<h:outputText value="Usuário e/	ou senha inválidos!"

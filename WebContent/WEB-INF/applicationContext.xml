@@ -5,13 +5,13 @@
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
-							http://www.springframework.org/schema/beans/spring-beans.xsd
-							http://www.springframework.org/schema/context 
-							http://www.springframework.org/schema/context/spring-context-3.1.xsd 
-							http://www.springframework.org/schema/tx 
-							http://www.springframework.org/schema/tx/spring-tx-3.0.xsd 
-							http://www.springframework.org/schema/security
-                            http://www.springframework.org/schema/security/spring-security.xsd">
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context 
+						http://www.springframework.org/schema/context/spring-context-3.1.xsd 
+						http://www.springframework.org/schema/tx 
+						http://www.springframework.org/schema/tx/spring-tx-3.0.xsd 
+						http://www.springframework.org/schema/security
+                        http://www.springframework.org/schema/security/spring-security.xsd">
 
 	
 	<!-- Activates scanning of @Autowired -->
@@ -28,20 +28,19 @@
 		    Caso alguem tente acessar mudando a url que é o teu caso, ele não vai conseguir e será redirecionada para a página de login conforme foi definido na tag access-denied-page="/login.xhtml"
      	<intercept-url pattern="/comAutenticacao/**" access="isAuthenticated()" /> -->
      	
-		<form-login login-page="/login.xhtml"
-			authentication-failure-url="/login.xhtml?error=true" />
+		<form-login login-page="/login.xhtml" authentication-failure-url="/login.xhtml?error=true" />
 	</http>
 
 	<authentication-manager>
 		<authentication-provider>
+			<password-encoder hash="md5" />
 			<jdbc-user-service data-source-ref="dataSource"
-				users-by-username-query="SELECT username, password, enable FROM Users WHERE username=?"
-				authorities-by-username-query="SELECT User_username AS username, Auth_authority AS authority FROM User_Auth WHERE User_username=?" />
+				users-by-username-query="SELECT login, senha, ativo FROM tb_usuario_sistema WHERE login=?"
+				authorities-by-username-query="SELECT usuario_login AS username, perfil_acesso_nome AS authority FROM tb_usuario_sistema_perfil_acesso WHERE usuario_login =?" />
 		</authentication-provider>
 	</authentication-manager>
 	
-	<b:bean id="entityManagerFactory"
-		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+	<b:bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<b:property name="dataSource" ref="dataSource"/>
 		<b:property name="jpaVendorAdapter">
 			<b:bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
@@ -67,8 +66,7 @@
 	<!-- (in this case, JDBC-related settings for th edataSource definition below) -->
 	<context:property-placeholder location="classpath:jdbc.properties"/>
 	
-	<b:bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<b:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<b:property name="url" value="jdbc:postgresql://localhost:5432/jave" />
 		<b:property name="driverClassName" value="org.postgresql.Driver" />
 		<b:property name="username" value="jave" />
