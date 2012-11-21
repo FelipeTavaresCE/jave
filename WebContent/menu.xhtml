@@ -43,7 +43,10 @@
 	    <p:confirmDialog id="confirmDialog" message="Tem certeza que deseja sair do sistema?"  
 	                header="Sair do Sistema" severity="alert" widgetVar="confirmation">  
 	                  
-	        <p:commandButton id="confirm" value="Sim"  action="#{usuarioSistemaMB.sairDoSistema}" ajax="false"/>  
+	        <h:outputLink value="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout" >  
+			      Sair
+	        </h:outputLink>
+	        
 	        <p:commandButton id="decline" value="Cancelar" onclick="confirmation.hide()" type="button" />   
 	                  
 	    </p:confirmDialog>		
