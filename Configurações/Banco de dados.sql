@@ -1,11 +1,4 @@
-﻿--------------Criação do Usuario---------------------------
-CREATE ROLE jave
-  SUPERUSER CREATEDB CREATEROLE REPLICATION
-   VALID UNTIL 'infinity';
-
---------------- Fim da Criação do Usuario -----------------
-
---------------Criação das Sequences------------------------
+﻿--------------Criação das Sequences------------------------
 DROP SEQUENCE IF EXISTS seq_id_email;
 
 CREATE SEQUENCE seq_id_email
@@ -71,39 +64,6 @@ CREATE TABLE tb_telefone (
     pessoa_id bigint
 );
 
-DROP TABLE IF EXISTS authority;
-
-CREATE TABLE authority
-(
-  name character varying(255) NOT NULL,
-  CONSTRAINT authority_pkey PRIMARY KEY (name )
-);
-
-DROP TABLE IF EXISTS users;
-
-CREATE TABLE users
-(
-  username character varying(40) NOT NULL,
-  enable boolean,
-  password character varying(40),
-  CONSTRAINT users_pkey PRIMARY KEY (username )
-);
-
-DROP TABLE IF EXISTS user_auth;
-
-CREATE TABLE user_auth
-(
-  user_username character varying(40) NOT NULL,
-  auth_authority character varying(255) NOT NULL,
-  CONSTRAINT fk1434519c4cf16b0b FOREIGN KEY (user_username)
-      REFERENCES users (username) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT fk1434519c7b6bb1f9 FOREIGN KEY (auth_authority)
-      REFERENCES authority (name) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
-)
-
-
 DROP TABLE IF EXISTS tb_email;
 
 CREATE TABLE tb_email (
@@ -127,6 +87,31 @@ CREATE TABLE tb_endereco (
     uf_id bigint
 );
 
+DROP TABLE IF EXISTS tb_usuario_sistema_perfil_acesso;
+
+CREATE TABLE tb_usuario_sistema_perfil_acesso(
+   usuario_login varchar(50) not null,
+   perfil_acesso_nome varchar(20) not null
+);
+
+DROP TABLE IF EXISTS tb_usuario_sistema;
+
+CREATE TABLE tb_usuario_sistema(
+    id bigint NOT NULL,
+    login varchar(50) not null,
+    senha varchar(100) not null,
+    ativo boolean not null,
+    pessoa_id bigint not null
+);
+
+DROP TABLE IF EXISTS tb_perfil_acesso;
+
+CREATE TABLE tb_perfil_acesso(
+    nome varchar(20) not null
+);
+
+
+
 DROP TABLE IF EXISTS tb_pessoa;
 
 CREATE TABLE tb_pessoa (
@@ -147,30 +132,6 @@ CREATE TABLE tb_uf (
     nome varchar(50),
     sigla varchar(2)
 );
-
-DROP TABLE IF EXISTS tb_usuario_sistema;
-
-CREATE TABLE tb_usuario_sistema(
-    id bigint NOT NULL,
-    login varchar(50) not null,
-    senha varchar(100) not null,
-    ativo boolean not null,
-    pessoa_id bigint not null
-);
-
-DROP TABLE IF EXISTS tb_perfil_acesso;
-
-CREATE TABLE tb_perfil_acesso(
-    nome varchar(20) not null
-);
-
-DROP TABLE IF EXISTS tb_usuario_sistema_perfil_acesso;
-
-CREATE TABLE tb_usuario_sistema_perfil_acesso(
-   usuario_login varchar(50) not null,
-   perfil_acesso_nome varchar(20) not null
-);
-
 
 --------------Fim da Criação das tabelas------------------------
 
@@ -198,6 +159,13 @@ ALTER TABLE ONLY tb_perfil_acesso
 
 -------------- Fim da Criação das Primary Keys ------------------------
 
+-------------- Criação dos indices ---------------------------------
+CREATE UNIQUE INDEX unq_idx_login ON tb_usuario_sistema(login);
+-------------- Fim da Criação dos indices --------------------------
+
+
+
+
 -------------- Criação das Foreign Keys ------------------------
 ALTER TABLE ONLY tb_telefone
     ADD CONSTRAINT fk_telefone_pessoa_id FOREIGN KEY (pessoa_id) REFERENCES tb_pessoa(id);
@@ -222,13 +190,21 @@ ALTER TABLE ONLY tb_usuario_sistema_perfil_acesso
 
 -------------- Fim Criação das Foreign Keys ------------------------
 
--------------- Criação dos indices ------------------------
-CREATE UNIQUE INDEX unq_idx_login ON tb_usuario_sistema(login);
--------------- Fim da Criação dos indices ------------------------
+--------------Criação do Usuario---------------------------
+--DROP ROLE IF EXISTS jave;
+
+--CREATE ROLE jave
+--  SUPERUSER CREATEDB CREATEROLE REPLICATION
+--   VALID UNTIL 'infinity';
+
+--------------- Fim da Criação do Usuario -----------------
+
 
 INSERT INTO tb_uf VALUES(nextval('seq_id_uf'), 'Ceará', 'CE');
 INSERT INTO tb_uf VALUES(nextval('seq_id_uf'), 'Bahia', 'BA');
 INSERT INTO tb_uf VALUES(nextval('seq_id_uf'), 'Pernambuco', 'PE');
+
+INSERT INTO tb_pessoa(id, nome) values (nextval('seq_id_pessoa'),'Administrador do Sistema');
 
 INSERT INTO tb_perfil_acesso values('ROLE_ADMIN');
 INSERT INTO tb_usuario_sistema values(nextval('seq_id_usuario_sistema'), 'admin', md5('admin'), true, 1);
