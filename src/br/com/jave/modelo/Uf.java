@@ -11,26 +11,23 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.springframework.stereotype.Component;
-
 @Entity
 @Table(name = "tb_uf")
 @NamedQueries({
 	@NamedQuery(name = "ufListarTodos", query = "SELECT u FROM Uf u"),
 	@NamedQuery(name = "ufPesquisarPorId", query = "SELECT u FROM Uf u WHERE u.id = :id"),
 })
-
 public class Uf implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@SequenceGenerator(name = "seq_id_uf", sequenceName = "seq_id_uf", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id_uf")
 	private Long id;
 	private String sigla;
 	private String nome;
-	
+
+	@Id
+	@SequenceGenerator(name = "seq_id_uf", sequenceName = "seq_id_uf", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id_uf")
 	public Long getId() {
 		return id;
 	}
@@ -41,17 +38,18 @@ public class Uf implements Serializable{
 		return sigla;
 	}
 	public void setSigla(String sigla) {
-		this.sigla = sigla;
+		this.sigla = sigla.toUpperCase();
 	}
 	public String getNome() {
 		return nome;
 	}
 	public void setNome(String nome) {
-		this.nome = nome;
+		this.nome = nome.toUpperCase();
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

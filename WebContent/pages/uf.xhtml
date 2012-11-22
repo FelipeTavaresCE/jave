@@ -14,15 +14,15 @@
 			    <p:tab id="cliente-tab-dados-pessoais" title="Dados da Unidade Federativa">  
 			        <h:panelGrid columns="2" cellpadding="10">
 			            <h:outputText value="Nome.: "/>
-			            <p:inputText id="nome" value="#{ufMB.uf.nome}" styleClass="elemento-form" 
+			            <p:inputText id="nome" value="#{ufMB.uf.nome}" styleClass="elemento-form-input largura250" 
 			                         required="true" requiredMessage="O Nome da UF é obrigatório."/>
 			            <h:outputText value="Sigla.: "/>
-			            <p:inputText id="sigla" value="#{ufMB.uf.sigla}" styleClass="elemento-form" maxlength="2"/>
+			            <p:inputText id="sigla" value="#{ufMB.uf.sigla}" styleClass="elemento-form-input largura20" maxlength="2"/>
 			            
 			            <h:panelGroup></h:panelGroup>
 			            			            
-			            <p:commandButton value="Salvar" actionListener="#{ufMB.salvar}" ajax="true" 
-			                             update=":mensagens :form-geral :form-listagem-uf" styleClass="elemento-form"/>
+			            <p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{ufMB.salvar}" ajax="true" 
+			                             update=":mensagens :form-geral :form-listagem-uf"/>
 			        </h:panelGrid>
 			    </p:tab>  
 			</p:tabView> 		

@@ -40,8 +40,8 @@ public class UfDaoImpl implements UfDao, Serializable{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Uf> listarTodos() throws Exception {
-		Query query = entityManager.createNamedQuery("ufListarTodos");
-		return query.getResultList();
+		
+		return this.entityManager.createNamedQuery("ufListarTodos").getResultList();
 	}
 
 	@Override
