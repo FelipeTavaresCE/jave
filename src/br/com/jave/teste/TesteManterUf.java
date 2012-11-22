@@ -10,14 +10,14 @@ public class TesteManterUf {
 	public static void main(String[] args) {
 		
 		Fachada<Uf> daoUf = new UfFachadaImpl();
-		long ID_UF_PESQUISA = 5;
+		long ID_UF_PESQUISA = 60;
 		
 		try{
 			//Criar
-			Uf uf1 = new Uf();
-			uf1.setNome("Belo Horizonte");
-			uf1.setSigla("BH");
-			daoUf.gravar(uf1);
+//			Uf uf1 = new Uf();
+//			uf1.setNome("Belo Horizonte");
+//			uf1.setSigla("BH");
+			//daoUf.gravar(uf1);
 			
 			
 			//Atualizar
@@ -28,14 +28,14 @@ public class TesteManterUf {
 			daoUf.gravar(ufUpdate);
 			
 			
-			for(Uf uf : daoUf.listarTodos()){
-				System.out.println(uf.getId() + " - " + uf.getNome() + " - " + uf.getSigla());
-			}			
+//			for(Uf uf : daoUf.listarTodos()){
+//				System.out.println(uf.getId() + " - " + uf.getNome() + " - " + uf.getSigla());
+//			}			
 
-			daoUf.excluir(ufUpdate);
+			//daoUf.excluir(ufUpdate);
 
 			
-			System.out.println("Pesquisa com filtro de ID: " + daoUf.pesquisarPorId((long)4).getNome());		
+//			System.out.println("Pesquisa com filtro de ID: " + daoUf.pesquisarPorId((long)4).getNome());		
 			
 		}catch(ExclusaoNaoPermitidaException e){
 			System.out.println(e.getMessage());

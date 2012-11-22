@@ -1,5 +1,6 @@
 package br.com.jave.dao;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -9,8 +10,12 @@ import javax.persistence.Query;
 import br.com.java.modelo.Uf;
 import br.com.jave.excecoes.ExclusaoNaoPermitidaException;
 
-public class UfDaoImpl implements GenericDao<Uf>{
+public class UfDaoImpl implements GenericDao<Uf>, Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	EntityManager entityManager;
 	
 	@Override

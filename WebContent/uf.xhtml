@@ -19,10 +19,32 @@
 			            <h:outputText value="Sigla.: "/>
 			            <p:inputText id="sigla" value="#{ufMB.uf.sigla}" styleClass="elemento-form" maxlength="2"/>
 			            
-			            <p:commandButton value="Salvar" actionListener="#{ufMB.salvar}" ajax="true" update=":mensagens"/>
+			            <h:panelGroup></h:panelGroup>
+			            			            
+			            <p:commandButton value="Salvar" actionListener="#{ufMB.salvar}" ajax="true" 
+			                             update=":mensagens :form-geral :form-listagem-uf" styleClass="elemento-form"/>
 			        </h:panelGrid>
 			    </p:tab>  
 			</p:tabView> 		
+		</h:form>
+		<br />
+		<h:form id="form-listagem-uf">
+			<p:dataTable var="uf" value="#{ufMB.ufLista}" emptyMessage="Nenhum registro encontrado" style="width: 250px;"
+			   paginator="true" rows="10"
+			   paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			   rowKey="#{uf}" selection="#{ufMB.ufSelecionada}" selectionMode="single" paginatorPosition="bottom"
+			   rowsPerPageTemplate="5,10,15,20,25,30,40,50"
+			             >
+				<p:ajax event="rowSelect" listener="#{ufMB.prepararEdicao()}" update=":form-geral" />
+								
+				<p:column headerText="Nome" width="150">
+					<h:outputText value="#{uf.nome}" />
+				</p:column>  				
+				<p:column headerText="Sigla" width="80">
+					<h:outputText value="#{uf.sigla}" />
+				</p:column>				
+						
+			</p:dataTable>
 		</h:form>
 	</ui:define>
 </ui:composition>

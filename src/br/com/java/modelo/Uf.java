@@ -28,6 +28,7 @@ public class Uf implements Serializable{
 	private Long id;
 	private String sigla;
 	private String nome;
+	
 	public Long getId() {
 		return id;
 	}
