@@ -5,49 +5,57 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.stereotype.Controller;
 
+import br.com.jave.modelo.UsuarioSistema;
 
 @ManagedBean
 @SessionScoped
 public class UsuarioController {
 
-    private br.com.java.modelo.User usuario;
-    private List<br.com.java.modelo.User> usuarios;
+	private UsuarioSistema usuario;
+	private List<UsuarioSistema> usuarios;
 
-    public UsuarioController() {
-        try {
-            usuario = new br.com.java.modelo.User();
-            SecurityContext context = SecurityContextHolder.getContext();
-            if (context instanceof SecurityContext) {
-                Authentication authentication = context.getAuthentication();
-                if (authentication instanceof Authentication) {
-                    usuario.setUsername(((User) authentication.getPrincipal()).getUsername());
-                } else {usuario = null;} 
-            } else {usuario = null;} 
-        } catch (Exception e) {
-        }
-    }
+	public UsuarioController() {
+		try {
+			usuario = new UsuarioSistema();
+			SecurityContext context = SecurityContextHolder.getContext();
+			if (context instanceof SecurityContext) {
+				Authentication authentication = context.getAuthentication();
+				if (authentication instanceof Authentication) {
+					usuario.setLogin(((User) authentication.getPrincipal())
+							.getUsername());
+				} else {
+					usuario = null;
+				}
+			} else {
+				usuario = null;
+			}
+		} catch (Exception e) {
+		}
+	}
 
-	public br.com.java.modelo.User getUsuario() {
+	public UsuarioSistema getUsuario() {
 		return usuario;
 	}
 
-	public void setUsuario(br.com.java.modelo.User usuario) {
+	public void setUsuario(UsuarioSistema usuario) {
 		this.usuario = usuario;
 	}
 
-	public List<br.com.java.modelo.User> getUsuarios() {
+	public List<UsuarioSistema> getUsuarios() {
 		return usuarios;
 	}
 
-	public void setUsuarios(List<br.com.java.modelo.User> usuarios) {
+	public void setUsuarios(List<UsuarioSistema> usuarios) {
 		this.usuarios = usuarios;
 	}
 
-//omitido getters and setters
+	// omitido getters and setters
 
 }

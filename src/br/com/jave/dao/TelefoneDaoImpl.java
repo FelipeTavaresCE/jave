@@ -4,46 +4,42 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import br.com.java.modelo.Telefone;
-import br.com.jave.excecoes.ExclusaoNaoPermitidaException;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import br.com.jave.excecoes.ExclusaoNaoPermitidaException;
+import br.com.jave.modelo.Telefone;
+
+@Repository
+@Transactional
 public class TelefoneDaoImpl implements GenericDao<Telefone>{
 
+	@PersistenceContext
 	private EntityManager entityManager;
 	
 	@Override
 	public void gravar(Telefone telefone) throws Exception {
-		entityManager = new EntityManagerFabrica().obterEntityManager();
-		entityManager.getTransaction().begin();
-		entityManager.merge(telefone);
-		entityManager.getTransaction().commit();
-		entityManager.close();
+		entityManager.persist(telefone);
+		entityManager.flush();
 	}
 
 	@Override
 	public void excluir(Telefone telefone) throws Exception, ExclusaoNaoPermitidaException {
-		entityManager = new EntityManagerFabrica().obterEntityManager();
-		Telefone telefoneExcluir;
-		entityManager.getTransaction().begin();
-		telefoneExcluir = entityManager.merge(telefone);
-		entityManager.remove(telefoneExcluir);
-		entityManager.getTransaction().commit();
-		entityManager.close();
+				entityManager.remove(telefone);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Telefone> listarTodos() throws Exception {
-		entityManager = new EntityManagerFabrica().obterEntityManager();
 		Query query = entityManager.createNamedQuery("telefoneListarTodos");
 		return query.getResultList();
 	}
 
 	@Override
 	public Telefone pesquisarPorId(Long id) throws Exception, NoResultException {
-		entityManager = new EntityManagerFabrica().obterEntityManager();
 		return entityManager.find(Telefone.class, id);
 	}
 

@@ -2,11 +2,11 @@ package br.com.jave.teste;
 
 import javax.persistence.NoResultException;
 
-import br.com.java.modelo.Endereco;
 import br.com.jave.fachada.EnderecoFachadaImpl;
 import br.com.jave.fachada.Fachada;
 import br.com.jave.fachada.PessoaFachadaImpl;
 import br.com.jave.fachada.UfFachadaImpl;
+import br.com.jave.modelo.Endereco;
 
 
 public class TesteManterEndereco {

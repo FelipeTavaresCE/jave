@@ -5,11 +5,14 @@ import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
+import org.springframework.stereotype.Controller;
+
 import br.com.jave.fachada.UsuarioSistemaFachadaImpl;
 import br.com.jave.util.FacesMessageUtil;
 
 @ManagedBean
 @RequestScoped
+@Controller
 public class UsuarioSistemaMB implements Serializable {
 
 	private static final long serialVersionUID = 1L;

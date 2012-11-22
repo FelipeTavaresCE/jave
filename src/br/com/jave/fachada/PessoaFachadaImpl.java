@@ -4,10 +4,10 @@ import java.util.List;
 
 import javax.persistence.NoResultException;
 
-import br.com.java.modelo.Pessoa;
 import br.com.jave.dao.GenericDao;
 import br.com.jave.dao.PessoaDaoImpl;
 import br.com.jave.excecoes.ExclusaoNaoPermitidaException;
+import br.com.jave.modelo.Pessoa;
 
 public class PessoaFachadaImpl implements Fachada<Pessoa>{
 	

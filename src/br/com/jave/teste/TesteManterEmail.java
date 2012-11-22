@@ -2,12 +2,12 @@ package br.com.jave.teste;
 
 import javax.persistence.NoResultException;
 
-import br.com.java.modelo.Email;
-import br.com.java.modelo.Pessoa;
 import br.com.jave.excecoes.ExclusaoNaoPermitidaException;
 import br.com.jave.fachada.EmailFachadaImpl;
 import br.com.jave.fachada.Fachada;
 import br.com.jave.fachada.PessoaFachadaImpl;
+import br.com.jave.modelo.Email;
+import br.com.jave.modelo.Pessoa;
 
 public class TesteManterEmail {
 

@@ -1,9 +1,9 @@
 package br.com.jave.teste;
 
-import br.com.java.modelo.Uf;
 import br.com.jave.excecoes.ExclusaoNaoPermitidaException;
 import br.com.jave.fachada.Fachada;
 import br.com.jave.fachada.UfFachadaImpl;
+import br.com.jave.modelo.Uf;
 
 public class TesteManterUf {
 	

@@ -4,10 +4,10 @@ import java.util.List;
 
 import javax.persistence.NoResultException;
 
-import br.com.java.modelo.Uf;
 import br.com.jave.dao.GenericDao;
 import br.com.jave.dao.UfDaoImpl;
 import br.com.jave.excecoes.ExclusaoNaoPermitidaException;
+import br.com.jave.modelo.Uf;
 
 public class UfFachadaImpl implements Fachada<Uf>{
 

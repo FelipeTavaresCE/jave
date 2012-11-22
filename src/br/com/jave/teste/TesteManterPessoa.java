@@ -8,17 +8,17 @@ import java.util.List;
 
 import javax.persistence.NoResultException;
 
-import br.com.java.modelo.Email;
-import br.com.java.modelo.Endereco;
-import br.com.java.modelo.Pessoa;
-import br.com.java.modelo.Telefone;
-import br.com.java.modelo.Uf;
 import br.com.jave.dao.GenericDao;
 import br.com.jave.dao.UfDaoImpl;
 import br.com.jave.enums.Sexo;
 import br.com.jave.excecoes.ExclusaoNaoPermitidaException;
 import br.com.jave.fachada.Fachada;
 import br.com.jave.fachada.PessoaFachadaImpl;
+import br.com.jave.modelo.Email;
+import br.com.jave.modelo.Endereco;
+import br.com.jave.modelo.Pessoa;
+import br.com.jave.modelo.Telefone;
+import br.com.jave.modelo.Uf;
 import br.com.jave.util.DataHoraUtil;
 //import org.apache.log4j.BasicConfigurator;
 

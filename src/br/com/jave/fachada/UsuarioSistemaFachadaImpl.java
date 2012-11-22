@@ -4,10 +4,10 @@ import java.util.List;
 
 import javax.persistence.NoResultException;
 
-import br.com.java.modelo.UsuarioSistema;
 import br.com.jave.dao.GenericDao;
 import br.com.jave.dao.UsuarioSistemaDaoImpl;
 import br.com.jave.excecoes.ExclusaoNaoPermitidaException;
+import br.com.jave.modelo.UsuarioSistema;
 
 public class UsuarioSistemaFachadaImpl implements Fachada<UsuarioSistema>{
 

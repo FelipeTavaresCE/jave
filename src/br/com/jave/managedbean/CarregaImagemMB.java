@@ -7,8 +7,8 @@ import javax.faces.bean.ManagedBean;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
-import br.com.java.modelo.Pessoa;
 import br.com.jave.dao.PessoaDaoImpl;
+import br.com.jave.modelo.Pessoa;
 @ManagedBean
 public class CarregaImagemMB {
 
@@ -17,9 +17,9 @@ public class CarregaImagemMB {
     public CarregaImagemMB() {  
         try {
         	
-    		Pessoa pessoa = new PessoaDaoImpl().pesquisarPorId((long)2);    		
-    		ByteArrayInputStream inputStream = new ByteArrayInputStream(pessoa.getFoto());    		
-            fotoGerada = new DefaultStreamedContent(inputStream, "image/jpeg");            
+//    		Pessoa pessoa = new PessoaDaoImpl().pesquisarPorId((long)2);    		
+//    		ByteArrayInputStream inputStream = new ByteArrayInputStream(pessoa.getFoto());    		
+//            fotoGerada = new DefaultStreamedContent(inputStream, "image/jpeg");            
         } catch (Exception e) {  
             e.printStackTrace();
             System.out.println(e.getMessage());

@@ -2,10 +2,10 @@ package br.com.jave.teste;
 
 import javax.persistence.NoResultException;
 
-import br.com.java.modelo.Telefone;
 import br.com.jave.fachada.Fachada;
 import br.com.jave.fachada.PessoaFachadaImpl;
 import br.com.jave.fachada.TelefoneFachadaImpl;
+import br.com.jave.modelo.Telefone;
 
 public class TesteManterTelefone {
 	

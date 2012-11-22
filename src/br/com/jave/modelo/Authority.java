@@ -1,4 +1,4 @@
-package br.com.java.modelo;
+package br.com.jave.modelo;
 
 
 

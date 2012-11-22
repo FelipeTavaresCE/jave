@@ -4,46 +4,42 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import br.com.java.modelo.Endereco;
-import br.com.jave.excecoes.ExclusaoNaoPermitidaException;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import br.com.jave.excecoes.ExclusaoNaoPermitidaException;
+import br.com.jave.modelo.Endereco;
+
+@Repository
+@Transactional
 public class EnderecoDaoImpl implements GenericDao<Endereco>{
 
+	@PersistenceContext
 	private EntityManager entityManager;
 	
 	@Override
 	public void gravar(Endereco endereco) throws Exception {
-		entityManager = new EntityManagerFabrica().obterEntityManager();
-		entityManager.getTransaction().begin();
-		entityManager.merge(endereco);
-		entityManager.getTransaction().commit();
-		entityManager.close();
+		entityManager.persist(endereco);
+		entityManager.flush();
 	}
 
 	@Override
 	public void excluir(Endereco endereco) throws Exception, ExclusaoNaoPermitidaException {
-		entityManager = new EntityManagerFabrica().obterEntityManager();
-		Endereco enderecoRemove;
-		enderecoRemove = entityManager.merge(endereco);
-		entityManager.getTransaction().begin();		
-		entityManager.remove(enderecoRemove);
-		entityManager.getTransaction().commit();
-		entityManager.close();
+			entityManager.remove(endereco);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Endereco> listarTodos() throws Exception {
-		entityManager = new EntityManagerFabrica().obterEntityManager();
 		Query query = entityManager.createNamedQuery("enderecoListarTodos", Endereco.class);
 		return query.getResultList();
 	}
 
 	@Override
 	public Endereco pesquisarPorId(Long id) throws Exception, NoResultException {
-		entityManager = new EntityManagerFabrica().obterEntityManager();
 		return entityManager.find(Endereco.class, id);
 	}
 

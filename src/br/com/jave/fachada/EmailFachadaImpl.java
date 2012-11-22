@@ -4,10 +4,10 @@ import java.util.List;
 
 import javax.persistence.NoResultException;
 
-import br.com.java.modelo.Email;
 import br.com.jave.dao.EmailDaoImpl;
 import br.com.jave.dao.GenericDao;
 import br.com.jave.excecoes.ExclusaoNaoPermitidaException;
+import br.com.jave.modelo.Email;
 
 public class EmailFachadaImpl implements Fachada<Email>{
 	

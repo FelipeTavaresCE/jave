@@ -4,10 +4,10 @@ import java.util.List;
 
 import javax.persistence.NoResultException;
 
-import br.com.java.modelo.Telefone;
 import br.com.jave.dao.GenericDao;
 import br.com.jave.dao.TelefoneDaoImpl;
 import br.com.jave.excecoes.ExclusaoNaoPermitidaException;
+import br.com.jave.modelo.Telefone;
 
 public class TelefoneFachadaImpl implements Fachada<Telefone>{
 	

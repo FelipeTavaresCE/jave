@@ -11,12 +11,12 @@
   	<div id="menu-conteiner">
 		<p:menubar autoDisplay="true">
 	        <p:submenu label="Cadastro" icon="ui-icon-folder-open">  
-	            <p:menuitem value="Cliente" url="cliente.xhtml" />  
+	            <p:menuitem value="Cliente" url="/pages/cliente.xhtml" />  
 	            <p:menuitem value="Usuário do Sistema" url="#" />  
 	            <p:menuitem value="Produto" url="#" />  
 	            <p:menuitem value="Estoque" url="#" />
 	            <p:menuitem value="Operador de Caixa" url="#" />
-	            <p:menuitem value="Unidade Federativa" url="uf.xhtml" />
+	            <p:menuitem value="Unidade Federativa" url="/pages/uf.xhtml" />
 	        </p:submenu> 	
 	        <p:submenu label="Venda" icon="ui-icon-cart">  
 	            <p:menuitem value="Cancelar Venda" url="#" />  
@@ -32,7 +32,7 @@
 	        </p:submenu> 	
 		</p:menubar>
 		<div id="menu-usuario-dados">
-			<span id="menu-nome-usuario-sistema"><h:outputLabel value="#{usuarioController.usuario.username}"></h:outputLabel></span>
+			<span id="menu-nome-usuario-sistema"><h:outputLabel value="#{usuarioController.usuario.login}"></h:outputLabel></span>
 			<span id="menu-icone-sair">
 				<p:commandLink onclick="confirmation.show()">  
 					<p:graphicImage value="/icones/sair.png" title="Sair do Sistema"/>

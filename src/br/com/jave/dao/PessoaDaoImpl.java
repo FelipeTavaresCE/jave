@@ -4,21 +4,25 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import br.com.java.modelo.Pessoa;
-import br.com.jave.excecoes.ExclusaoNaoPermitidaException;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import br.com.jave.excecoes.ExclusaoNaoPermitidaException;
+import br.com.jave.modelo.Pessoa;
+
+@Repository
+@Transactional
 public class PessoaDaoImpl implements GenericDao<Pessoa>{
 
+	@PersistenceContext
 	private EntityManager entityManager;
 	
 	public void gravar(Pessoa pessoa){
-		entityManager = new EntityManagerFabrica().obterEntityManager();
-		entityManager.getTransaction().begin();
-		entityManager.merge(pessoa);
-		entityManager.getTransaction().commit();
-		entityManager.close();		
+		entityManager.persist(pessoa);
+		entityManager.flush();
 	}	
 	
 	public void excluir(Pessoa pessoa)throws Exception, ExclusaoNaoPermitidaException{
@@ -27,13 +31,11 @@ public class PessoaDaoImpl implements GenericDao<Pessoa>{
 	
 	@SuppressWarnings("unchecked")
 	public List<Pessoa> listarTodos(){
-		entityManager = new EntityManagerFabrica().obterEntityManager();
 		Query query = entityManager.createNamedQuery("pessoaListarTodos");
 		return query.getResultList();
 	}
 	
 	public Pessoa pesquisarPorId(Long id)throws NoResultException{
-		entityManager = new EntityManagerFabrica().obterEntityManager();
 		return entityManager.find(Pessoa.class, id);
 	}
 

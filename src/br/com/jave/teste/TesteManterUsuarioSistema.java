@@ -2,11 +2,11 @@ package br.com.jave.teste;
 
 import javax.persistence.NoResultException;
 
-import br.com.java.modelo.UsuarioSistema;
 import br.com.jave.dao.PessoaDaoImpl;
 import br.com.jave.dao.UsuarioSistemaDaoImpl;
 import br.com.jave.excecoes.ExclusaoNaoPermitidaException;
 import br.com.jave.fachada.UsuarioSistemaFachadaImpl;
+import br.com.jave.modelo.UsuarioSistema;
 
 public class TesteManterUsuarioSistema {
 	

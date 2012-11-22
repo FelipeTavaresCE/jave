@@ -7,23 +7,36 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.persistence.NoResultException;
 
-import br.com.java.modelo.Uf;
-import br.com.jave.dao.GenericDao;
-import br.com.jave.dao.UfDaoImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
+import br.com.jave.dao.UfDao;
+import br.com.jave.modelo.Uf;
 import br.com.jave.util.FacesMessageUtil;
 
-@SuppressWarnings("serial")
+
+@Controller
 @ManagedBean
 @ViewScoped
 public class UfMB implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Uf uf = new Uf();
-	private GenericDao<Uf> ufDao = new UfDaoImpl();
+	private UfDao ufDao;
 	private List<Uf> ufLista;
 	private Uf ufSelecionada;
 	
-	public UfMB(){
+	@Autowired
+	public UfMB(UfDao dao){
+		ufDao = dao;
 		listarUfs();
+	}
+	
+	public UfMB(){
+		
 	}
 
 	public void salvar(){
@@ -58,6 +71,15 @@ public class UfMB implements Serializable{
 		return ufLista;
 	}
 	
+	
+	public UfDao getUfDao() {
+		return ufDao;
+	}
+
+	public void setUfDao(UfDao ufDao) {
+		this.ufDao = ufDao;
+	}
+
 	public Uf getUf() {
 		return uf;
 	}
