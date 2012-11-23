@@ -1,14 +1,14 @@
 package br.com.jave.managedbean;
 
-import java.io.ByteArrayInputStream;
+//import java.io.ByteArrayInputStream;
 
 import javax.faces.bean.ManagedBean;
 
-import org.primefaces.model.DefaultStreamedContent;
+//import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
-import br.com.jave.dao.PessoaDaoImpl;
-import br.com.jave.modelo.Pessoa;
+//import br.com.jave.dao.PessoaDaoImpl;
+//import br.com.jave.modelo.Pessoa;
 @ManagedBean
 public class CarregaImagemMB {
 

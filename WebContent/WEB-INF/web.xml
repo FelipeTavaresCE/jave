@@ -103,6 +103,6 @@
   </servlet-mapping>
   
   <welcome-file-list>
-    <welcome-file>inicial.xhtml</welcome-file>
+    <welcome-file>/pages/inicial.xhtml</welcome-file>
   </welcome-file-list>
 </web-app>

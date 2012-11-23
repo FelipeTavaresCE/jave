@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +27,7 @@ public class UfDaoImpl implements UfDao, Serializable{
 	
 	@Override
 	public void gravar(Uf uf) throws Exception {
-		entityManager.persist(uf);
+		entityManager.merge(uf);
 		entityManager.flush();
 	}
 
