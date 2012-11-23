@@ -4,13 +4,12 @@
   xmlns:f="http://java.sun.com/jsf/core" 
   xmlns:ui="http://java.sun.com/jsf/facelets"
   xmlns:p="http://primefaces.org/ui"
-  xmlns:sec= "http://www.springframework.org/security/tags"
-  >
+  xmlns:sec= "http://www.springframework.org/security/tags">
   
-  <h:form>
+<h:form>
   	<div id="menu-conteiner">
 		<p:menubar autoDisplay="true">
-	        <p:submenu label="Cadastro" icon="ui-icon-folder-open">  
+	        <p:submenu label="Cadastro" icon="ui-icon-folder-open">
 	            <p:menuitem value="Cliente" url="/pages/cliente.xhtml" />  
 	            <p:menuitem value="Usuário do Sistema" url="#" />  
 	            <p:menuitem value="Produto" url="#" />  
@@ -29,7 +28,13 @@
 	            <p:menuitem value="Vendas Por Período" url="#" />
 	            <p:menuitem value="Vendas Por Operador" url="#" />
 	            <p:menuitem value="Produtos em Falta" url="#" />
-	        </p:submenu> 	
+	        </p:submenu>
+	        <p:submenu label="Configurações" icon="ui-icon-wrench">  
+	            <p:menuitem value="Logomarca" url="logomarca.xhtml" />
+	            <p:menuitem value="Tema" url="#" />
+	            <p:menuitem value="Nome da Loja" url="#" />
+	        </p:submenu>
+	        
 		</p:menubar>
 		<div id="menu-usuario-dados">
 			<span id="menu-nome-usuario-sistema"><h:outputLabel value="#{usuarioController.usuario.login}"></h:outputLabel></span>
@@ -52,5 +57,5 @@
 	    </p:confirmDialog>		
 		
 	</div>
-  </h:form>  
+</h:form>  
 </ui:fragment>

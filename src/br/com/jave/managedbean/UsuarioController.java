@@ -1,5 +1,6 @@
 package br.com.jave.managedbean;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -14,7 +15,9 @@ import br.com.jave.modelo.UsuarioSistema;
 
 @ManagedBean
 @SessionScoped
-public class UsuarioController {
+public class UsuarioController implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private UsuarioSistema usuario;
 	private List<UsuarioSistema> usuarios;

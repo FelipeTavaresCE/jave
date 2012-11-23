@@ -22,7 +22,7 @@
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	
     <http auto-config="true" access-denied-page="/login.xhtml" use-expressions="true"> 
-		<intercept-url pattern="/pages/inicial.xhtml" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="inicial.xhtml" access="hasRole('ROLE_ADMIN')" />
 		
        <!-- "isAuthenticated()" que diz que todas as páginas que estão dentro desse pacote só serão acessadas se o usuário tiver autenticado...
 		    Caso alguem tente acessar mudando a url que é o teu caso, ele não vai conseguir e será redirecionada para a página de login conforme foi definido na tag access-denied-page="/login.xhtml"-->
