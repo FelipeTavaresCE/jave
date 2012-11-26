@@ -13,26 +13,26 @@
 	<p:tabView id="tabView">  
 	  
 	    <p:tab id="cliente-tab-dados-pessoais" title="Dados Pessoais">  
-	        <h:panelGrid columns="2" cellpadding="10">
+	        <h:panelGrid columns="2">
 	          
 	            <h:outputText value="Nome.: "/>
-	            <p:inputText id="nome" value="" styleClass="elemento-form"/>
-	            
+	            <p:inputText id="nome" value="" styleClass="elemento-form-input largura250"/>
+
 	            <h:outputText value="Tipo Pessoa.: " />
-	            <p:selectOneMenu id="tipo-pessoa" value="" styleClass="elemento-form">
+	            <p:selectOneMenu id="tipo-pessoa" value="" styleClass="elemento-form-input">
 	            	<f:selectItem  itemValue="" itemLabel="Selecione..."/>
 	            	<f:selectItem  itemValue="FISICA" itemLabel="Fisica"/>
-	            	<f:selectItem  itemValue="FISICA" itemLabel="Fisica"/>
+	            	<f:selectItem  itemValue="JURIDICA" itemLabel="Juridica"/>
 	            </p:selectOneMenu>
 
 	            <h:outputText value="CPF.: "/>
-	            <p:inputText id="cpf" value="" styleClass="elemento-form"/>
+	            <p:inputMask id="cpf" value="" styleClass="elemento-form-input largura80" mask="999.999.999-99"/>
 
 	            <h:outputText value="CNPJ.:"/>
-	            <p:inputText id="cnpj" value="" styleClass="elemento-form"/>
+	            <p:inputMask id="cnpj" value="" styleClass="elemento-form-input largura100" mask="99.999.999/9999-99" />
 
 	            <h:outputText value="Nascimento.: "/>
-	            <p:inputText id="data-nascimento" value="" styleClass="elemento-form"/>
+	            <p:inputMask id="data-nascimento" value="" styleClass="elemento-form" mask="99/99/9999"/>
 	            
 	            <h:outputText value="Sexo.: "/>
 	            <p:inputText id="sexo" value="" styleClass="elemento-form"/>

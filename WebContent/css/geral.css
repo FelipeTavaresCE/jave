@@ -49,6 +49,14 @@
 	text-transform: uppercase;
 }
 
+.largura80{
+	width: 80px;
+}
+
+.largura100{
+	width: 100px;
+}
+
 .largura250{
 	width: 250px;
 }
