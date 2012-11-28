@@ -28,6 +28,11 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
   
+	<filter>
+	    <filter-name>PrimeFaces FileUpload Filter</filter-name>
+		<filter-class> org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+	</filter>  
+  
   <listener>
     <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
   </listener>
@@ -63,6 +68,11 @@
     <filter-name>oemiv</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+
+    <filter-mapping>
+       <filter-name>PrimeFaces FileUpload Filter</filter-name>
+       <servlet-name>Faces Servlet</servlet-name>
+   </filter-mapping> 
   
   <context-param>
     <param-name>javax.faces.CONFIG_FILES</param-name>
