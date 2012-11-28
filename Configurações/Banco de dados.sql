@@ -119,7 +119,7 @@ CREATE TABLE tb_pessoa (
     cnpj varchar(14),
     cpf varchar(11),
     datacadastro timestamp without time zone,
-    datanascimento timestamp without time zone,
+    datanascimento date,
     nome varchar(100),
     sexo varchar(10),
     foto bytea

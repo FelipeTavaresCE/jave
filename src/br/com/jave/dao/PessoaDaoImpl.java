@@ -15,13 +15,13 @@ import br.com.jave.modelo.Pessoa;
 
 @Repository
 @Transactional
-public class PessoaDaoImpl implements GenericDao<Pessoa>{
+public class PessoaDaoImpl implements PessoaDao{
 
 	@PersistenceContext
 	private EntityManager entityManager;
 	
 	public void gravar(Pessoa pessoa){
-		entityManager.persist(pessoa);
+		entityManager.merge(pessoa);
 		entityManager.flush();
 	}	
 	

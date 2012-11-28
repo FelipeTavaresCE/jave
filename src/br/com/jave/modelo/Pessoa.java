@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -18,6 +19,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import br.com.jave.enums.Sexo;
@@ -37,13 +40,15 @@ public class Pessoa implements Serializable{
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id_pessoa")
 	private Long id;
 	private String nome;
+	@Temporal(TemporalType.DATE)
+	@Column(name = "datanascimento")
 	private Date dataNascimento;
-	
-	//@OneToOne
 	@Enumerated(EnumType.STRING)
 	private Sexo sexo;
 	private String cpf;
 	private String cnpj;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "datacadastro")
 	private Date dataCadastro;
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "pessoa_id")
@@ -54,8 +59,13 @@ public class Pessoa implements Serializable{
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "pessoa_id")	
 	private List<Email> emails;
-	//@Lob
-	private byte[] foto; 
+	private byte[] foto;
+	
+	public Pessoa(){
+		this.dataCadastro = new Date();
+	}
+	
+	/*Metodos Get e Set*/
 	
 	public Long getId() {
 		return id;
@@ -67,7 +77,7 @@ public class Pessoa implements Serializable{
 		return nome;
 	}
 	public void setNome(String nome) {
-		this.nome = nome;
+		this.nome = nome.toUpperCase();
 	}
 	public Date getDataNascimento() {
 		return dataNascimento;
