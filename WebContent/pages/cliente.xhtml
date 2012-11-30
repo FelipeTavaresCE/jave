@@ -11,49 +11,85 @@
   	<ui:param name="pagina-titulo" value="Cadastro de Cliente" />
 	<h:form id="form-geral">
 	
-	<p:tabView id="tabView">  
+	<p:tabView id="tab">  
 	  
-	    <p:tab id="cliente-tab-dados-pessoais" title="Dados Pessoais">  
+	    <p:tab id="tab-dados-pessoais" title="Dados Pessoais">  
 	        <h:panelGrid columns="2">
 	          
 	            <h:outputText value="Nome.: "/>
-	            <p:inputText value="#{pessoaMB.pessoa.nome}" id="nome" styleClass="elemento-form-input largura250"/>
+	            <p:inputText value="#{clienteMB.pessoa.nome}" id="nome" styleClass="elemento-form-input largura250"/>
 
-<!-- 	            <h:outputText value="Tipo Pessoa.: " />
-	            <p:selectOneMenu value="" id="tipo-pessoa" styleClass="elemento-form-input">
-	            	<f:selectItem  itemValue="" itemLabel="Selecione..."/>
-	            	<f:selectItem  itemValue="FISICA" itemLabel="Fisica"/>
-	            	<f:selectItem  itemValue="JURIDICA" itemLabel="Juridica"/>
-	            </p:selectOneMenu>
- -->
 	            <h:outputText value="CPF.: "/>
-	            <p:inputMask value="#{pessoaMB.pessoa.cpf}" id="cpf" styleClass="elemento-form-input largura80" mask="99999999999"/>
+	            <p:inputMask value="#{clienteMB.pessoa.cpf}" id="cpf" styleClass="elemento-form-input largura80" mask="99999999999"/>
 
 	            <h:outputText value="CNPJ.:"/>
-	            <p:inputMask value="#{pessoaMB.pessoa.cnpj}" id="cnpj" styleClass="elemento-form-input largura100" mask="99999999999999" />
+	            <p:inputMask value="#{clienteMB.pessoa.cnpj}" id="cnpj" styleClass="elemento-form-input largura100" mask="99999999999999" />
 
 	            <h:outputText value="Nascimento.: "/>
-	            <p:inputMask value="#{pessoaMB.pessoa.dataNascimento}" id="data-nascimento" styleClass="elemento-form-input largura65" mask="99/99/9999" />
+	            <p:inputMask value="#{clienteMB.pessoa.dataNascimento}" id="data-nascimento" styleClass="elemento-form-input largura65" mask="99/99/9999" />
 	            
 	            <h:outputText value="Sexo.: "/>
-	            <p:selectOneMenu value="#{pessoaMB.pessoa.sexo}" id="sexo" styleClass="elemento-form-input">
-	            	<f:selectItems  value="#{pessoaMB.sexo}" var="sexo" itemLabel="#{sexo.toString()}" itemValue="#{sexo}"/>
+	            <p:selectOneMenu value="#{clienteMB.pessoa.sexo}" id="sexo" styleClass="elemento-form-input">
+	            	<f:selectItems  value="#{clienteMB.sexo}" var="sexo" itemLabel="#{sexo.toString()}" itemValue="#{sexo}"/>
 	            </p:selectOneMenu>
 	            
 	            <h:outputText value="Data Cadastro.: "/>
-	            <p:inputText value="#{pessoaMB.pessoa.dataCadastro}" id="data-cadastro" disabled="true" styleClass="elemento-form-input largura65" />
+	            <p:inputText value="#{clienteMB.pessoa.dataCadastro}" id="data-cadastro" disabled="true" styleClass="elemento-form-input largura65" />
 	            
 	            <h:panelGroup></h:panelGroup>
-	            <p:commandButton value="Gravar" icon="ui-icon-disk" actionListener="#{pessoaMB.gravar}" update="mensagens" />
+	            <p:commandButton value="Gravar" icon="ui-icon-disk" actionListener="#{clienteMB.gravar}" update=":form-geral mensagens" />
 	            
 	            <p:growl id="mensagens"/>
 
 	        </h:panelGrid>
+	        
 	    </p:tab>  
 	  
-	    <p:tab id="tab2" title="Endereço">  
-	        <h:panelGrid columns="2" cellpadding="10">  
-	        </h:panelGrid>  
+	    <p:tab id="tab-enderecos" title="Endereço">
+	    	<p:panel id="form-novo-endereco">
+			<table>
+				<tr>
+					<td>Rua</td><td>Número</td><td>Bairro</td><td>CEP</td><td>Cidade</td><td></td>
+				</tr>
+				<tr>
+					<td><p:inputText id="rua" value="#{clienteMB.endereco.rua}" styleClass=""/></td>
+					<td><p:inputText id="numero" value="#{clienteMB.endereco.numero}" styleClass=""/></td>
+					<td><p:inputText id="bairro" value="#{clienteMB.endereco.bairro}" styleClass=""/></td>
+					<td><p:inputText id="cep" value="#{clienteMB.endereco.cep}" styleClass=""/></td>
+					<td><p:inputText id="cidade" value="#{clienteMB.endereco.cidade}" styleClass=""/></td>
+<!-- 					<td><p:inputText id="estado" value="" styleClass=""/></td> -->
+<!-- 					<td><p:inputText id="uf" value="" styleClass=""/></td> -->
+					<td><p:commandButton value="Adicionar" icon="ui-icon-check" actionListener="#{clienteMB.adicionarEndereco}" ajax="true" update="form-novo-endereco"/></td>
+				</tr>
+			</table>
+			</p:panel>
+	    	<br />
+	        <h:panelGrid columns="2">
+	        	<p:dataTable id="enderecos" var="endereco" value="#{clienteMB.pessoa.enderecos}" emptyMessage="Nenhum endereço cadastro">
+	        		<p:column headerText="Rua">
+	        			<h:outputText value="#{endereco.rua}" />
+	        		</p:column>
+	        		<p:column headerText="Número">
+	        			<h:outputText value="#{endereco.numero}" />
+	        		</p:column>
+	        		<p:column headerText="Bairro">
+	        			<h:outputText value="#{endereco.bairro}" />
+	        		</p:column>
+	        		<p:column headerText="CEP">
+	        			<h:outputText value="#{endereco.cep}" />
+	        		</p:column>
+	        		<p:column headerText="Cidade">
+	        			<h:outputText value="#{endereco.cidade}" />
+	        		</p:column>
+	        		<p:column headerText="Estado">
+	        			<h:outputText value="#{endereco.uf.nome}" />
+	        		</p:column>
+	        		<p:column headerText="UF">
+	        			<h:outputText value="#{endereco.uf.sigla}" />
+	        		</p:column>
+	        	</p:dataTable>
+	        
+	        </h:panelGrid>
 	    </p:tab>  
 	  
 	    <p:tab id="tab3" title="Contatos">  
@@ -61,7 +97,36 @@
 	        </h:panelGrid>  
 	    </p:tab>  
 	  
-	</p:tabView> 		
+	</p:tabView>
+	<br />
+	<p:dataTable var="pessoa" value="#{clienteMB.pessoasListagem}" emptyMessage="Nenhum registro encontrado" style="width: 100%;"
+	   paginator="true" rows="10"
+	   paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+	   rowKey="#{pessoa}" selection="#{clienteMB.pessoaSelecionada}" selectionMode="single" paginatorPosition="bottom"
+	   rowsPerPageTemplate="5,10,15,20,25,30,40,50">
+		<p:ajax event="rowSelect" listener="#{clienteMB.prepararEdicao()}" update=":form-geral" />
+						
+		<p:column headerText="Nome" width="150">
+			<h:outputText value="#{pessoa.nome}" />
+		</p:column>  				
+		<p:column headerText="CPF">
+			<h:outputText value="#{pessoa.cpf}" />
+		</p:column>				
+		<p:column headerText="CNPJ">
+			<h:outputText value="#{pessoa.cnpj}" />
+		</p:column>				
+		<p:column headerText="Sexo">
+			<h:outputText value="#{pessoa.sexo}" />
+		</p:column>				
+		<p:column headerText="Nascimento">
+			<h:outputText value="#{pessoa.dataNascimento}" />
+		</p:column>				
+		<p:column headerText="Data Cadastro">
+			<h:outputText value="#{pessoa.dataCadastro}" />
+		</p:column>								
+	</p:dataTable>
+
+	
     </h:form>
   </ui:define>
 </ui:composition>

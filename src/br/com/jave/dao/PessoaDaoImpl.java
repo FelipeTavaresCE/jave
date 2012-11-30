@@ -20,6 +20,7 @@ public class PessoaDaoImpl implements PessoaDao{
 	@PersistenceContext
 	private EntityManager entityManager;
 	
+	@Transactional
 	public void gravar(Pessoa pessoa){
 		entityManager.merge(pessoa);
 		entityManager.flush();

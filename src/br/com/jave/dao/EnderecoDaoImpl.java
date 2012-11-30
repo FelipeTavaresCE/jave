@@ -15,14 +15,14 @@ import br.com.jave.modelo.Endereco;
 
 @Repository
 @Transactional
-public class EnderecoDaoImpl implements GenericDao<Endereco>{
+public class EnderecoDaoImpl implements EnderecoDao{
 
 	@PersistenceContext
 	private EntityManager entityManager;
 	
 	@Override
 	public void gravar(Endereco endereco) throws Exception {
-		entityManager.persist(endereco);
+		entityManager.merge(endereco);
 		entityManager.flush();
 	}
 
