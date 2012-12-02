@@ -52,7 +52,7 @@
 			<b:props>
 				<b:prop key="hibernate.format_sql">true</b:prop>
 				<b:prop key="hibernate.default_schema">public</b:prop>
-				<b:prop key="hibernate.hbm2ddl.auto">update</b:prop> <!-- create | create-drop | validate | update -->
+				<!-- <b:prop key="hibernate.hbm2ddl.auto">update</b:prop> --> <!-- create | create-drop | validate | update -->
 				<b:prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</b:prop>
 			</b:props>
 		</b:property>

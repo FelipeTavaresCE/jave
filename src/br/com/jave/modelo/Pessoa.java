@@ -39,26 +39,34 @@ public class Pessoa implements Serializable{
 	@SequenceGenerator(name = "seq_id_pessoa", sequenceName = "seq_id_pessoa", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id_pessoa")
 	private Long id;
+	
 	private String nome;
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "datanascimento")
 	private Date dataNascimento;
+	
 	@Enumerated(EnumType.STRING)
 	private Sexo sexo;
+	
 	private String cpf;
 	private String cnpj;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "datacadastro")
 	private Date dataCadastro;
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "pessoa_id")
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="pessoa")
 	private List<Endereco> enderecos;
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "pessoa_id")
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="pessoa")
+	//@JoinColumn(name = "pessoa_id")
 	private List<Telefone> contatos;
+	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "pessoa_id")	
 	private List<Email> emails;
+	
 	private byte[] foto;
 	
 	public Pessoa(){

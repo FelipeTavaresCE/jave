@@ -2,10 +2,12 @@ package br.com.jave.modelo;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -24,15 +26,25 @@ public class Endereco implements Serializable{
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id_endereco")
 	private Long id;
 	private String rua;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	private Integer numero;
 	private String bairro;
 	private String cep;
 	private String cidade;
+	
 	@OneToOne
+	@JoinColumn(name="uf_id")
 	private Uf uf;
+	
+	@Column(name = "ponto_de_referencia")
 	private String pontoDeReferencia; 
-	private String complemento;	
+	private String complemento;
+	
 	@ManyToOne
+	@JoinColumn(name="pessoa_id")
 	private Pessoa pessoa;
 	
 	public Long getId() {
@@ -45,7 +57,7 @@ public class Endereco implements Serializable{
 		return rua;
 	}
 	public void setRua(String rua) {
-		this.rua = rua;
+		this.rua = rua.toUpperCase();
 	}
 	public Integer getNumero() {
 		return numero;
@@ -57,7 +69,7 @@ public class Endereco implements Serializable{
 		return bairro;
 	}
 	public void setBairro(String bairro) {
-		this.bairro = bairro;
+		this.bairro = bairro.toUpperCase();
 	}
 	public String getCep() {
 		return cep;
@@ -69,7 +81,7 @@ public class Endereco implements Serializable{
 		return cidade;
 	}
 	public void setCidade(String cidade) {
-		this.cidade = cidade;
+		this.cidade = cidade.toUpperCase();
 	}
 	public Uf getUf() {
 		return uf;
@@ -81,13 +93,13 @@ public class Endereco implements Serializable{
 		return pontoDeReferencia;
 	}
 	public void setPontoDeReferencia(String pontoDeReferencia) {
-		this.pontoDeReferencia = pontoDeReferencia;
+		this.pontoDeReferencia = pontoDeReferencia.toUpperCase();
 	}
 	public String getComplemento() {
 		return complemento;
 	}
 	public void setComplemento(String complemento) {
-		this.complemento = complemento;
+		this.complemento = complemento.toUpperCase();
 	}
 	public Pessoa getPessoa() {
 		return pessoa;

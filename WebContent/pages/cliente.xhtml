@@ -55,19 +55,30 @@
 					<td><p:inputText id="rua" value="#{clienteMB.endereco.rua}" styleClass=""/></td>
 					<td><p:inputText id="numero" value="#{clienteMB.endereco.numero}" styleClass=""/></td>
 					<td><p:inputText id="bairro" value="#{clienteMB.endereco.bairro}" styleClass=""/></td>
-					<td><p:inputText id="cep" value="#{clienteMB.endereco.cep}" styleClass=""/></td>
+					<td><p:inputMask id="cep" value="#{clienteMB.endereco.cep}" styleClass="" mask="99999999" /></td>
 					<td><p:inputText id="cidade" value="#{clienteMB.endereco.cidade}" styleClass=""/></td>
 <!-- 					<td><p:inputText id="estado" value="" styleClass=""/></td> -->
 <!-- 					<td><p:inputText id="uf" value="" styleClass=""/></td> -->
-					<td><p:commandButton value="Adicionar" icon="ui-icon-check" actionListener="#{clienteMB.adicionarEndereco}" ajax="true" update="form-novo-endereco"/></td>
+					<td><p:commandButton id="add-endereco" value="Adicionar" icon="ui-icon-check" actionListener="#{clienteMB.adicionarEndereco}" ajax="true" update="form-novo-endereco"/></td>
 				</tr>
 			</table>
 			</p:panel>
 	    	<br />
 	        <h:panelGrid columns="2">
-	        	<p:dataTable id="enderecos" var="endereco" value="#{clienteMB.pessoa.enderecos}" emptyMessage="Nenhum endereço cadastro">
+	        	<p:dataTable id="enderecos" var="endereco" value="#{clienteMB.pessoa.enderecos}"
+	        	emptyMessage="Nenhum endereço cadastro" editable="true">
+	        	
+	        		<p:ajax event="rowEdit" listener="#{clienteMB.editarEndereco}" update=":form-geral:tab:mensagens" /> 
+	        		
 	        		<p:column headerText="Rua">
-	        			<h:outputText value="#{endereco.rua}" />
+	        			<p:cellEditor>
+	        				<f:facet name="output">
+	        					<h:outputText value="#{endereco.rua}" />
+	        				</f:facet>
+	        				<f:facet name="input">
+	        					<h:inputText value="#{endereco.rua}" />
+	        				</f:facet>
+	        			</p:cellEditor>
 	        		</p:column>
 	        		<p:column headerText="Número">
 	        			<h:outputText value="#{endereco.numero}" />
@@ -87,6 +98,11 @@
 	        		<p:column headerText="UF">
 	        			<h:outputText value="#{endereco.uf.sigla}" />
 	        		</p:column>
+	        		
+	        		<p:column headerText="Operações">
+	        			<p:rowEditor />
+	        		</p:column>
+	        		
 	        	</p:dataTable>
 	        
 	        </h:panelGrid>

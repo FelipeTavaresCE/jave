@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.persistence.NoResultException;
 
+import org.primefaces.event.RowEditEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -32,7 +33,7 @@ public class ClienteMB implements Serializable{
 	private List<Endereco> enderecos = new ArrayList<Endereco>();
 	private List<Pessoa> pessoasListagem;
 	private Pessoa pessoaSelecionada;
-	private List sexo;
+	private List<Sexo> sexo;
 	
 	public ClienteMB(){}
 	
@@ -47,13 +48,15 @@ public class ClienteMB implements Serializable{
 	public void gravar(){
 		try {			
 			pessoa.setEnderecos(enderecos);
-			pessoaDao.gravar(this.pessoa);			
-			this.pessoa = new Pessoa();
-			this.pessoaSelecionada = null;
+			pessoaDao.gravar(this.pessoa);
+			this.pessoa            = new Pessoa();
+			this.pessoaSelecionada = new Pessoa();
+			this.enderecos         = new ArrayList<Endereco>();
+			this.endereco          = new Endereco();
 			listarPessoas();
 			FacesMessageUtil.mensagem("Cliente Gravado com sucesso.");
 		} catch (Exception e) {
-			FacesMessageUtil.erro("Ocorreu um erro ao gravar o cliente." + e.getMessage());
+			FacesMessageUtil.erro("Ocorreu um erro ao gravar o cliente.\n" + e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -79,8 +82,20 @@ public class ClienteMB implements Serializable{
 	}
 	
 	public void adicionarEndereco(){
-		this.enderecos.add(endereco);
+		this.endereco.setPessoa(pessoa);
+		this.enderecos.add(this.endereco);
 		this.endereco = new Endereco();
+	}
+	
+	public void editarEndereco(RowEditEvent event){
+		Endereco enderecoEditado = (Endereco)event.getObject();
+		FacesMessageUtil.mensagem("Registro Editado com sucesso: " + enderecoEditado.getRua());
+		try {
+			enderecoDao.gravar(enderecoEditado);
+		} catch (Exception e) {
+			FacesMessageUtil.erro("Erro ao gravar o endere�o." + e.getMessage());
+			e.printStackTrace();
+		}		
 	}
 
 	public Pessoa getPessoa() {
@@ -95,11 +110,11 @@ public class ClienteMB implements Serializable{
 		return serialVersionUID;
 	}
 	
-	public List getSexo() {
+	public List<Sexo> getSexo() {
 		return sexo;
 	}
 
-	public void setSexo(List sexo) {
+	public void setSexo(List<Sexo> sexo) {
 		this.sexo = sexo;
 	}
 

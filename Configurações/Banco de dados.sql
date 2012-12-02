@@ -59,7 +59,7 @@ DROP TABLE IF EXISTS tb_telefone;
 
 CREATE TABLE tb_telefone (
     id bigint NOT NULL,
-    codigodearea varchar(3),
+    codigo_de_area varchar(3),
     numero varchar(10),
     pessoa_id bigint
 );
@@ -72,7 +72,7 @@ CREATE TABLE tb_email (
     pessoa_id bigint
 );
 
-DROP TABLE IF EXISTS tb_endereco;
+DROP TABLE IF EXISTS tb_endereco cascade;
 
 CREATE TABLE tb_endereco (
     id bigint NOT NULL,
@@ -81,7 +81,7 @@ CREATE TABLE tb_endereco (
     cidade varchar(100),
     complemento varchar(255),
     numero integer,
-    pontodereferencia varchar(255),
+    ponto_de_referencia varchar(255),
     rua varchar(100),
     pessoa_id bigint,
     uf_id bigint

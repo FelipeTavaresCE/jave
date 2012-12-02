@@ -2,10 +2,12 @@ package br.com.jave.modelo;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
@@ -22,9 +24,11 @@ public class Telefone implements Serializable{
 	@SequenceGenerator(name = "seq_id_telefone", sequenceName = "seq_id_telefone", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id_telefone")
 	private Long id;
+	@Column(name = "codigo_de_area")
 	private String codigoDeArea;
 	private String numero;
 	@ManyToOne
+	@JoinColumn(name = "pessoa_id")
 	private Pessoa pessoa;	
 	
 	public Long getId() {
