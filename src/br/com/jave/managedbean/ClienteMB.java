@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 import javax.persistence.NoResultException;
 
 import org.primefaces.event.RowEditEvent;
@@ -15,34 +15,49 @@ import org.springframework.stereotype.Controller;
 
 import br.com.jave.dao.EnderecoDao;
 import br.com.jave.dao.PessoaDao;
+import br.com.jave.dao.UfDao;
 import br.com.jave.enums.Sexo;
 import br.com.jave.modelo.Endereco;
 import br.com.jave.modelo.Pessoa;
+import br.com.jave.modelo.Uf;
 import br.com.jave.util.FacesMessageUtil;
 
 @Controller
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class ClienteMB implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private PessoaDao pessoaDao;
 	private EnderecoDao enderecoDao;
+	private UfDao ufDao;
 	private Pessoa pessoa = new Pessoa();
 	private Endereco endereco = new Endereco();
 	private List<Endereco> enderecos = new ArrayList<Endereco>();
 	private List<Pessoa> pessoasListagem;
-	private Pessoa pessoaSelecionada;
 	private List<Sexo> sexo;
+	private List<Uf> ufListagem;
+	private Pessoa pessoaSelecionada;
+	private Endereco enderecoParaExcluir;
 	
 	public ClienteMB(){}
 	
 	@Autowired
-	public ClienteMB(PessoaDao pessoaDao, EnderecoDao enderecoDao){
+	public ClienteMB(PessoaDao pessoaDao, EnderecoDao enderecoDao, UfDao ufDao){
 		this.pessoaDao = pessoaDao;
 		this.enderecoDao = enderecoDao;
+		this.ufDao = ufDao;
 		this.sexo = Arrays.asList(Sexo.values());
 		listarPessoas();
+		carregaUfs();
+	}
+	
+	public void carregaUfs(){
+		try {
+			this.ufListagem = ufDao.listarTodos();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
 	}
 	
 	public void gravar(){
@@ -89,13 +104,20 @@ public class ClienteMB implements Serializable{
 	
 	public void editarEndereco(RowEditEvent event){
 		Endereco enderecoEditado = (Endereco)event.getObject();
-		FacesMessageUtil.mensagem("Registro Editado com sucesso: " + enderecoEditado.getRua());
+		FacesMessageUtil.mensagem("Endereço alterado com sucesso!");
 		try {
 			enderecoDao.gravar(enderecoEditado);
 		} catch (Exception e) {
-			FacesMessageUtil.erro("Erro ao gravar o endere�o." + e.getMessage());
+			FacesMessageUtil.erro("Erro ao gravar o endereço." + e.getMessage());
 			e.printStackTrace();
 		}		
+	}
+	
+	public void criarNovo(){
+		this.pessoa            = new Pessoa();
+		this.pessoaSelecionada = new Pessoa();
+		this.enderecos         = new ArrayList<Endereco>();
+		this.endereco          = new Endereco();		
 	}
 
 	public Pessoa getPessoa() {
@@ -148,5 +170,24 @@ public class ClienteMB implements Serializable{
 
 	public void setPessoaSelecionada(Pessoa pessoaSelecionada) {
 		this.pessoaSelecionada = pessoaSelecionada;
-	}	
+	}
+
+	public Endereco getEnderecoParaExcluir() {
+		return enderecoParaExcluir;
+	}
+
+	public void setEnderecoParaExcluir(Endereco enderecoParaExcluir) {
+		this.enderecoParaExcluir = enderecoParaExcluir;
+	}
+
+	public List<Uf> getUfListagem() {
+		return ufListagem;
+	}
+
+	public void setUfListagem(List<Uf> ufListagem) {
+		this.ufListagem = ufListagem;
+	}
+	
+	
+	
 }

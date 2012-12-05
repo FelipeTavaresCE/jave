@@ -5,9 +5,15 @@
   xmlns:ui="http://java.sun.com/jsf/facelets"
   xmlns:p="http://primefaces.org/ui">
 
-	<ui:define name="pagina-titulo">Cadastro de Cliente</ui:define>
+<ui:define name="pagina-titulo">Cadastro de Cliente</ui:define>
 
   <ui:define name="corpo-pagina">
+  	<style type="text/css">
+  		.lista-enderecos-inclusos tr td{
+  			border: 1px solid gray;
+  		}
+  	</style>
+  	
   	<ui:param name="pagina-titulo" value="Cadastro de Cliente" />
 	<h:form id="form-geral">
 	
@@ -36,9 +42,6 @@
 	            <h:outputText value="Data Cadastro.: "/>
 	            <p:inputText value="#{clienteMB.pessoa.dataCadastro}" id="data-cadastro" disabled="true" styleClass="elemento-form-input largura65" />
 	            
-	            <h:panelGroup></h:panelGroup>
-	            <p:commandButton value="Gravar" icon="ui-icon-disk" actionListener="#{clienteMB.gravar}" update=":form-geral mensagens" />
-	            
 	            <p:growl id="mensagens"/>
 
 	        </h:panelGrid>
@@ -57,11 +60,43 @@
 					<td><p:inputText id="bairro" value="#{clienteMB.endereco.bairro}" styleClass=""/></td>
 					<td><p:inputMask id="cep" value="#{clienteMB.endereco.cep}" styleClass="" mask="99999999" /></td>
 					<td><p:inputText id="cidade" value="#{clienteMB.endereco.cidade}" styleClass=""/></td>
-<!-- 					<td><p:inputText id="estado" value="" styleClass=""/></td> -->
+					<td>
+<!-- 			            <p:selectOneMenu value="#{clienteMB.endereco.uf}" id="uf" styleClass="elemento-form-input">
+			            	<f:selectItems  value="#{clienteMB.ufListagem}" var="uf" itemLabel="#{uf.sigla}" itemValue="#{uf.id}"/>
+			            </p:selectOneMenu>
+ -->					
+					
+					</td>
 <!-- 					<td><p:inputText id="uf" value="" styleClass=""/></td> -->
-					<td><p:commandButton id="add-endereco" value="Adicionar" icon="ui-icon-check" actionListener="#{clienteMB.adicionarEndereco}" ajax="true" update="form-novo-endereco"/></td>
+					<td>
+						<p:commandButton id="add-endereco" value="Adicionar" icon="ui-icon-check" actionListener="#{clienteMB.adicionarEndereco}"
+										 ajax="true" update="form-novo-endereco" />
+					</td>
 				</tr>
 			</table>
+
+			<h:dataTable var="endereco_incluir" value="#{clienteMB.enderecos}" styleClass="lista-enderecos-inclusos"
+			             rendered="#{not empty clienteMB.enderecos}">
+				<f:facet name="header">
+					<h:outputText value="Relação de Endereços inclusos...." />
+				</f:facet>
+				<p:column>
+					<h:outputText value="#{endereco_incluir.rua}" />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{endereco_incluir.numero}" />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{endereco_incluir.bairro}" />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{endereco_incluir.cep}" />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{endereco_incluir.cidade}" />
+				</p:column>
+				
+			</h:dataTable>
 			</p:panel>
 	    	<br />
 	        <h:panelGrid columns="2">
@@ -100,12 +135,21 @@
 	        		</p:column>
 	        		
 	        		<p:column headerText="Operações">
+	        			<p:commandButton icon="ui-icon-disk" style="border: 0; background-color: transparent; heigth: 5px;"
+	        			oncomplete="excluir.show()"
+	        			rendered="#{facesContext.externalContext.isUserInRole('ROLE_ADMIN')}">
+	        				<f:setPropertyActionListener target="#{clienteMB.enderecoParaExcluir}" value="#{endereco}" />
+	        			</p:commandButton>
 	        			<p:rowEditor />
 	        		</p:column>
 	        		
 	        	</p:dataTable>
 	        
 	        </h:panelGrid>
+			<p:dialog id="modal-endereco-excluir" header="Confirmação" widgetVar="excluir"
+			          modal="true" resizable="false">
+			    <span>Confirma a remoção do endereço.</span>  
+			</p:dialog>	        
 	    </p:tab>  
 	  
 	    <p:tab id="tab3" title="Contatos">  
@@ -114,6 +158,12 @@
 	    </p:tab>  
 	  
 	</p:tabView>
+	<br />	
+
+	<p:commandButton value="Gravar" icon="ui-icon-disk" actionListener="#{clienteMB.gravar}" update=":form-geral" />
+	<p:commandButton value="Novo" icon="ui-icon-circle-plus" actionListener="#{clienteMB.criarNovo}" update=":form-geral" />
+
+	<br />
 	<br />
 	<p:dataTable var="pessoa" value="#{clienteMB.pessoasListagem}" emptyMessage="Nenhum registro encontrado" style="width: 100%;"
 	   paginator="true" rows="10"

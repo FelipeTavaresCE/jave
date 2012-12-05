@@ -205,7 +205,13 @@ INSERT INTO tb_uf VALUES(nextval('seq_id_uf'), 'Bahia', 'BA');
 INSERT INTO tb_uf VALUES(nextval('seq_id_uf'), 'Pernambuco', 'PE');
 
 INSERT INTO tb_pessoa(id, nome) values (nextval('seq_id_pessoa'),'Administrador do Sistema');
+INSERT INTO tb_pessoa(id, nome) values (nextval('seq_id_pessoa'),'Cadastro');
 
 INSERT INTO tb_perfil_acesso values('ROLE_ADMIN');
+INSERT INTO tb_perfil_acesso values('ROLE_CADASTRO');
+
 INSERT INTO tb_usuario_sistema values(nextval('seq_id_usuario_sistema'), 'admin', md5('admin'), true, 1);
+INSERT INTO tb_usuario_sistema values(nextval('seq_id_usuario_sistema'), 'cadastro', md5('cadastro'), true, 4);
+
 INSERT INTO tb_usuario_sistema_perfil_acesso values('admin', 'ROLE_ADMIN');
+INSERT INTO tb_usuario_sistema_perfil_acesso values('cadastro', 'ROLE_CADASTRO');
