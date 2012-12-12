@@ -8,191 +8,209 @@
 <ui:define name="pagina-titulo">Cadastro de Cliente</ui:define>
 
   <ui:define name="corpo-pagina">
+  
   	<style type="text/css">
-  		.lista-enderecos-inclusos tr td{
-  			border: 1px solid gray;
-  		}
   	</style>
   	
   	<ui:param name="pagina-titulo" value="Cadastro de Cliente" />
-	<h:form id="form-geral">
+  	
+	<h:form id="form-geral">	
+		<p:tabView id="tab">		  
+		    <p:tab id="tab-dados-pessoais" title="Dados Pessoais">  
+		        <h:panelGrid columns="2">		          
+		            <h:outputText value="Nome.: "/>
+		            <p:inputText value="#{clienteMB.pessoa.nome}" id="nome" styleClass="elemento-form-input largura250"/>
 	
-	<p:tabView id="tab">  
-	  
-	    <p:tab id="tab-dados-pessoais" title="Dados Pessoais">  
-	        <h:panelGrid columns="2">
-	          
-	            <h:outputText value="Nome.: "/>
-	            <p:inputText value="#{clienteMB.pessoa.nome}" id="nome" styleClass="elemento-form-input largura250"/>
-
-	            <h:outputText value="CPF.: "/>
-	            <p:inputMask value="#{clienteMB.pessoa.cpf}" id="cpf" styleClass="elemento-form-input largura80" mask="99999999999"/>
-
-	            <h:outputText value="CNPJ.:"/>
-	            <p:inputMask value="#{clienteMB.pessoa.cnpj}" id="cnpj" styleClass="elemento-form-input largura100" mask="99999999999999" />
-
-	            <h:outputText value="Nascimento.: "/>
-	            <p:inputMask value="#{clienteMB.pessoa.dataNascimento}" id="data-nascimento" styleClass="elemento-form-input largura65" mask="99/99/9999" />
-	            
-	            <h:outputText value="Sexo.: "/>
-	            <p:selectOneMenu value="#{clienteMB.pessoa.sexo}" id="sexo" styleClass="elemento-form-input">
-	            	<f:selectItems  value="#{clienteMB.sexo}" var="sexo" itemLabel="#{sexo.toString()}" itemValue="#{sexo}"/>
-	            </p:selectOneMenu>
-	            
-	            <h:outputText value="Data Cadastro.: "/>
-	            <p:inputText value="#{clienteMB.pessoa.dataCadastro}" id="data-cadastro" disabled="true" styleClass="elemento-form-input largura65" />
-	            
-	            <p:growl id="mensagens"/>
-
-	        </h:panelGrid>
-	        
-	    </p:tab>  
-	  
-	    <p:tab id="tab-enderecos" title="Endereço">
-	    	<p:panel id="form-novo-endereco">
-			<table>
-				<tr>
-					<td>Rua</td><td>Número</td><td>Bairro</td><td>CEP</td><td>Cidade</td><td></td>
-				</tr>
-				<tr>
-					<td><p:inputText id="rua" value="#{clienteMB.endereco.rua}" styleClass=""/></td>
-					<td><p:inputText id="numero" value="#{clienteMB.endereco.numero}" styleClass=""/></td>
-					<td><p:inputText id="bairro" value="#{clienteMB.endereco.bairro}" styleClass=""/></td>
-					<td><p:inputMask id="cep" value="#{clienteMB.endereco.cep}" styleClass="" mask="99999999" /></td>
-					<td><p:inputText id="cidade" value="#{clienteMB.endereco.cidade}" styleClass=""/></td>
-					<td>
-<!-- 			            <p:selectOneMenu value="#{clienteMB.endereco.uf}" id="uf" styleClass="elemento-form-input">
-			            	<f:selectItems  value="#{clienteMB.ufListagem}" var="uf" itemLabel="#{uf.sigla}" itemValue="#{uf.id}"/>
-			            </p:selectOneMenu>
- -->					
-					
-					</td>
-<!-- 					<td><p:inputText id="uf" value="" styleClass=""/></td> -->
-					<td>
-						<p:commandButton id="add-endereco" value="Adicionar" icon="ui-icon-check" actionListener="#{clienteMB.adicionarEndereco}"
-										 ajax="true" update="form-novo-endereco" />
-					</td>
-				</tr>
-			</table>
-
-			<h:dataTable var="endereco_incluir" value="#{clienteMB.enderecos}" styleClass="lista-enderecos-inclusos"
-			             rendered="#{not empty clienteMB.enderecos}">
-				<f:facet name="header">
-					<h:outputText value="Relação de Endereços inclusos...." />
-				</f:facet>
-				<p:column>
-					<h:outputText value="#{endereco_incluir.rua}" />
-				</p:column>
-				<p:column>
-					<h:outputText value="#{endereco_incluir.numero}" />
-				</p:column>
-				<p:column>
-					<h:outputText value="#{endereco_incluir.bairro}" />
-				</p:column>
-				<p:column>
-					<h:outputText value="#{endereco_incluir.cep}" />
-				</p:column>
-				<p:column>
-					<h:outputText value="#{endereco_incluir.cidade}" />
-				</p:column>
-				
-			</h:dataTable>
-			</p:panel>
-	    	<br />
-	        <h:panelGrid columns="2">
-	        	<p:dataTable id="enderecos" var="endereco" value="#{clienteMB.pessoa.enderecos}"
-	        	emptyMessage="Nenhum endereço cadastro" editable="true">
-	        	
-	        		<p:ajax event="rowEdit" listener="#{clienteMB.editarEndereco}" update=":form-geral:tab:mensagens" /> 
-	        		
-	        		<p:column headerText="Rua">
-	        			<p:cellEditor>
-	        				<f:facet name="output">
-	        					<h:outputText value="#{endereco.rua}" />
-	        				</f:facet>
-	        				<f:facet name="input">
-	        					<h:inputText value="#{endereco.rua}" />
-	        				</f:facet>
-	        			</p:cellEditor>
-	        		</p:column>
-	        		<p:column headerText="Número">
-	        			<h:outputText value="#{endereco.numero}" />
-	        		</p:column>
-	        		<p:column headerText="Bairro">
-	        			<h:outputText value="#{endereco.bairro}" />
-	        		</p:column>
-	        		<p:column headerText="CEP">
-	        			<h:outputText value="#{endereco.cep}" />
-	        		</p:column>
-	        		<p:column headerText="Cidade">
-	        			<h:outputText value="#{endereco.cidade}" />
-	        		</p:column>
-	        		<p:column headerText="Estado">
-	        			<h:outputText value="#{endereco.uf.nome}" />
-	        		</p:column>
-	        		<p:column headerText="UF">
-	        			<h:outputText value="#{endereco.uf.sigla}" />
-	        		</p:column>
-	        		
-	        		<p:column headerText="Operações">
-	        			<p:commandButton icon="ui-icon-disk" style="border: 0; background-color: transparent; heigth: 5px;"
-	        			oncomplete="excluir.show()"
-	        			rendered="#{facesContext.externalContext.isUserInRole('ROLE_ADMIN')}">
-	        				<f:setPropertyActionListener target="#{clienteMB.enderecoParaExcluir}" value="#{endereco}" />
-	        			</p:commandButton>
-	        			<p:rowEditor />
-	        		</p:column>
-	        		
-	        	</p:dataTable>
-	        
-	        </h:panelGrid>
-			<p:dialog id="modal-endereco-excluir" header="Confirmação" widgetVar="excluir"
-			          modal="true" resizable="false">
-			    <span>Confirma a remoção do endereço.</span>  
-			</p:dialog>	        
-	    </p:tab>  
-	  
-	    <p:tab id="tab3" title="Contatos">  
-	        <h:panelGrid columns="2" cellpadding="10">  
-	        </h:panelGrid>  
-	    </p:tab>  
-	  
-	</p:tabView>
-	<br />	
-
-	<p:commandButton value="Gravar" icon="ui-icon-disk" actionListener="#{clienteMB.gravar}" update=":form-geral" />
-	<p:commandButton value="Novo" icon="ui-icon-circle-plus" actionListener="#{clienteMB.criarNovo}" update=":form-geral" />
-
-	<br />
-	<br />
-	<p:dataTable var="pessoa" value="#{clienteMB.pessoasListagem}" emptyMessage="Nenhum registro encontrado" style="width: 100%;"
-	   paginator="true" rows="10"
-	   paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-	   rowKey="#{pessoa}" selection="#{clienteMB.pessoaSelecionada}" selectionMode="single" paginatorPosition="bottom"
-	   rowsPerPageTemplate="5,10,15,20,25,30,40,50">
-		<p:ajax event="rowSelect" listener="#{clienteMB.prepararEdicao()}" update=":form-geral" />
-						
-		<p:column headerText="Nome" width="150">
-			<h:outputText value="#{pessoa.nome}" />
-		</p:column>  				
-		<p:column headerText="CPF">
-			<h:outputText value="#{pessoa.cpf}" />
-		</p:column>				
-		<p:column headerText="CNPJ">
-			<h:outputText value="#{pessoa.cnpj}" />
-		</p:column>				
-		<p:column headerText="Sexo">
-			<h:outputText value="#{pessoa.sexo}" />
-		</p:column>				
-		<p:column headerText="Nascimento">
-			<h:outputText value="#{pessoa.dataNascimento}" />
-		</p:column>				
-		<p:column headerText="Data Cadastro">
-			<h:outputText value="#{pessoa.dataCadastro}" />
-		</p:column>								
-	</p:dataTable>
-
+		            <h:outputText value="CPF.: "/>
+		            <p:inputMask value="#{clienteMB.pessoa.cpf}" id="cpf" styleClass="elemento-form-input largura80" mask="99999999999"/>
 	
+		            <h:outputText value="CNPJ.:"/>
+		            <p:inputMask value="#{clienteMB.pessoa.cnpj}" id="cnpj" styleClass="elemento-form-input largura100" mask="99999999999999" />
+	
+		            <h:outputText value="Nascimento.: "/>
+		            <p:inputMask value="#{clienteMB.pessoa.dataNascimento}" id="data-nascimento" styleClass="elemento-form-input largura65" mask="99/99/9999" />
+		            
+		            <h:outputText value="Sexo.: "/>
+		            <p:selectOneMenu value="#{clienteMB.pessoa.sexo}" id="sexo" styleClass="elemento-form-input">
+		            	<f:selectItems  value="#{clienteMB.sexo}" var="sexo" itemLabel="#{sexo.toString()}" itemValue="#{sexo}"/>
+		            </p:selectOneMenu>
+		            
+		            <h:outputText value="Data Cadastro.: "/>
+		            <p:inputText value="#{clienteMB.pessoa.dataCadastro}" id="data-cadastro" disabled="true" styleClass="elemento-form-input largura65" />
+		            
+		            <p:growl id="mensagens"/>
+	
+		        </h:panelGrid>		        
+		    </p:tab>		  
+		    <p:tab id="tab-enderecos" title="Endereço">
+		    	<p:panel id="form-novo-endereco">
+					<table>
+						<tr>
+							<td>Rua</td><td>Número</td><td>Bairro</td><td>CEP</td><td>Cidade</td><td></td>
+						</tr>
+						<tr>
+							<td><p:inputText id="rua" value="#{clienteMB.endereco.rua}" styleClass=""/></td>
+							<td><p:inputText id="numero" value="#{clienteMB.endereco.numero}" styleClass=""/></td>
+							<td><p:inputText id="bairro" value="#{clienteMB.endereco.bairro}" styleClass=""/></td>
+							<td><p:inputMask id="cep" value="#{clienteMB.endereco.cep}" styleClass="" mask="99999999" /></td>
+							<td><p:inputText id="cidade" value="#{clienteMB.endereco.cidade}" styleClass=""/></td>
+							<td>
+		<!-- 			            <p:selectOneMenu value="#{clienteMB.endereco.uf}" id="uf" styleClass="elemento-form-input">
+					            	<f:selectItems  value="#{clienteMB.ufListagem}" var="uf" itemLabel="#{uf.sigla}" itemValue="#{uf.id}"/>
+					            </p:selectOneMenu>
+		 -->					
+							
+							</td>
+		<!-- 					<td><p:inputText id="uf" value="" styleClass=""/></td> -->
+							<td>
+								<p:commandButton id="add-endereco" value="Adicionar" icon="ui-icon-check" actionListener="#{clienteMB.adicionarEndereco}"
+												 ajax="true" update="form-novo-endereco" />
+							</td>
+						</tr>
+					</table>
+					<br />
+					<p:dataTable var="endereco_incluir" value="#{clienteMB.enderecos}" styleClass="lista-enderecos-inclusos"
+					             rendered="#{not empty clienteMB.enderecos}">
+						<f:facet name="header">
+							<h:outputText value="Relação de Endereços inclusos...." />
+						</f:facet>
+						<p:column headerText="Rua">
+							<h:outputText value="#{endereco_incluir.rua}" />
+						</p:column>
+						<p:column headerText="Número">
+							<h:outputText value="#{endereco_incluir.numero}" />
+						</p:column>
+						<p:column headerText="Bairro">
+							<h:outputText value="#{endereco_incluir.bairro}" />
+						</p:column>
+						<p:column headerText="CEP">
+							<h:outputText value="#{endereco_incluir.cep}" />
+						</p:column>
+						<p:column headerText="Cidade">
+							<h:outputText value="#{endereco_incluir.cidade}" />
+						</p:column>				
+					</p:dataTable>				
+				</p:panel>
+		    	<br />
+		        <h:panelGrid columns="2" id="grid-enderecos">
+		        	<p:dataTable id="enderecos" var="endereco" value="#{clienteMB.pessoa.enderecos}"
+		        	             emptyMessage="Nenhum endereço cadastro" editable="true">
+		        	
+		        		<p:ajax event="rowEdit" listener="#{clienteMB.editarEndereco}" update=":form-geral:tab:mensagens" /> 
+		        		
+		        		<p:column headerText="Rua">
+		        			<p:cellEditor>
+		        				<f:facet name="output">
+		        					<h:outputText value="#{endereco.rua}" />
+		        				</f:facet>
+		        				<f:facet name="input">
+		        					<h:inputText value="#{endereco.rua}" />
+		        				</f:facet>
+		        			</p:cellEditor>
+		        		</p:column>
+		        		<p:column headerText="Número">
+		        			<p:cellEditor>
+		        				<f:facet name="output">
+		        					<h:outputText value="#{endereco.numero}" />
+		        				</f:facet>
+		        				<f:facet name="input">
+		        					<h:inputText value="#{endereco.numero}" />
+		        				</f:facet>
+		        			</p:cellEditor>
+		        		</p:column>
+		        		<p:column headerText="Bairro">
+		        			<p:cellEditor>
+		        				<f:facet name="output">
+		        					<h:outputText value="#{endereco.bairro}" />
+		        				</f:facet>
+		        				<f:facet name="input">
+		        					<h:inputText value="#{endereco.bairro}" />
+		        				</f:facet>
+		        			</p:cellEditor>
+		        		</p:column>
+		        		<p:column headerText="CEP">
+		        			<p:cellEditor>
+		        				<f:facet name="output">
+		        					<h:outputText value="#{endereco.cep}" />
+		        				</f:facet>
+		        				<f:facet name="input">
+		        					<h:inputText value="#{endereco.cep}" />
+		        				</f:facet>		        				
+		        			</p:cellEditor>
+		        		</p:column>
+		        		<p:column headerText="Cidade">
+		        			<p:cellEditor>
+		        				<f:facet name="output">
+		        					<h:outputText value="#{endereco.cidade}" />
+		        				</f:facet>
+		        				<f:facet name="input">
+		        					<h:inputText value="#{endereco.cidade}" />
+		        				</f:facet>
+		        			</p:cellEditor>
+		        		</p:column>
+		        		<p:column headerText="Estado">
+		        			<h:outputText value="#{endereco.uf.nome}" />
+		        		</p:column>
+		        		<p:column headerText="UF">
+		        			<h:outputText value="#{endereco.uf.sigla}" />
+		        		</p:column>		        		
+		        		<p:column headerText="Operações">
+		        			<p:commandLink icon="ui-icon-trash" style="border: 0; background-color: transparent;"
+		        			oncomplete="excluir.show()" rendered="#{facesContext.externalContext.isUserInRole('ROLE_ADMIN')}"><p:spacer width="5"/>Excluir
+		        				<f:setPropertyActionListener target="#{clienteMB.enderecoParaExcluir}" value="#{endereco}" />
+		        			</p:commandLink>
+		        			<p:rowEditor title="Alterar"/>
+		        		</p:column>		        		
+		        	</p:dataTable>		        
+		        </h:panelGrid>
+				<p:confirmDialog id="modal-endereco-excluir"
+				                 message="Confirma a remoção do endereço?"
+				                 header="Confirmação"
+				                 widgetVar="excluir"
+				                 severity="alert">
+				    <p:commandButton value="Sim" actionListener="#{clienteMB.excluirEndereco()}"
+				    	oncomplete="excluir.hide()" update=":form-geral"/>
+				    <p:commandButton value="Não" onclick="excluir.hide()"/>
+				</p:confirmDialog>	        
+		    </p:tab>  
+		  
+		    <p:tab id="tab3" title="Contatos">  
+				<h1>Fncionalidade não implementada.</h1>
+		    </p:tab>		  
+		</p:tabView>
+		
+		<br />	
+		<p:commandButton value="Gravar" icon="ui-icon-disk" actionListener="#{clienteMB.gravar}" update=":form-geral" />
+		<p:commandButton value="Novo" icon="ui-icon-circle-plus" actionListener="#{clienteMB.criarNovo}" update=":form-geral" />
+		<br />
+		<br />
+		
+		<p:dataTable var="pessoa" value="#{clienteMB.pessoasListagem}" emptyMessage="Nenhum registro encontrado" style="width: 100%;"
+		   paginator="true" rows="10"
+		   paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		   rowKey="#{pessoa}" selection="#{clienteMB.pessoaSelecionada}" selectionMode="single" paginatorPosition="bottom"
+		   rowsPerPageTemplate="5,10,15,20,25,30,40,50">
+			<p:ajax event="rowSelect" listener="#{clienteMB.prepararEdicao()}" update=":form-geral" />
+							
+			<p:column headerText="Nome" width="150">
+				<h:outputText value="#{pessoa.nome}" />
+			</p:column>  				
+			<p:column headerText="CPF">
+				<h:outputText value="#{pessoa.cpf}" />
+			</p:column>				
+			<p:column headerText="CNPJ">
+				<h:outputText value="#{pessoa.cnpj}" />
+			</p:column>				
+			<p:column headerText="Sexo">
+				<h:outputText value="#{pessoa.sexo}" />
+			</p:column>				
+			<p:column headerText="Nascimento">
+				<h:outputText value="#{pessoa.dataNascimento}" />
+			</p:column>				
+			<p:column headerText="Data Cadastro">
+				<h:outputText value="#{pessoa.dataCadastro}" />
+			</p:column>								
+		</p:dataTable>
     </h:form>
   </ui:define>
 </ui:composition>

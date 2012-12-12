@@ -21,14 +21,16 @@ public class EnderecoDaoImpl implements EnderecoDao{
 	private EntityManager entityManager;
 	
 	@Override
+	@Transactional
 	public void gravar(Endereco endereco) throws Exception {
 		entityManager.merge(endereco);
 		entityManager.flush();
 	}
 
 	@Override
+	@Transactional
 	public void excluir(Endereco endereco) throws Exception, ExclusaoNaoPermitidaException {
-			entityManager.remove(endereco);
+			entityManager.remove(entityManager.merge(endereco));
 	}
 
 	@SuppressWarnings("unchecked")

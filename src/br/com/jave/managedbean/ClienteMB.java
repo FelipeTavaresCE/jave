@@ -17,6 +17,7 @@ import br.com.jave.dao.EnderecoDao;
 import br.com.jave.dao.PessoaDao;
 import br.com.jave.dao.UfDao;
 import br.com.jave.enums.Sexo;
+import br.com.jave.excecoes.ExclusaoNaoPermitidaException;
 import br.com.jave.modelo.Endereco;
 import br.com.jave.modelo.Pessoa;
 import br.com.jave.modelo.Uf;
@@ -119,6 +120,20 @@ public class ClienteMB implements Serializable{
 		this.enderecos         = new ArrayList<Endereco>();
 		this.endereco          = new Endereco();		
 	}
+	
+	public void excluirEndereco(){
+		try {
+			enderecoDao.excluir(enderecoParaExcluir);
+			FacesMessageUtil.mensagem("Endereço Excluido com sucesso!");
+			this.pessoa = pessoaDao.pesquisarPorId(pessoaSelecionada.getId());
+			this.enderecoParaExcluir = null;  
+		} catch (ExclusaoNaoPermitidaException e) {
+			FacesMessageUtil.erro(e.getMessage());
+		}catch(Exception e){
+			FacesMessageUtil.erro(e.getMessage());
+		}
+	}
+	
 
 	public Pessoa getPessoa() {
 		return pessoa;
