@@ -49,6 +49,22 @@
 	text-transform: uppercase;
 }
 
+.maiusculo{
+	text-transform: uppercase;
+}
+
+.minusculo{
+	text-transform: lowercase;
+}
+
+.largura20{
+	width: 20px;
+}
+
+.largura40{
+	width: 40px;
+}
+
 .largura65{
 	width: 65px;
 }
@@ -61,12 +77,20 @@
 	width: 100px;
 }
 
-.largura250{
-	width: 250px;
+.largura150{
+	width: 150px;
 }
 
-.largura20{
-	width: 20px;
+.largura180{
+	width: 180px;
+}
+
+.largura200{
+	width: 200px;
+}
+
+.largura250{
+	width: 250px;
 }
 
 #menu-conteiner{

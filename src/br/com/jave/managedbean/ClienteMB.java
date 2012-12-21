@@ -40,7 +40,16 @@ public class ClienteMB implements Serializable{
 	private List<Uf> ufListagem;
 	private Pessoa pessoaSelecionada;
 	private Endereco enderecoParaExcluir;
+	private long idUfSelecionada; 
 	
+	public long getIdUfSelecionada() {
+		return idUfSelecionada;
+	}
+
+	public void setIdUfSelecionada(long idUfSelecionada) {
+		this.idUfSelecionada = idUfSelecionada;
+	}
+
 	public ClienteMB(){}
 	
 	@Autowired
@@ -53,12 +62,13 @@ public class ClienteMB implements Serializable{
 		carregaUfs();
 	}
 	
-	public void carregaUfs(){
+	public List<Uf> carregaUfs(){
 		try {
 			this.ufListagem = ufDao.listarTodos();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}		
+		}
+		return this.ufListagem;
 	}
 	
 	public void gravar(){
@@ -98,6 +108,14 @@ public class ClienteMB implements Serializable{
 	}
 	
 	public void adicionarEndereco(){
+		try {
+			Uf uf = ufDao.pesquisarPorId(idUfSelecionada);
+			this.endereco.setUf(uf);
+		} catch (NoResultException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		this.endereco.setPessoa(pessoa);
 		this.enderecos.add(this.endereco);
 		this.endereco = new Endereco();

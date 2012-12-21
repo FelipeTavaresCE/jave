@@ -10,6 +10,10 @@
   <ui:define name="corpo-pagina">
   
   	<style type="text/css">
+  		#tabela-form-endereco td{
+  			border: 0;
+  			padding: 0 3px 0 0;
+  		}
   	</style>
   	
   	<ui:param name="pagina-titulo" value="Cadastro de Cliente" />
@@ -44,49 +48,47 @@
 		    </p:tab>		  
 		    <p:tab id="tab-enderecos" title="Endereço">
 		    	<p:panel id="form-novo-endereco">
-					<table>
+					<table id="tabela-form-endereco">
 						<tr>
-							<td>Rua</td><td>Número</td><td>Bairro</td><td>CEP</td><td>Cidade</td><td></td>
+							<td>Rua</td><td>Número</td><td>Bairro</td><td>CEP</td><td>Cidade</td><td>UF</td><td></td>
 						</tr>
 						<tr>
-							<td><p:inputText id="rua" value="#{clienteMB.endereco.rua}" styleClass=""/></td>
-							<td><p:inputText id="numero" value="#{clienteMB.endereco.numero}" styleClass=""/></td>
-							<td><p:inputText id="bairro" value="#{clienteMB.endereco.bairro}" styleClass=""/></td>
-							<td><p:inputMask id="cep" value="#{clienteMB.endereco.cep}" styleClass="" mask="99999999" /></td>
-							<td><p:inputText id="cidade" value="#{clienteMB.endereco.cidade}" styleClass=""/></td>
+							<td><p:inputText id="rua" value="#{clienteMB.endereco.rua}" styleClass="largura250 maiusculo"/></td>
+							<td><p:inputText id="numero" value="#{clienteMB.endereco.numero}" styleClass="largura40"/></td>
+							<td><p:inputText id="bairro" value="#{clienteMB.endereco.bairro}" styleClass="largura180 maiusculo"/></td>
+							<td><p:inputMask id="cep" value="#{clienteMB.endereco.cep}" styleClass="largura65" mask="99999999" /></td>
+							<td><p:inputText id="cidade" value="#{clienteMB.endereco.cidade}" styleClass="largura150 maiusculo"/></td>
 							<td>
-		<!-- 			            <p:selectOneMenu value="#{clienteMB.endereco.uf}" id="uf" styleClass="elemento-form-input">
-					            	<f:selectItems  value="#{clienteMB.ufListagem}" var="uf" itemLabel="#{uf.sigla}" itemValue="#{uf.id}"/>
-					            </p:selectOneMenu>
-		 -->					
-							
+					            <p:selectOneMenu value="#{clienteMB.idUfSelecionada}" id="uf" style="margin: 0 0 -8px 0;">
+					            	<f:selectItems  value="#{clienteMB.carregaUfs()}" var="uf" itemLabel="#{uf.sigla}" itemValue="#{uf.id}"/>
+					            </p:selectOneMenu>							
 							</td>
-		<!-- 					<td><p:inputText id="uf" value="" styleClass=""/></td> -->
 							<td>
-								<p:commandButton id="add-endereco" value="Adicionar" icon="ui-icon-check" actionListener="#{clienteMB.adicionarEndereco}"
+								<p:commandButton id="add-endereco" value="Adicionar" icon="ui-icon-check"
+								                 actionListener="#{clienteMB.adicionarEndereco}"
 												 ajax="true" update="form-novo-endereco" />
 							</td>
 						</tr>
 					</table>
 					<br />
 					<p:dataTable var="endereco_incluir" value="#{clienteMB.enderecos}" styleClass="lista-enderecos-inclusos"
-					             rendered="#{not empty clienteMB.enderecos}">
+					             rendered="#{not empty clienteMB.enderecos}" style="width: 900px;">
 						<f:facet name="header">
-							<h:outputText value="Relação de Endereços inclusos...." />
+							<h:outputText value="Relação de Endereços inclusos" />
 						</f:facet>
 						<p:column headerText="Rua">
 							<h:outputText value="#{endereco_incluir.rua}" />
 						</p:column>
-						<p:column headerText="Número">
+						<p:column headerText="Número" style="width: 40px;">
 							<h:outputText value="#{endereco_incluir.numero}" />
 						</p:column>
-						<p:column headerText="Bairro">
+						<p:column headerText="Bairro" style="width: 150px;">
 							<h:outputText value="#{endereco_incluir.bairro}" />
 						</p:column>
-						<p:column headerText="CEP">
-							<h:outputText value="#{endereco_incluir.cep}" />
+						<p:column headerText="CEP" style="width: 50px;">
+							<h:outputText value="#{endereco_incluir.cep}"/>
 						</p:column>
-						<p:column headerText="Cidade">
+						<p:column headerText="Cidade" style="width: 150px;">
 							<h:outputText value="#{endereco_incluir.cidade}" />
 						</p:column>				
 					</p:dataTable>				
