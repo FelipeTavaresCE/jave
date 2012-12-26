@@ -40,16 +40,8 @@ public class ClienteMB implements Serializable{
 	private List<Uf> ufListagem;
 	private Pessoa pessoaSelecionada;
 	private Endereco enderecoParaExcluir;
-	private long idUfSelecionada; 
+	private Long idUfSelecionada;
 	
-	public long getIdUfSelecionada() {
-		return idUfSelecionada;
-	}
-
-	public void setIdUfSelecionada(long idUfSelecionada) {
-		this.idUfSelecionada = idUfSelecionada;
-	}
-
 	public ClienteMB(){}
 	
 	@Autowired
@@ -123,11 +115,15 @@ public class ClienteMB implements Serializable{
 	
 	public void editarEndereco(RowEditEvent event){
 		Endereco enderecoEditado = (Endereco)event.getObject();
-		FacesMessageUtil.mensagem("Endereço alterado com sucesso!");
 		try {
 			enderecoDao.gravar(enderecoEditado);
-		} catch (Exception e) {
-			FacesMessageUtil.erro("Erro ao gravar o endereço." + e.getMessage());
+			enderecoEditado = new Endereco();
+			FacesMessageUtil.mensagem("Endereço alterado com sucesso!");
+		}catch (NoResultException e) {
+			FacesMessageUtil.erro("Erro ao obter a UF.\n" + e.getMessage());
+			e.printStackTrace();
+		}catch (Exception e) {
+			FacesMessageUtil.erro("Erro ao gravar o endereço.\n" + e.getMessage());
 			e.printStackTrace();
 		}		
 	}
@@ -152,7 +148,6 @@ public class ClienteMB implements Serializable{
 		}
 	}
 	
-
 	public Pessoa getPessoa() {
 		return pessoa;
 	}
@@ -220,7 +215,14 @@ public class ClienteMB implements Serializable{
 	public void setUfListagem(List<Uf> ufListagem) {
 		this.ufListagem = ufListagem;
 	}
-	
-	
+
+	public Long getIdUfSelecionada() {
+		return idUfSelecionada;
+	}
+
+	public void setIdUfSelecionada(Long idUfSelecionada) {
+		this.idUfSelecionada = idUfSelecionada;
+	}
+
 	
 }

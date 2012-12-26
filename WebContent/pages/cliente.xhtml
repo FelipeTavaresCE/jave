@@ -18,8 +18,11 @@
   	
   	<ui:param name="pagina-titulo" value="Cadastro de Cliente" />
   	
-	<h:form id="form-geral">	
-		<p:tabView id="tab">		  
+	<h:form id="form-geral">
+		<!-- INICIO DA DECLARAÇÃO DAS ABAS -->	
+		<p:tabView id="tab">
+		
+			<!-- ABA DE DADOS PESSOAIS -->
 		    <p:tab id="tab-dados-pessoais" title="Dados Pessoais">  
 		        <h:panelGrid columns="2">		          
 		            <h:outputText value="Nome.: "/>
@@ -45,7 +48,9 @@
 		            <p:growl id="mensagens"/>
 	
 		        </h:panelGrid>		        
-		    </p:tab>		  
+		    </p:tab>
+		    
+		    <!-- ABA DE DADOS DO ENDEREÇO -->
 		    <p:tab id="tab-enderecos" title="Endereço">
 		    	<p:panel id="form-novo-endereco">
 					<table id="tabela-form-endereco">
@@ -60,6 +65,7 @@
 							<td><p:inputText id="cidade" value="#{clienteMB.endereco.cidade}" styleClass="largura150 maiusculo"/></td>
 							<td>
 					            <p:selectOneMenu value="#{clienteMB.idUfSelecionada}" id="uf" style="margin: 0 0 -8px 0;">
+					            	<f:selectItem itemLabel="Selecione" />
 					            	<f:selectItems  value="#{clienteMB.carregaUfs()}" var="uf" itemLabel="#{uf.sigla}" itemValue="#{uf.id}"/>
 					            </p:selectOneMenu>							
 							</td>
@@ -94,9 +100,11 @@
 					</p:dataTable>				
 				</p:panel>
 		    	<br />
-		        <h:panelGrid columns="2" id="grid-enderecos">
+		    	
+		    	<!-- RELAÇÃO DE ENDEREÇOS CADASTRADOS -->
+		        <h:panelGrid id="grid-enderecos">
 		        	<p:dataTable id="enderecos" var="endereco" value="#{clienteMB.pessoa.enderecos}"
-		        	             emptyMessage="Nenhum endereço cadastro" editable="true">
+		        	             emptyMessage="Nenhum endereço cadastrado" editable="true" style="width: 100%;">
 		        	
 		        		<p:ajax event="rowEdit" listener="#{clienteMB.editarEndereco}" update=":form-geral:tab:mensagens" /> 
 		        		
@@ -153,18 +161,31 @@
 		        		<p:column headerText="Estado">
 		        			<h:outputText value="#{endereco.uf.nome}" />
 		        		</p:column>
-		        		<p:column headerText="UF">
-		        			<h:outputText value="#{endereco.uf.sigla}" />
+		        		<p:column headerText="UF" style="width: 50px;">
+		        			<p:cellEditor>
+		        				<f:facet name="output">
+		        					<h:outputText value="#{endereco.uf.sigla}" />
+		        				</f:facet>
+		        				<f:facet name="input">
+						            <p:selectOneMenu value="#{endereco.uf}" id="uf-editar"
+						                             style="margin: 0 0 -1px 0; width: 80px;" immediate="true" converter="simpleIndexConverter" >
+						            	<f:selectItems  value="#{clienteMB.carregaUfs()}" var="uf" itemLabel="#{uf.sigla}" itemValue="#{uf}"/>
+						            </p:selectOneMenu>							
+		        				</f:facet>
+		        			</p:cellEditor>
 		        		</p:column>		        		
 		        		<p:column headerText="Operações">
 		        			<p:commandLink icon="ui-icon-trash" style="border: 0; background-color: transparent;"
-		        			oncomplete="excluir.show()" rendered="#{facesContext.externalContext.isUserInRole('ROLE_ADMIN')}"><p:spacer width="5"/>Excluir
+		        			               oncomplete="excluir.show()" rendered="#{facesContext.externalContext.isUserInRole('ROLE_ADMIN')}">
+		        			    <p:spacer width="6"/>Excluir
 		        				<f:setPropertyActionListener target="#{clienteMB.enderecoParaExcluir}" value="#{endereco}" />
 		        			</p:commandLink>
 		        			<p:rowEditor title="Alterar"/>
 		        		</p:column>		        		
 		        	</p:dataTable>		        
 		        </h:panelGrid>
+		        
+		        <!-- MODAL DE CONFIRMAÇÃO DE EXCLUSÃO DE ENDEREÇO -->
 				<p:confirmDialog id="modal-endereco-excluir"
 				                 message="Confirma a remoção do endereço?"
 				                 header="Confirmação"
@@ -174,8 +195,9 @@
 				    	oncomplete="excluir.hide()" update=":form-geral"/>
 				    <p:commandButton value="Não" onclick="excluir.hide()"/>
 				</p:confirmDialog>	        
-		    </p:tab>  
-		  
+		    </p:tab>
+		    
+		    <!-- ABA DE DADOS DOS CONTATOS -->		  
 		    <p:tab id="tab3" title="Contatos">  
 				<h1>Fncionalidade não implementada.</h1>
 		    </p:tab>		  
@@ -187,6 +209,7 @@
 		<br />
 		<br />
 		
+		<!-- LISTAGEM DOS CLIENTES CADASTRADOS NA BASE DE DADOS -->
 		<p:dataTable var="pessoa" value="#{clienteMB.pessoasListagem}" emptyMessage="Nenhum registro encontrado" style="width: 100%;"
 		   paginator="true" rows="10"
 		   paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"

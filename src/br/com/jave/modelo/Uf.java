@@ -11,13 +11,15 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import br.com.jave.converter.BaseEntity;
+
 @Entity
 @Table(name = "tb_uf")
 @NamedQueries({
 	@NamedQuery(name = "ufListarTodos", query = "SELECT u FROM Uf u"),
 	@NamedQuery(name = "ufPesquisarPorId", query = "SELECT u FROM Uf u WHERE u.id = :id"),
 })
-public class Uf implements Serializable{
+public class Uf implements Serializable, BaseEntity{
 	
 	private static final long serialVersionUID = 1L;
 
