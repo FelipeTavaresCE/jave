@@ -52,6 +52,15 @@ CREATE SEQUENCE seq_id_usuario_sistema
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
+
+DROP SEQUENCE IF EXISTS seq_id_cliente;
+
+CREATE SEQUENCE seq_id_cliente
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
 --------------Fim Criação das Sequences------------------------
 
 --------------Criação das tabelas------------------------
@@ -123,6 +132,15 @@ CREATE TABLE tb_pessoa (
     nome varchar(100),
     sexo varchar(10),
     foto bytea
+);
+
+DROP TABLE IF EXISTS tb_cliente;
+
+CREATE TABLE tb_cliente(
+    id bigint not null,
+    dt_cadastro date not null,
+    codigo_cliente bigint not null,
+    pessoa_id bigint not null
 );
 
 DROP TABLE IF EXISTS tb_uf;
