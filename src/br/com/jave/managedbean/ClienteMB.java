@@ -13,6 +13,7 @@ import org.primefaces.event.RowEditEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.jave.dao.ClienteDao;
 import br.com.jave.dao.EnderecoDao;
 import br.com.jave.dao.PessoaDao;
 import br.com.jave.dao.UfDao;
@@ -32,6 +33,7 @@ public class ClienteMB implements Serializable{
 	private PessoaDao pessoaDao;
 	private EnderecoDao enderecoDao;
 	private UfDao ufDao;
+	private ClienteDao clienteDao;
 	private Pessoa pessoa = new Pessoa();
 	private Endereco endereco = new Endereco();
 	private List<Endereco> enderecos = new ArrayList<Endereco>();
@@ -45,10 +47,11 @@ public class ClienteMB implements Serializable{
 	public ClienteMB(){}
 	
 	@Autowired
-	public ClienteMB(PessoaDao pessoaDao, EnderecoDao enderecoDao, UfDao ufDao){
+	public ClienteMB(PessoaDao pessoaDao, EnderecoDao enderecoDao, UfDao ufDao, ClienteDao clienteDao){
 		this.pessoaDao = pessoaDao;
 		this.enderecoDao = enderecoDao;
 		this.ufDao = ufDao;
+		this.clienteDao = clienteDao;
 		this.sexo = Arrays.asList(Sexo.values());
 		listarPessoas();
 		carregaUfs();
@@ -222,7 +225,5 @@ public class ClienteMB implements Serializable{
 
 	public void setIdUfSelecionada(Long idUfSelecionada) {
 		this.idUfSelecionada = idUfSelecionada;
-	}
-
-	
+	}	
 }

@@ -61,6 +61,15 @@ CREATE SEQUENCE seq_id_cliente
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
+
+DROP SEQUENCE IF EXISTS seq_cod_cliente;
+
+CREATE SEQUENCE seq_cod_cliente
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
 --------------Fim Criação das Sequences------------------------
 
 --------------Criação das tabelas------------------------
@@ -119,8 +128,6 @@ CREATE TABLE tb_perfil_acesso(
     nome varchar(20) not null
 );
 
-
-
 DROP TABLE IF EXISTS tb_pessoa;
 
 CREATE TABLE tb_pessoa (
@@ -175,14 +182,16 @@ ALTER TABLE ONLY tb_usuario_sistema
 ALTER TABLE ONLY tb_perfil_acesso
     ADD CONSTRAINT pk_perfil_acesso PRIMARY KEY (nome);
 
+ALTER TABLE tb_cliente
+    ADD CONSTRAINT pk_cliente PRIMARY KEY (id);
+
 -------------- Fim da Criação das Primary Keys ------------------------
 
 -------------- Criação dos indices ---------------------------------
 CREATE UNIQUE INDEX unq_idx_login ON tb_usuario_sistema(login);
+
+CREATE UNIQUE INDEX unq_idx_cod_cliente ON tb_cliente(codigo_cliente);
 -------------- Fim da Criação dos indices --------------------------
-
-
-
 
 -------------- Criação das Foreign Keys ------------------------
 ALTER TABLE ONLY tb_telefone
@@ -205,6 +214,9 @@ ALTER TABLE ONLY tb_usuario_sistema_perfil_acesso
 
 ALTER TABLE ONLY tb_usuario_sistema_perfil_acesso 
     ADD CONSTRAINT fk_usu_sis_perfil_nome FOREIGN KEY (perfil_acesso_nome) REFERENCES tb_perfil_acesso(nome);
+
+ALTER TABLE tb_cliente
+    ADD CONSTRAINT fk_cliente_pessoa FOREIGN KEY (pessoa_id) REFERENCES tb_pessoa (id);
 
 -------------- Fim Criação das Foreign Keys ------------------------
 
