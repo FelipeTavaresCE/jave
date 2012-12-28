@@ -1,7 +1,7 @@
 package br.com.jave.enums;
 
 public enum Sexo {
-	MASCULINO("Masculino"), FEMINO("Feminino");
+	MASCULINO("Masculino"), FEMININO("Feminino");
 	
 	private String sexo;
 	

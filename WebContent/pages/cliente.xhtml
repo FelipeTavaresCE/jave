@@ -12,7 +12,7 @@
   	<style type="text/css">
   		#tabela-form-endereco td{
   			border: 0;
-  			padding: 0 3px 0 0;
+  			padding: 2px 3px 0 0;
   		}
   	</style>
   	
@@ -58,11 +58,21 @@
 							<td>Rua</td><td>Número</td><td>Bairro</td><td>CEP</td><td>Cidade</td><td>UF</td><td></td>
 						</tr>
 						<tr>
-							<td><p:inputText id="rua" value="#{clienteMB.endereco.rua}" styleClass="largura250 maiusculo"/></td>
-							<td><p:inputText id="numero" value="#{clienteMB.endereco.numero}" styleClass="largura40"/></td>
-							<td><p:inputText id="bairro" value="#{clienteMB.endereco.bairro}" styleClass="largura180 maiusculo"/></td>
-							<td><p:inputMask id="cep" value="#{clienteMB.endereco.cep}" styleClass="largura65" mask="99999999" /></td>
-							<td><p:inputText id="cidade" value="#{clienteMB.endereco.cidade}" styleClass="largura150 maiusculo"/></td>
+							<td>
+								<p:inputText id="rua" value="#{clienteMB.endereco.rua}" styleClass="largura250 maiusculo" required="true"/>
+							</td>
+							<td>
+								<p:inputText id="numero" value="#{clienteMB.endereco.numero}" styleClass="largura40" required="true" />
+							</td>
+							<td>
+								<p:inputText id="bairro" value="#{clienteMB.endereco.bairro}" styleClass="largura180 maiusculo" required="true"/>
+							</td>
+							<td>
+								<p:inputMask id="cep" value="#{clienteMB.endereco.cep}" styleClass="largura65" mask="99999999" required="true" />
+							</td>
+							<td>
+								<p:inputText id="cidade" value="#{clienteMB.endereco.cidade}" styleClass="largura150 maiusculo" required="true"/>
+							</td>
 							<td>
 					            <p:selectOneMenu value="#{clienteMB.idUfSelecionada}" id="uf" style="margin: 0 0 -8px 0;">
 					            	<f:selectItem itemLabel="Selecione" />
@@ -74,6 +84,13 @@
 								                 actionListener="#{clienteMB.adicionarEndereco}"
 												 ajax="true" update="form-novo-endereco" />
 							</td>
+						</tr>
+						<tr>
+							<td>Complemento</td><td colspan="2">Ponto de Referência</td><td></td><td></td><td></td><td></td>
+						</tr>
+						<tr>
+							<td><p:inputText id="complemento-endereco" value="#{clienteMB.endereco.rua}" styleClass="largura250 maiusculo"/></td>
+							<td colspan="3"><p:inputText id="ponto-de-referencia" value="#{clienteMB.endereco.rua}" styleClass="largura250 maiusculo"/></td><td></td><td></td><td></td>
 						</tr>
 					</table>
 					<br />
@@ -205,35 +222,36 @@
 		
 		<br />	
 		<p:commandButton value="Gravar" icon="ui-icon-disk" actionListener="#{clienteMB.gravar}" update=":form-geral" />
-		<p:commandButton value="Novo" icon="ui-icon-circle-plus" actionListener="#{clienteMB.criarNovo}" update=":form-geral" />
+		<p:commandButton value="Novo" icon="ui-icon-circle-plus" actionListener="#{clienteMB.criarNovo}" update=":form-geral" process="@this"/>
 		<br />
 		<br />
 		
 		<!-- LISTAGEM DOS CLIENTES CADASTRADOS NA BASE DE DADOS -->
-		<p:dataTable var="pessoa" value="#{clienteMB.pessoasListagem}" emptyMessage="Nenhum registro encontrado" style="width: 100%;"
+		<f:event listener="#{clienteMB.listarClientes}" type="preRenderView" />
+		<p:dataTable var="cliente" value="#{clienteMB.clientes}" emptyMessage="Nenhum registro encontrado" style="width: 100%;"
 		   paginator="true" rows="10"
 		   paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-		   rowKey="#{pessoa}" selection="#{clienteMB.pessoaSelecionada}" selectionMode="single" paginatorPosition="bottom"
+		   rowKey="#{cliente}" selection="#{clienteMB.cliente}" selectionMode="single" paginatorPosition="bottom"
 		   rowsPerPageTemplate="5,10,15,20,25,30,40,50">
 			<p:ajax event="rowSelect" listener="#{clienteMB.prepararEdicao()}" update=":form-geral" />
 							
 			<p:column headerText="Nome" width="150">
-				<h:outputText value="#{pessoa.nome}" />
+				<h:outputText value="#{cliente.pessoa.nome}" />
 			</p:column>  				
 			<p:column headerText="CPF">
-				<h:outputText value="#{pessoa.cpf}" />
+				<h:outputText value="#{cliente.pessoa.cpf}" />
 			</p:column>				
 			<p:column headerText="CNPJ">
-				<h:outputText value="#{pessoa.cnpj}" />
+				<h:outputText value="#{cliente.pessoa.cnpj}" />
 			</p:column>				
 			<p:column headerText="Sexo">
-				<h:outputText value="#{pessoa.sexo}" />
+				<h:outputText value="#{cliente.pessoa.sexo}" />
 			</p:column>				
 			<p:column headerText="Nascimento">
-				<h:outputText value="#{pessoa.dataNascimento}" />
+				<h:outputText value="#{cliente.pessoa.dataNascimento}" />
 			</p:column>				
 			<p:column headerText="Data Cadastro">
-				<h:outputText value="#{pessoa.dataCadastro}" />
+				<h:outputText value="#{cliente.pessoa.dataCadastro}" />
 			</p:column>								
 		</p:dataTable>
     </h:form>

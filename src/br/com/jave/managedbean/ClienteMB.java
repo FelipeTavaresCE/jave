@@ -19,6 +19,7 @@ import br.com.jave.dao.PessoaDao;
 import br.com.jave.dao.UfDao;
 import br.com.jave.enums.Sexo;
 import br.com.jave.excecoes.ExclusaoNaoPermitidaException;
+import br.com.jave.modelo.Cliente;
 import br.com.jave.modelo.Endereco;
 import br.com.jave.modelo.Pessoa;
 import br.com.jave.modelo.Uf;
@@ -35,9 +36,11 @@ public class ClienteMB implements Serializable{
 	private UfDao ufDao;
 	private ClienteDao clienteDao;
 	private Pessoa pessoa = new Pessoa();
+	private Cliente cliente;
 	private Endereco endereco = new Endereco();
 	private List<Endereco> enderecos = new ArrayList<Endereco>();
 	private List<Pessoa> pessoasListagem;
+	private List<Cliente> clientes = null;
 	private List<Sexo> sexo;
 	private List<Uf> ufListagem;
 	private Pessoa pessoaSelecionada;
@@ -53,7 +56,8 @@ public class ClienteMB implements Serializable{
 		this.ufDao = ufDao;
 		this.clienteDao = clienteDao;
 		this.sexo = Arrays.asList(Sexo.values());
-		listarPessoas();
+		//listarPessoas();
+		//listarClientes();
 		carregaUfs();
 	}
 	
@@ -84,7 +88,7 @@ public class ClienteMB implements Serializable{
 	
 	public void prepararEdicao(){
 		try {
-			this.pessoa = pessoaDao.pesquisarPorId(pessoaSelecionada.getId());
+			this.pessoa = pessoaDao.pesquisarPorId(cliente.getPessoa().getId());
 		} catch (NoResultException e) {
 			e.printStackTrace();
 			FacesMessageUtil.mensagem("Estado não encontrado");
@@ -149,6 +153,16 @@ public class ClienteMB implements Serializable{
 		}catch(Exception e){
 			FacesMessageUtil.erro(e.getMessage());
 		}
+	}
+	
+	public List<Cliente> listarClientes(){
+		try {
+			this.clientes = clienteDao.listarTodos();			
+		} catch (Exception e) {
+			FacesMessageUtil.erro("erro ao carregar os clientes.");
+			e.printStackTrace();
+		}
+		return this.clientes;
 	}
 	
 	public Pessoa getPessoa() {
@@ -225,5 +239,21 @@ public class ClienteMB implements Serializable{
 
 	public void setIdUfSelecionada(Long idUfSelecionada) {
 		this.idUfSelecionada = idUfSelecionada;
-	}	
+	}
+
+	public List<Cliente> getClientes() {
+		return this.clientes;
+	}
+
+	public void setClientes(List<Cliente> clientes) {
+		this.clientes = clientes;
+	}
+	
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
 }
