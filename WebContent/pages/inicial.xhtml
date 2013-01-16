@@ -6,9 +6,11 @@
   xmlns:p="http://primefaces.org/ui">
 
   <ui:define name="corpo-pagina">
+  	<f:event listener="#{logomarcaUpload.carregarConfiguracoes()}" type="preRenderView" />
   	<div id="div-logo-inicial">
-		<h1 id="nome-sistema">Jave</h1>
-		<h1 id="sub-nome-sistema">Automação de Vendas</h1>
+		<h1 id="nome-sistema">#{logomarcaUpload.configuracoesDoSistema.mensagemInicial}</h1>
+		<h1 id="sub-nome-sistema">#{logomarcaUpload.configuracoesDoSistema.subMensagemInicial}</h1>
+		<p:graphicImage value="#{logomarcaUpload.fotoGerada}" id="foto" style="width: 500px; margin: 15px 0 0 0;" />
 	</div>
   </ui:define>
 </ui:composition>

@@ -70,6 +70,16 @@ CREATE SEQUENCE seq_cod_cliente
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
+
+DROP SEQUENCE IF EXISTS seq_id_configuracoes_sistema;
+
+CREATE SEQUENCE seq_id_configuracoes_sistema
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+    
 --------------Fim Criação das Sequences------------------------
 
 --------------Criação das tabelas------------------------
@@ -157,6 +167,18 @@ CREATE TABLE tb_uf (
     nome varchar(50),
     sigla varchar(2)
 );
+
+--------configurações do sistema -----
+CREATE TABLE tb_configuracoes_sistema(
+    id bigint not null,
+    logomarca bytea,
+    mensagem_inicial varchar(100),
+    sub_mensagem_inicial varchar(100)
+    
+);
+ALTER TABLE tb_configuracoes_sistema
+    ADD CONSTRAINT pk_config_sistema PRIMARY KEY (id);
+----------------------------------------
 
 --------------Fim da Criação das tabelas------------------------
 

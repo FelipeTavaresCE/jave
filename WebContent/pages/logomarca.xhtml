@@ -8,18 +8,41 @@
 	<ui:define name="corpo-pagina">
 		<style type="text/css">
 			.foto{width: 250px;}
-			.fileupload-content{height: 100px;}
-			#div-foto{border: 1px solid #A8A8A8; width: 250px; height: 250px; border-radius: 3px 3px 3px 3px; padding: 5px; margin: 4px 4px 0 0;}
+			/* .fileupload-content{height: 100px;} */
+			#div-foto{ width: 250px; height: 250px; float: left;}
+			.cantos-arredondados{border: 1px solid #A8A8A8; border-radius: 3px 3px 3px 3px; padding: 5px; margin: 4px 4px 0 0;}
+			#div-inputs{float: left; margin: 8px 0 0 3px;}
+			.clear{clear: both;}
 		</style>
 	
 		<h:form enctype="multipart/form-data" id="formulario">  
 		    <p:fileUpload fileUploadListener="#{logomarcaUpload.upload}" mode="advanced"   
-		            update="formulario" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>  
+		                  update="foto" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+		                  cancelLabel="Cancelar" label="Escolha" uploadLabel="Carregar" />  
 		    <p:growl id="mensagens"/>
 		    
-		    <div id="div-foto">
-				<p:graphicImage value="#{logomarcaUpload.fotoGerada}" id="foto" styleClass="foto" />
-			</div>
+			<f:event listener="#{logomarcaUpload.carregarConfiguracoes()}" type="preRenderView" />		    
+		    
+			<div id="div-foto" class="cantos-arredondados">
+				<p:graphicImage value="#{logomarcaUpload.fotoGerada}" id="foto" styleClass="foto" style="width: 100%; height: 100%;"/>
+			</div>		    		
+		    	
+		    <div id="div-inputs" >
+		    	<h:panelGrid columns="1">
+		    		<h:outputText value="Mensagem Inicial" />
+			    	<p:inputText id="msg-inicial" value="#{logomarcaUpload.configuracoesDoSistema.mensagemInicial}"
+			    	             style="width: 500px; height: 30px; font-size: 2em; margin: 5px 0 5px 0;" />
+			    	
+			    	<h:outputText value="Sub Mensagem Inicial" />
+			    	<p:inputText id="sub-msg-inicial" value="#{logomarcaUpload.configuracoesDoSistema.subMensagemInicial}"
+			    	             style="width: 500px; height: 30px; font-size: 2em; margin: 5px 0 5px 0;"/>
+					<p:commandButton value="Salvar" actionListener="#{logomarcaUpload.gravarConfiguracoes()}" 
+					                 update="formulario" icon="ui-icon-disk"/>
+		    	</h:panelGrid>
+		    </div>		
+			
+			<div class="clear"></div>
+			
 		</h:form>
 		
 	</ui:define>
