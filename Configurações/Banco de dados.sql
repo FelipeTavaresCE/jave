@@ -267,3 +267,5 @@ INSERT INTO tb_usuario_sistema values(nextval('seq_id_usuario_sistema'), 'cadast
 
 INSERT INTO tb_usuario_sistema_perfil_acesso values('admin', 'ROLE_ADMIN');
 INSERT INTO tb_usuario_sistema_perfil_acesso values('cadastro', 'ROLE_CADASTRO');
+
+INSERT INTO tb_configuracoes_sistema values(1, null, 'Nome da Empresa','Slogan da Empresa');

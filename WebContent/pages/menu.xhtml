@@ -34,7 +34,8 @@
 	            <p:menuitem value="Produtos em Falta" url="#" />
 	        </p:submenu>
 	        <p:submenu label="Configurações" icon="ui-icon-wrench">  
-	            <p:menuitem value="Informações da Loja" url="logomarca.xhtml" />
+	            <p:menuitem value="Informações da Loja" url="logomarca.xhtml"
+	                        rendered="#{facesContext.externalContext.isUserInRole('ROLE_ADMIN')}"/>
 	        </p:submenu>
 	        
 		</p:menubar>
