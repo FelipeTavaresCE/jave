@@ -5,7 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,13 +34,20 @@ public class ProdutoDaoImpl implements ProdutoDao{
 
 	@Override
 	public List<Produto> listarTodos() throws Exception {
-		Query query = entityManager.createNamedQuery("produtoListarTodos");
+		TypedQuery<Produto> query = entityManager.createNamedQuery("produtoListarTodos", Produto.class);
 		return query.getResultList();
 	}
 
 	@Override
 	public Produto pesquisarPorId(Long id) throws Exception, NoResultException {
 		return entityManager.find(Produto.class, id);
+	}
+
+	@Override
+	public Produto pesquisarProdutoCodigoDeBarras(String codigoDeBarras){
+		TypedQuery<Produto> query = entityManager.createNamedQuery("produtoPesquisarPorCodBarras", Produto.class);
+		query.setParameter("codigoDeBarras", codigoDeBarras);
+		return query.getSingleResult();
 	}
 
 }
