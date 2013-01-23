@@ -36,7 +36,7 @@ public class ClienteMB implements Serializable{
 	private UfDao ufDao;
 	private ClienteDao clienteDao;
 	private Pessoa pessoa = new Pessoa();
-	private Cliente cliente;
+	private Cliente cliente = new Cliente();//TODO
 	private Endereco endereco = new Endereco();
 	private List<Endereco> enderecos = new ArrayList<Endereco>();
 	private List<Pessoa> pessoasListagem;
@@ -45,7 +45,6 @@ public class ClienteMB implements Serializable{
 	private List<Uf> ufListagem;
 	private Pessoa pessoaSelecionada;
 	private Endereco enderecoParaExcluir;
-	private Long idUfSelecionada;
 	
 	public ClienteMB(){}
 	
@@ -56,9 +55,7 @@ public class ClienteMB implements Serializable{
 		this.ufDao = ufDao;
 		this.clienteDao = clienteDao;
 		this.sexo = Arrays.asList(Sexo.values());
-		//listarPessoas();
-		//listarClientes();
-		carregaUfs();
+		//carregaUfs();
 	}
 	
 	public List<Uf> carregaUfs(){
@@ -107,14 +104,6 @@ public class ClienteMB implements Serializable{
 	}
 	
 	public void adicionarEndereco(){
-		try {
-			Uf uf = ufDao.pesquisarPorId(idUfSelecionada);
-			this.endereco.setUf(uf);
-		} catch (NoResultException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		this.endereco.setPessoa(pessoa);
 		this.enderecos.add(this.endereco);
 		this.endereco = new Endereco();
@@ -231,14 +220,6 @@ public class ClienteMB implements Serializable{
 
 	public void setUfListagem(List<Uf> ufListagem) {
 		this.ufListagem = ufListagem;
-	}
-
-	public Long getIdUfSelecionada() {
-		return idUfSelecionada;
-	}
-
-	public void setIdUfSelecionada(Long idUfSelecionada) {
-		this.idUfSelecionada = idUfSelecionada;
 	}
 
 	public List<Cliente> getClientes() {

@@ -10,9 +10,12 @@
   <ui:define name="corpo-pagina">
   
   	<style type="text/css">
-  		#tabela-form-endereco td{
+  		td{
   			border: 0;
   			padding: 2px 3px 0 0;
+  		}
+  		.btn{
+  			
   		}
   	</style>
   	
@@ -26,7 +29,8 @@
 		    <p:tab id="tab-dados-pessoais" title="Dados Pessoais">  
 		        <h:panelGrid columns="2">		          
 		            <h:outputText value="Nome.: "/>
-		            <p:inputText value="#{clienteMB.pessoa.nome}" id="nome" styleClass="elemento-form-input largura250"/>
+		            <p:inputText value="#{clienteMB.pessoa.nome}" id="nome" styleClass="elemento-form-input largura250"
+		            	required="true" requiredMessage="Informe o nome do Cliente" />
 	
 		            <h:outputText value="CPF.: "/>
 		            <p:inputMask value="#{clienteMB.pessoa.cpf}" id="cpf" styleClass="elemento-form-input largura80" mask="99999999999"/>
@@ -59,24 +63,24 @@
 						</tr>
 						<tr>
 							<td>
-								<p:inputText id="rua" value="#{clienteMB.endereco.rua}" styleClass="largura250 maiusculo" required="true"/>
+								<p:inputText id="rua" value="#{clienteMB.endereco.rua}" styleClass="largura250 maiusculo" />
 							</td>
 							<td>
-								<p:inputText id="numero" value="#{clienteMB.endereco.numero}" styleClass="largura40" required="true" />
+								<p:inputText id="numero" value="#{clienteMB.endereco.numero}" styleClass="largura40" />
 							</td>
 							<td>
-								<p:inputText id="bairro" value="#{clienteMB.endereco.bairro}" styleClass="largura180 maiusculo" required="true"/>
+								<p:inputText id="bairro" value="#{clienteMB.endereco.bairro}" styleClass="largura180 maiusculo" />
 							</td>
 							<td>
-								<p:inputMask id="cep" value="#{clienteMB.endereco.cep}" styleClass="largura65" mask="99999999" required="true" />
+								<p:inputMask id="cep" value="#{clienteMB.endereco.cep}" styleClass="largura65" mask="99999999" />
 							</td>
 							<td>
-								<p:inputText id="cidade" value="#{clienteMB.endereco.cidade}" styleClass="largura150 maiusculo" required="true"/>
+								<p:inputText id="cidade" value="#{clienteMB.endereco.cidade}" styleClass="largura150 maiusculo" />
 							</td>
 							<td>
-					            <p:selectOneMenu value="#{clienteMB.idUfSelecionada}" id="uf" style="margin: 0 0 -8px 0;">
-					            	<f:selectItem itemLabel="Selecione" />
-					            	<f:selectItems  value="#{clienteMB.carregaUfs()}" var="uf" itemLabel="#{uf.sigla}" itemValue="#{uf.id}"/>
+					            <p:selectOneMenu value="#{clienteMB.endereco.uf}" id="uf" style="margin: 0 0 -8px 0;" converter="simpleIndexConverter">
+					            	<f:selectItem itemLabel="Selecione" noSelectionOption="true"/>
+					            	<f:selectItems  value="#{clienteMB.carregaUfs()}" var="uf" itemLabel="#{uf.sigla}" itemValue="#{uf}"/>
 					            </p:selectOneMenu>							
 							</td>
 							<td>
@@ -215,8 +219,48 @@
 		    </p:tab>
 		    
 		    <!-- ABA DE DADOS DOS CONTATOS -->		  
-		    <p:tab id="tab3" title="Contatos">  
-				<h1>Fncionalidade não implementada.</h1>
+		    <p:tab id="tab-contatos" title="Contatos">
+			    <h:panelGrid columns="2">
+			    	<!-- FIELDSET DOS TELEFONES -->
+			    	<p:fieldset legend="Telefones">
+						<h:panelGrid columns="3" >
+							<h:outputText value="DDD" />
+							<h:outputText value="Número" />
+							<h:outputText value="" styleClass="btn"/>
+							
+							<p:inputText id="ddd" styleClass="largura40"/>
+							<p:inputText id="numero-contato" styleClass="largura65"/>
+							<p:commandButton icon="ui-icon-check" style="height: 24px;"/>
+						</h:panelGrid>
+						<br/>
+						<p:dataTable value="" emptyMessage="Nenhum telefone cadastrado.">
+							<p:column headerText="DDD">
+							</p:column>
+							<p:column headerText="Número">
+							</p:column>						
+						</p:dataTable>
+					</p:fieldset>
+					<!-- FIELDSET DOS E-MAILS -->
+			    	<p:fieldset legend="E-mails">
+						<h:panelGrid columns="2" >
+							<h:outputText value="E-mail" />
+							<h:outputText value="" styleClass="btn"/>
+							
+							<p:inputText id="email" styleClass="largura250"/>
+							<p:commandButton icon="ui-icon-check" style="height: 24px;"/>
+						</h:panelGrid>
+						<br/>
+						<p:dataTable value="" emptyMessage="Nenhum e-mail cadastrado.">
+							<p:column headerText="E-mail">
+							</p:column>
+						</p:dataTable>
+					</p:fieldset>
+				</h:panelGrid>	
+		    </p:tab>
+		    
+		    <!-- ABA DE FOTO DO CLIENTE -->
+		    <p:tab id="tab-foto" title="Foto">
+		    	<h1>Fncionalidade não implementada.</h1>
 		    </p:tab>		  
 		</p:tabView>
 		
