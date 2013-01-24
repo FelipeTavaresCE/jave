@@ -13,7 +13,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -60,11 +59,9 @@ public class Pessoa implements Serializable{
 	private List<Endereco> enderecos;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="pessoa")
-	//@JoinColumn(name = "pessoa_id")
 	private List<Telefone> contatos;
 	
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "pessoa_id")	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="pessoa")
 	private List<Email> emails;
 	
 	private byte[] foto;

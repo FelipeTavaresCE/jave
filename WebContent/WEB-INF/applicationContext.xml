@@ -44,7 +44,7 @@
 		<b:property name="dataSource" ref="dataSource"/>
 		<b:property name="jpaVendorAdapter">
 			<b:bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-				<b:property name="showSql" value="true" />
+				<b:property name="showSql" value="false" />
 				<b:property name="databasePlatform" value="org.hibernate.dialect.PostgreSQLDialect" />
 			</b:bean>
 		</b:property>

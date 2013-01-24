@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -15,8 +16,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tb_email")
 @NamedQueries({
-	@NamedQuery(name = "emailListarTodos", query = "SELECT e FROM Email e"),
-	@NamedQuery(name = "emailPesquisarPorId", query = "SELECT e FROM Email e WHERE e.id = :id")
+	@NamedQuery(name = "emailListarTodos", query = "SELECT e FROM Email e")
 })
 
 public class Email implements Serializable {
@@ -29,6 +29,7 @@ public class Email implements Serializable {
 	private Long id;
 	private String email;
 	@ManyToOne
+	@JoinColumn(name = "pessoa_id")
 	private Pessoa pessoa;
 	
 	public Long getId() {

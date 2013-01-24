@@ -9,7 +9,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.persistence.NoResultException;
 
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.model.DefaultStreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -20,10 +22,13 @@ import br.com.jave.dao.UfDao;
 import br.com.jave.enums.Sexo;
 import br.com.jave.excecoes.ExclusaoNaoPermitidaException;
 import br.com.jave.modelo.Cliente;
+import br.com.jave.modelo.Email;
 import br.com.jave.modelo.Endereco;
 import br.com.jave.modelo.Pessoa;
+import br.com.jave.modelo.Telefone;
 import br.com.jave.modelo.Uf;
 import br.com.jave.util.FacesMessageUtil;
+import br.com.jave.util.UploadDeImagem;
 
 @Controller
 @ManagedBean
@@ -36,7 +41,7 @@ public class ClienteMB implements Serializable{
 	private UfDao ufDao;
 	private ClienteDao clienteDao;
 	private Pessoa pessoa = new Pessoa();
-	private Cliente cliente = new Cliente();//TODO
+	private Cliente cliente = new Cliente();
 	private Endereco endereco = new Endereco();
 	private List<Endereco> enderecos = new ArrayList<Endereco>();
 	private List<Pessoa> pessoasListagem;
@@ -45,6 +50,10 @@ public class ClienteMB implements Serializable{
 	private List<Uf> ufListagem;
 	private Pessoa pessoaSelecionada;
 	private Endereco enderecoParaExcluir;
+	private Telefone telefoneAdicionar = new Telefone();
+	private Email emailAdicionar = new Email();
+	private DefaultStreamedContent fotoGerada;
+	private byte[] conteudoDoArquivo;
 	
 	public ClienteMB(){}
 	
@@ -55,7 +64,6 @@ public class ClienteMB implements Serializable{
 		this.ufDao = ufDao;
 		this.clienteDao = clienteDao;
 		this.sexo = Arrays.asList(Sexo.values());
-		//carregaUfs();
 	}
 	
 	public List<Uf> carregaUfs(){
@@ -86,9 +94,10 @@ public class ClienteMB implements Serializable{
 	public void prepararEdicao(){
 		try {
 			this.pessoa = pessoaDao.pesquisarPorId(cliente.getPessoa().getId());
+			this.fotoGerada = UploadDeImagem.gerarApresentacaoTela(this.pessoa.getFoto());
 		} catch (NoResultException e) {
 			e.printStackTrace();
-			FacesMessageUtil.mensagem("Estado não encontrado");
+			FacesMessageUtil.mensagem("Pessoa não encontrada");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -128,7 +137,8 @@ public class ClienteMB implements Serializable{
 		this.pessoa            = new Pessoa();
 		this.pessoaSelecionada = new Pessoa();
 		this.enderecos         = new ArrayList<Endereco>();
-		this.endereco          = new Endereco();		
+		this.endereco          = new Endereco();
+		this.cliente           = new Cliente();
 	}
 	
 	public void excluirEndereco(){
@@ -153,6 +163,32 @@ public class ClienteMB implements Serializable{
 		}
 		return this.clientes;
 	}
+	
+	public void adicionarTelefone(){
+		if(this.pessoa.getContatos() == null){
+			this.pessoa.setContatos(new ArrayList<Telefone>());
+		}
+		telefoneAdicionar.setPessoa(this.pessoa);
+		this.pessoa.getContatos().add(telefoneAdicionar);
+		this.telefoneAdicionar = new Telefone();
+	}
+	
+	public void adicionarEmail(){
+		if(this.pessoa.getEmails() == null){
+			this.pessoa.setEmails(new ArrayList<Email>());
+		}
+		emailAdicionar.setPessoa(this.pessoa);
+		this.pessoa.getEmails().add(emailAdicionar);
+		this.emailAdicionar = new Email();
+	}
+	
+	public void carregarFoto(FileUploadEvent event){
+		this.conteudoDoArquivo = event.getFile().getContents();
+		this.fotoGerada = UploadDeImagem.gerarApresentacaoTela(this.conteudoDoArquivo);
+		this.pessoa.setFoto(this.conteudoDoArquivo);
+	}
+	
+	/*Métodos e get e set*/
 	
 	public Pessoa getPessoa() {
 		return pessoa;
@@ -236,5 +272,29 @@ public class ClienteMB implements Serializable{
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+	public Telefone getTelefoneAdicionar() {
+		return telefoneAdicionar;
+	}
+
+	public void setTelefoneAdicionar(Telefone telefoneAdicionar) {
+		this.telefoneAdicionar = telefoneAdicionar;
+	}
+
+	public Email getEmailAdicionar() {
+		return emailAdicionar;
+	}
+
+	public void setEmailAdicionar(Email emailAdicionar) {
+		this.emailAdicionar = emailAdicionar;
+	}
+
+	public DefaultStreamedContent getFotoGerada() {
+		return fotoGerada;
+	}
+
+	public void setFotoGerada(DefaultStreamedContent fotoGerada) {
+		this.fotoGerada = fotoGerada;
 	}
 }
