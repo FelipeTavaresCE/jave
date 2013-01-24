@@ -10,20 +10,7 @@
 	<ui:define name="corpo-pagina">
 		<p:growl globalOnly="false" id="mensagens"/>
 		<h:form id="form-geral">
-			<p:tabView id="tabView">  
-			    <p:tab id="logomarca-tab-upload" title="Inserir Logomarca">  
-			        <h:panelGrid columns="2" cellpadding="10">
-			            <h:outputText value="Nome.: "/>
-			            <p:inputText id="nome" value="#{ufMB.uf.nome}" styleClass="elemento-form-input largura250" 
-			                         required="true" requiredMessage="O Nome da UF é obrigatório."/>
 
-			            <h:panelGroup></h:panelGroup>
-			            			            
-			            <p:commandButton value="Salvar" icon="ui-icon-disk" actionListener="#{ufMB.salvar}" ajax="true" 
-			                             update=":mensagens :form-geral :form-listagem-uf"/>
-			        </h:panelGrid>
-			    </p:tab>  
-			</p:tabView> 		
 		</h:form>
 	</ui:define>
 
