@@ -138,19 +138,6 @@ CREATE TABLE tb_perfil_acesso(
     nome varchar(20) not null
 );
 
-DROP TABLE IF EXISTS tb_pessoa;
-
-CREATE TABLE tb_pessoa (
-    id bigint NOT NULL,
-    cnpj varchar(14),
-    cpf varchar(11),
-    datacadastro timestamp without time zone,
-    datanascimento date,
-    nome varchar(100),
-    sexo varchar(10),
-    foto bytea
-);
-
 DROP TABLE IF EXISTS tb_cliente;
 
 CREATE TABLE tb_cliente(
@@ -168,7 +155,8 @@ CREATE TABLE tb_uf (
     sigla varchar(2)
 );
 
---------configurações do sistema -----
+DROP TABLE IF EXISTS tb_configuracoes_sistema;
+
 CREATE TABLE tb_configuracoes_sistema(
     id bigint not null,
     logomarca bytea,
@@ -176,9 +164,19 @@ CREATE TABLE tb_configuracoes_sistema(
     sub_mensagem_inicial varchar(100)
     
 );
-ALTER TABLE tb_configuracoes_sistema
-    ADD CONSTRAINT pk_config_sistema PRIMARY KEY (id);
-----------------------------------------
+
+DROP TABLE IF EXISTS tb_pessoa;
+
+CREATE TABLE tb_pessoa (
+    id bigint NOT NULL,
+    cnpj varchar(14),
+    cpf varchar(11),
+    datacadastro timestamp without time zone,
+    datanascimento date,
+    nome varchar(100),
+    sexo varchar(10),
+    foto bytea
+);
 
 --------------Fim da Criação das tabelas------------------------
 
@@ -206,6 +204,9 @@ ALTER TABLE ONLY tb_perfil_acesso
 
 ALTER TABLE tb_cliente
     ADD CONSTRAINT pk_cliente PRIMARY KEY (id);
+
+ALTER TABLE tb_configuracoes_sistema
+    ADD CONSTRAINT pk_config_sistema PRIMARY KEY (id);    
 
 -------------- Fim da Criação das Primary Keys ------------------------
 

@@ -5,7 +5,7 @@
   xmlns:ui="http://java.sun.com/jsf/facelets"
   xmlns:p="http://primefaces.org/ui">
 
-	<ui:define name="pagina-titulo">Insira o titulo da página</ui:define>
+	<ui:define name="pagina-titulo">Cadastro de Usuários do Sitema</ui:define>
 
 	<ui:define name="corpo-pagina">
 		<style type="text/css">
@@ -14,43 +14,50 @@
 		
 		<p:growl globalOnly="false" id="mensagens"/>
 		<h:form id="form-geral">
-	        <h:panelGrid columns="2">		          
-	            <h:outputText value="Nome.: "/>
-	            <p:inputText value="#{clienteMB.pessoa.nome}" id="nome" styleClass="elemento-form-input largura250"
-	            	required="true" requiredMessage="Informe o nome do Cliente" />
+			<p:tabView>
+				<p:tab title="Dados do Usuário">
+			        <h:panelGrid columns="2">		          
+			            <h:outputText value="Nome.: "/>
+			            <p:inputText value="#{clienteMB.pessoa.nome}" id="nome" styleClass="elemento-form-input largura250"
+			            	required="true" requiredMessage="Informe o nome do Cliente" />
 
-	            <h:outputText value="CPF.: "/>
-	            <p:inputMask value="#{clienteMB.pessoa.cpf}" id="cpf" styleClass="elemento-form-input largura80" mask="99999999999"/>
-
-	            <h:outputText value="CNPJ.:"/>
-	            <p:inputMask value="#{clienteMB.pessoa.cnpj}" id="cnpj" styleClass="elemento-form-input largura100" mask="99999999999999" />
-
-	            <h:outputText value="Nascimento.: "/>
-	            <p:inputMask value="#{clienteMB.pessoa.dataNascimento}" id="data-nascimento" styleClass="elemento-form-input largura65" mask="99/99/9999" />
-	            
-	            <h:outputText value="Sexo.: "/>
-	            <p:selectOneMenu value="#{clienteMB.pessoa.sexo}" id="sexo" styleClass="elemento-form-input">
-	            	<f:selectItems  value="#{clienteMB.sexo}" var="sexo" itemLabel="#{sexo.toString()}" itemValue="#{sexo}"/>
-	            </p:selectOneMenu>
-	            
-	            <h:outputText value="Data Cadastro.: "/>
-	            <p:inputText value="#{clienteMB.pessoa.dataCadastro}" id="data-cadastro" disabled="true" styleClass="elemento-form-input largura65" />
-
-				<h:outputText value="Login.: "/>
-				<p:inputText id="login" styleClass="elemento-form-input largura200" />
-				
-				<h:outputText value="Senha.: "/>
-				<p:password id="senha1" match="senha2" label="Password 1" required="true" styleClass="elemento-form-input"
-				 	goodLabel="Bom" promptLabel="Informe a senha" strongLabel="Forte" weakLabel="Fraca" />
-				
-				<h:outputText value="Repita a Senha.: " styleClass="senhas"/>
-				<p:password id="senha2" match="senha2" label="Password 2" required="true" styleClass="elemento-form-input"
-					goodLabel="Bom" promptLabel="Repita a senha" strongLabel="Forte" weakLabel="Fraca"/>
-
-				<h:outputText value="Ativo.: "/>
-	            <p:selectBooleanButton onLabel="Sim" offLabel="Não" styleClass="elemento-form-input largura200"/>
-
-	        </h:panelGrid>		        
+			            <h:outputText value="CPF.: "/>
+			            
+			            <h:panelGroup>
+				            <p:inputMask value="#{clienteMB.pessoa.cpf}" id="cpf" styleClass="elemento-form-input largura80" mask="99999999999"/>
+				            <h:outputText value="CNPJ.:"/>
+				            <p:inputMask value="#{clienteMB.pessoa.cnpj}" id="cnpj" styleClass="elemento-form-input largura100" mask="99999999999999" />
+			            </h:panelGroup>
+		
+			            <h:outputText value="Nascimento.: "/>
+			            <h:panelGroup>
+				            <p:inputMask value="#{clienteMB.pessoa.dataNascimento}" id="data-nascimento" styleClass="elemento-form-input largura65" mask="99/99/9999" />
+				            <h:outputText value="Sexo.: "/>
+				            <p:selectOneMenu value="#{clienteMB.pessoa.sexo}" id="sexo" styleClass="elemento-form-input" style="margin-bottom:-7px;">
+				            	<f:selectItems  value="#{clienteMB.sexo}" var="sexo" itemLabel="#{sexo.toString()}" itemValue="#{sexo}"/>
+				            </p:selectOneMenu>
+			            </h:panelGroup>
+			            
+			            <h:outputText value="Data Cadastro.: "/>
+			            <p:inputText value="#{clienteMB.pessoa.dataCadastro}" id="data-cadastro" disabled="true" styleClass="elemento-form-input largura65" />
+		
+						<h:outputText value="Login.: "/>
+						<p:inputText id="login" styleClass="elemento-form-input largura200" />
+						
+						<h:outputText value="Senha.: "/>
+						<p:password id="senha1" match="senha2" label="Password 1" required="true" styleClass="elemento-form-input"
+						 	goodLabel="Bom" promptLabel="Informe a senha" strongLabel="Forte" weakLabel="Fraca" />
+						
+						<h:outputText value="Repita a Senha.: " styleClass="senhas"/>
+						<p:password id="senha2" match="senha2" label="Password 2" required="true" styleClass="elemento-form-input"
+							goodLabel="Bom" promptLabel="Repita a senha" strongLabel="Forte" weakLabel="Fraca"/>
+		
+						<h:outputText value="Ativo.: "/>
+			            <p:selectBooleanButton onLabel="Sim" offLabel="Não" styleClass="elemento-form-input largura200"/>
+		
+			        </h:panelGrid>
+		        </p:tab>
+	        </p:tabView>
 
 		</h:form>
 	</ui:define>
