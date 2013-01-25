@@ -1,0 +1,60 @@
+<ui:composition template="/WEB-INF/templates/principal.xhtml"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core" 
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="pagina-titulo">Insira o titulo da página</ui:define>
+
+	<ui:define name="corpo-pagina">
+		<p:growl globalOnly="false" id="mensagens"/>
+		<h:form id="form-geral">
+			<h:panelGrid id="panelProduto" columns="2">
+	            <h:outputText value="Nome.: "/>
+	            <p:inputText id="nome" value="#{produtoMB.produto.nome}" />
+	            
+	            <h:outputText value="Código de Barras.: "/>
+	            <p:inputText id="cdBarras" value="#{produtoMB.produto.codigoDeBarras}" />
+	            
+	            <h:outputText value="Qr Code.: "/>
+	            <p:inputText id="qrCode" value="#{produtoMB.produto.qrCode}" />
+	            
+	            <h:outputText value="Nome do Fabricante.: "/>
+	            <p:inputText id="nmFab" value="#{produtoMB.produto.nomeFabricante}" />
+	            
+	            <h:outputText value="Código de Referência.: "/>
+	            <p:inputText id="cdREf" value="#{produtoMB.produto.codigoReferencia}" />
+	            
+	            <h:outputText value="Lote.: "/>
+	            <p:inputText id="lote" value="#{produtoMB.produto.lote}" />
+	            
+	            <h:outputText value="Perecível.: "/>
+	            <p:inputText id="perecivel" value="#{produtoMB.produto.perecivel}" />
+	            
+	            <h:outputText value="Tipo de Medida.: "/>
+	            <p:inputText id="tpMedida" value="#{produtoMB.produto.tipoMedida}" />
+	            
+	            <h:outputText value="Qtd Volume.: "/>
+	            <p:inputText id="qtdVolume" value="#{produtoMB.produto.quantidadeVolume}" />
+	            
+	            <h:outputText value="Preço.: "/>
+	            <p:inputText id="preco" value="#{produtoMB.produto.preco}" />
+	            
+	            <h:outputText value="Desconto %.: "/>
+	            <p:inputText id="desconto" value="#{produtoMB.produto.descontoPercentual}" />
+	            
+	            <h:outputText value="Qtd Disponível.: "/>
+	            <p:inputText id="qtdDisponivel" value="#{produtoMB.produto.quantidadeDisponivel}" />
+	            
+	            <h:outputText value="Estoque Mínimo.: "/>
+	            <p:inputText id="estoqueDisp" value="#{produtoMB.produto.estoqueMinimo}" />
+	            
+	            <h:outputText value="Ativo.: "/>
+	            <p:inputText id="ativo" value="#{produtoMB.produto.ativo}" />
+
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
