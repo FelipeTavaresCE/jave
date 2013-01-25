@@ -39,7 +39,12 @@
 <!-- 			<redirect /> -->
 <!-- 		</navigation-case> -->
 <!-- 	</navigation-rule> -->
-
+<application>
+	<resource-bundle>
+		<base-name>br.com.jave.resource.mensagens</base-name>
+		<var>msgs</var>
+	</resource-bundle>
+</application>
 <navigation-rule>
 		<from-view-id>*</from-view-id>
 		<navigation-case>
