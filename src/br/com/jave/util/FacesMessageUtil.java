@@ -13,6 +13,7 @@ public class FacesMessageUtil {
 	public static void aviso(String messagem){
 		FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_WARN, messagem, messagem);
 		FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+		FacesContext.getCurrentInstance().renderResponse();
 	}
 	
 	public static void erro(String messagem){

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.persistence.NoResultException;
 
 import org.primefaces.event.FileUploadEvent;
@@ -45,11 +46,19 @@ public class LogomarcaUpload implements Serializable{
 	public void carregarConfiguracoes(){
 		try {
 			this.configuracoesDoSistema = configuracoesDoSistemaDao.pesquisarPorId(1L);
-			if(logoAlterada)
+			if(this.configuracoesDoSistema == null){
+				//throw new NullPointerException();
+				FacesMessageUtil.aviso("Por favor inserir logomarca!");
+			}
+			if(logoAlterada) 
 				this.fotoGerada = UploadDeImagem.gerarApresentacaoTela(configuracoesDoSistema.getLogomarca());
 		} catch (NoResultException e) {
 			FacesMessageUtil.aviso("As configurações do sistema ainda não foram setadas!");
-		}catch(Exception e){
+		}
+		catch (NullPointerException ne) {
+			FacesMessageUtil.aviso("Por favor inserir logomarca!");
+		}
+		catch(Exception e){
 			FacesMessageUtil.aviso("Erro ao carregar as configurações do sistema!\n" + e.getMessage());
 			e.printStackTrace();
 		}
