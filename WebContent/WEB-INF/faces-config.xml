@@ -6,6 +6,13 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd"
     version="2.1">
     
+    <converter>
+    <converter-id>MoedaConverter</converter-id>
+
+ 	 <converter-class>br.com.jave.util.MoedaConverter</converter-class>
+      
+	</converter>
+	
   <application>
 		<!-- Spring EL Resolver -->
 		<el-resolver>
