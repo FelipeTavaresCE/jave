@@ -14,6 +14,7 @@ import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 
 import br.com.jave.dao.ClienteDao;
@@ -79,19 +80,19 @@ public class ClienteMB implements Serializable{
 			pessoaDao.gravar(this.pessoa);
 			this.fotoGerada = UploadDeImagem.gerarApresentacaoTela(this.pessoa.getFoto());
 			//criarNovo(); //Descomentar se quiser que a tela seja limpada após a gravação
-			
 			if(cliente == null){
 				cliente = new Cliente();
 				cliente.setDataCadastro(new Date());
 				cliente.setPessoa(pessoa);
 			}
-			
-			clienteDao.gravar(cliente);
-			
-			
+			cliente = clienteDao.gravarRetorno(cliente);
 			FacesMessageUtil.mensagem("Cliente Gravado com sucesso.");
-		} catch (Exception e) {
-			FacesMessageUtil.erro("Ocorreu um erro ao gravar o cliente.\n" + e.getMessage());
+		}catch(DataIntegrityViolationException e){
+			FacesMessageUtil.erro("ERRO: Já existe um cliente associado a esta pessoa. " +
+					"Provavelmente a tela foi atualizada. Seleciona novamente o cliente.\n", e.getMessage());
+			e.printStackTrace();
+		}catch (Exception e) {
+			FacesMessageUtil.erro("Ocorreu um erro ao gravar o cliente.\n", e.getMessage());
 			e.printStackTrace();
 		}
 	}

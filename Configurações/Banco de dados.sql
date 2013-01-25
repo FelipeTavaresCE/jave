@@ -202,6 +202,7 @@ ALTER TABLE tb_configuracoes_sistema
 
 -------------- Criação dos indices ---------------------------------
 CREATE UNIQUE INDEX unq_idx_login ON tb_usuario_sistema(login);
+CREATE UNIQUE INDEX unq_idx_pessoa_cliente ON tb_cliente(pessoa_id);
 -------------- Fim da Criação dos indices --------------------------
 
 -------------- Criação das Foreign Keys ------------------------

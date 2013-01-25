@@ -41,6 +41,16 @@
 	        
 		</p:menubar>
 		<div id="menu-usuario-dados">
+		<p:ajaxStatus style="position: absolute; border: 0px solid gray; margin: 5px 0 0 0;" id="ajaxStatusPanel">  
+		    <f:facet name="start">  
+		        <h:graphicImage value="../imagens/ajax-loader.gif" />  
+		    </f:facet>  
+		      
+		    <f:facet name="complete">  
+		        <h:outputText value="" />  
+		    </f:facet>  
+		</p:ajaxStatus>  
+		
 			<span id="menu-nome-usuario-sistema"><h:outputLabel value="#{usuarioController.usuario.login}"></h:outputLabel></span>
 			<span id="menu-icone-sair">
 				<p:commandLink onclick="confirmation.show()">  

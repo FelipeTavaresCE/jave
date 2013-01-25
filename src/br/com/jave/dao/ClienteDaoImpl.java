@@ -21,9 +21,12 @@ public class ClienteDaoImpl implements ClienteDao {
 	EntityManager entityManager;	
 
 	@Override
-	@Transactional
 	public void gravar(Cliente cliente) throws Exception {
 		entityManager.merge(cliente);
+	}
+
+	public Cliente gravarRetorno(Cliente cliente) throws Exception {
+		return entityManager.merge(cliente);
 	}
 
 	@Override

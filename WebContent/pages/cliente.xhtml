@@ -22,6 +22,8 @@
 		.cantos-arredondados{border: 1px solid #A8A8A8; border-radius: 3px 3px 3px 3px; padding: 5px; margin: 4px 4px 0 0;}
 		#div-inputs{float: left; margin: 8px 0 0 3px;}
 		.clear{clear: both;}
+		
+		.tab{min-height: 270px;}
   		
   	</style>
   	
@@ -33,10 +35,10 @@
 		</div>
 
 		<!-- INICIO DA DECLARAÇÃO DAS ABAS -->
-		<p:tabView id="tab" onTabChange="indexAbaSelecionada = index;" widgetVar="abas">		
+		<p:tabView id="tab" onTabChange="indexAbaSelecionada = index;" widgetVar="abas" styleClass="tab">		
 			
 			<!-- ABA DE DADOS PESSOAIS -->
-		    <p:tab id="tab-dados-pessoais" title="Dados Pessoais" >  
+		    <p:tab id="tab-dados-pessoais" title="Dados Pessoais"> 
 		        <h:panelGrid columns="2">		          
 		            <h:outputText value="Nome.: "/>
 		            <p:inputText value="#{clienteMB.pessoa.nome}" id="nome" styleClass="elemento-form-input largura250"
@@ -56,10 +58,13 @@
 		            	<f:selectItems  value="#{clienteMB.sexo}" var="sexo" itemLabel="#{sexo.toString()}" itemValue="#{sexo}"/>
 		            </p:selectOneMenu>
 		            
+		            <h:outputText value="Cód. Cliente.: "/>
+		            <p:inputText value="#{clienteMB.cliente.id}" id="cod-cliente" readonly="true" styleClass="elemento-form-input largura65" />
+
 		            <h:outputText value="Data Cadastro.: "/>
-		            <p:inputText value="#{clienteMB.pessoa.dataCadastro}" id="data-cadastro" disabled="true" styleClass="elemento-form-input largura65" />
+		            <p:inputText value="#{clienteMB.cliente.dataCadastro}" id="data-cadastro" readonly="true" styleClass="elemento-form-input largura65" />
 		            
-		            <p:growl id="mensagens"/>
+		            <p:growl id="mensagens" life="10000" showDetail="true"/>
 	
 		        </h:panelGrid>		        
 		    </p:tab>
@@ -255,7 +260,7 @@
 			    	<h:panelGrid columns="1">
 						<p:fileUpload   
 						            mode="advanced"  
-						            update="tab-foto"  
+						            update="foto"  
 						            auto="true"
 						            allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
 						            cancelLabel="Cancelar"
@@ -273,7 +278,7 @@
 		<p:commandButton value="Gravar" icon="ui-icon-disk" actionListener="#{clienteMB.gravar}"
 			update=":form-geral"  />
 		<p:commandButton value="Novo" icon="ui-icon-circle-plus" actionListener="#{clienteMB.criarNovo}"
-			update=":form-geral" process="@this" oncomplete="abas.select(0)"/>
+			update=":form-geral" process="@this" oncomplete="abas.select(0)" ajax="true"/>
 		<br />
 		<br />
 		
