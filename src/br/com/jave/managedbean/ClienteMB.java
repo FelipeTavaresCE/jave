@@ -3,6 +3,7 @@ package br.com.jave.managedbean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -40,15 +41,13 @@ public class ClienteMB implements Serializable{
 	private EnderecoDao enderecoDao;
 	private UfDao ufDao;
 	private ClienteDao clienteDao;
+	
 	private Pessoa pessoa = new Pessoa();
 	private Cliente cliente = new Cliente();
 	private Endereco endereco = new Endereco();
-	private List<Endereco> enderecos = new ArrayList<Endereco>();
-	private List<Pessoa> pessoasListagem;
 	private List<Cliente> clientes = null;
 	private List<Sexo> sexo;
 	private List<Uf> ufListagem;
-	private Pessoa pessoaSelecionada;
 	private Endereco enderecoParaExcluir;
 	private Telefone telefoneAdicionar = new Telefone();
 	private Email emailAdicionar = new Email();
@@ -77,13 +76,19 @@ public class ClienteMB implements Serializable{
 	
 	public void gravar(){
 		try {			
-			pessoa.setEnderecos(enderecos);
 			pessoaDao.gravar(this.pessoa);
-			this.pessoa            = new Pessoa();
-			this.pessoaSelecionada = new Pessoa();
-			this.enderecos         = new ArrayList<Endereco>();
-			this.endereco          = new Endereco();
-			listarPessoas();
+			this.fotoGerada = UploadDeImagem.gerarApresentacaoTela(this.pessoa.getFoto());
+			//criarNovo(); //Descomentar se quiser que a tela seja limpada após a gravação
+			
+			if(cliente == null){
+				cliente = new Cliente();
+				cliente.setDataCadastro(new Date());
+				cliente.setPessoa(pessoa);
+			}
+			
+			clienteDao.gravar(cliente);
+			
+			
 			FacesMessageUtil.mensagem("Cliente Gravado com sucesso.");
 		} catch (Exception e) {
 			FacesMessageUtil.erro("Ocorreu um erro ao gravar o cliente.\n" + e.getMessage());
@@ -93,7 +98,9 @@ public class ClienteMB implements Serializable{
 	
 	public void prepararEdicao(){
 		try {
-			this.pessoa = pessoaDao.pesquisarPorId(cliente.getPessoa().getId());
+			cliente = clienteDao.pesquisarPorId(cliente.getId());
+			//this.pessoa = pessoaDao.pesquisarPorId(cliente.getPessoa().getId());
+			this.pessoa = cliente.getPessoa();
 			this.fotoGerada = UploadDeImagem.gerarApresentacaoTela(this.pessoa.getFoto());
 		} catch (NoResultException e) {
 			e.printStackTrace();
@@ -103,18 +110,12 @@ public class ClienteMB implements Serializable{
 		}
 	}	
 	
-	public List<Pessoa> listarPessoas(){
-		try {
-			this.pessoasListagem = pessoaDao.listarTodos();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return this.pessoasListagem;
-	}
-	
 	public void adicionarEndereco(){
-		this.endereco.setPessoa(pessoa);
-		this.enderecos.add(this.endereco);
+		if(this.pessoa.getEnderecos() == null)
+			this.pessoa.setEnderecos(new ArrayList<Endereco>());
+		this.endereco.setPessoa(this.pessoa);
+		this.pessoa.getEnderecos().add(endereco);
+
 		this.endereco = new Endereco();
 	}
 	
@@ -135,8 +136,6 @@ public class ClienteMB implements Serializable{
 	
 	public void criarNovo(){
 		this.pessoa            = new Pessoa();
-		this.pessoaSelecionada = new Pessoa();
-		this.enderecos         = new ArrayList<Endereco>();
 		this.endereco          = new Endereco();
 		this.cliente           = new Cliente();
 	}
@@ -145,7 +144,7 @@ public class ClienteMB implements Serializable{
 		try {
 			enderecoDao.excluir(enderecoParaExcluir);
 			FacesMessageUtil.mensagem("Endereço Excluido com sucesso!");
-			this.pessoa = pessoaDao.pesquisarPorId(pessoaSelecionada.getId());
+			this.pessoa = pessoaDao.pesquisarPorId(this.pessoa.getId());
 			this.enderecoParaExcluir = null;  
 		} catch (ExclusaoNaoPermitidaException e) {
 			FacesMessageUtil.erro(e.getMessage());
@@ -216,30 +215,6 @@ public class ClienteMB implements Serializable{
 
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
-	}
-
-	public List<Endereco> getEnderecos() {
-		return enderecos;
-	}
-
-	public void setEnderecos(List<Endereco> enderecos) {
-		this.enderecos = enderecos;
-	}
-
-	public List<Pessoa> getPessoasListagem() {
-		return pessoasListagem;
-	}
-
-	public void setPessoasListagem(List<Pessoa> pessoasListagem) {
-		this.pessoasListagem = pessoasListagem;
-	}
-
-	public Pessoa getPessoaSelecionada() {
-		return pessoaSelecionada;
-	}
-
-	public void setPessoaSelecionada(Pessoa pessoaSelecionada) {
-		this.pessoaSelecionada = pessoaSelecionada;
 	}
 
 	public Endereco getEnderecoParaExcluir() {

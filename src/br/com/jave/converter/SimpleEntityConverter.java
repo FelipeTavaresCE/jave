@@ -12,7 +12,6 @@ import javax.faces.convert.FacesConverter;
 public class SimpleEntityConverter implements Converter {  
 	  
 	public Object getAsObject(FacesContext ctx, UIComponent component, String value) {
-		System.out.println("valor do campo: " + value);
         if (value != null)
         	return this.getAttributesFrom(component).get(value);  
         return null;  

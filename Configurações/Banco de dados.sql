@@ -62,15 +62,6 @@ CREATE SEQUENCE seq_id_cliente
     NO MAXVALUE
     CACHE 1;
 
-DROP SEQUENCE IF EXISTS seq_cod_cliente;
-
-CREATE SEQUENCE seq_cod_cliente
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
 DROP SEQUENCE IF EXISTS seq_id_configuracoes_sistema;
 
 CREATE SEQUENCE seq_id_configuracoes_sistema
@@ -143,7 +134,6 @@ DROP TABLE IF EXISTS tb_cliente;
 CREATE TABLE tb_cliente(
     id bigint not null,
     dt_cadastro date not null,
-    codigo_cliente bigint not null,
     pessoa_id bigint not null
 );
 
@@ -212,8 +202,6 @@ ALTER TABLE tb_configuracoes_sistema
 
 -------------- Criação dos indices ---------------------------------
 CREATE UNIQUE INDEX unq_idx_login ON tb_usuario_sistema(login);
-
-CREATE UNIQUE INDEX unq_idx_cod_cliente ON tb_cliente(codigo_cliente);
 -------------- Fim da Criação dos indices --------------------------
 
 -------------- Criação das Foreign Keys ------------------------

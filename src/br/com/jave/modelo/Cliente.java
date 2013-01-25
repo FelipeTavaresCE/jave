@@ -3,6 +3,7 @@ package br.com.jave.modelo;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +22,7 @@ import javax.persistence.TemporalType;
 @Table(name = "tb_cliente")
 @NamedQueries({
 	@NamedQuery(name = "clienteListarTodos", query = "SELECT c FROM Cliente c join c.pessoa p"),
-	@NamedQuery(name = "clientePesquisarPorCodigo", query = "SELECT c FROM Cliente c WHERE c.codigoCliente = :codigoCliente"),
+	@NamedQuery(name = "clientePesquisarPorCodigo", query = "SELECT c FROM Cliente c WHERE c.id = :codigoCliente"),
 })
 public class Cliente implements Serializable{
 	
@@ -36,12 +37,7 @@ public class Cliente implements Serializable{
 	@Temporal(TemporalType.DATE)
     private Date dataCadastro;
 	
-	@SequenceGenerator(name = "seqCodCliente", sequenceName = "seq_cod_cliente", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqCodCliente")	
-	@Column(name = "codigo_cliente", nullable = false)
-	private Long codigoCliente;
-	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "pessoa_id")
 	private Pessoa pessoa;
 
@@ -61,14 +57,6 @@ public class Cliente implements Serializable{
 		this.dataCadastro = dataCadastro;
 	}
 
-	public Long getCodigoCliente() {
-		return codigoCliente;
-	}
-
-	public void setCodigoCliente(Long codigoCliente) {
-		this.codigoCliente = codigoCliente;
-	}
-
 	public Pessoa getPessoa() {
 		return pessoa;
 	}
@@ -86,8 +74,6 @@ public class Cliente implements Serializable{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((codigoCliente == null) ? 0 : codigoCliente.hashCode());
-		result = prime * result
 				+ ((dataCadastro == null) ? 0 : dataCadastro.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((pessoa == null) ? 0 : pessoa.hashCode());
@@ -103,11 +89,6 @@ public class Cliente implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Cliente other = (Cliente) obj;
-		if (codigoCliente == null) {
-			if (other.codigoCliente != null)
-				return false;
-		} else if (!codigoCliente.equals(other.codigoCliente))
-			return false;
 		if (dataCadastro == null) {
 			if (other.dataCadastro != null)
 				return false;

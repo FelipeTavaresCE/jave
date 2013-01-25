@@ -69,69 +69,41 @@
 		    	<p:panel id="form-novo-endereco">
 					<table id="tabela-form-endereco">
 						<tr>
-							<td>Rua</td><td>Número</td><td>Bairro</td><td>CEP</td><td>Cidade</td><td>UF</td><td></td>
+							<td>Rua</td>
+							<td>Número</td>
+							<td>Bairro</td>
+							<td>CEP</td>
+							<td>Cidade</td>
+							<td>UF</td>
 						</tr>
 						<tr>
-							<td>
-								<p:inputText id="rua" value="#{clienteMB.endereco.rua}" styleClass="largura250 maiusculo" />
-							</td>
-							<td>
-								<p:inputText id="numero" value="#{clienteMB.endereco.numero}" styleClass="largura40" />
-							</td>
-							<td>
-								<p:inputText id="bairro" value="#{clienteMB.endereco.bairro}" styleClass="largura180 maiusculo" />
-							</td>
-							<td>
-								<p:inputMask id="cep" value="#{clienteMB.endereco.cep}" styleClass="largura65" mask="99999999" />
-							</td>
-							<td>
-								<p:inputText id="cidade" value="#{clienteMB.endereco.cidade}" styleClass="largura150 maiusculo" />
-							</td>
+							<td><p:inputText id="rua" value="#{clienteMB.endereco.rua}" styleClass="largura250 maiusculo" /></td>
+							<td><p:inputText id="numero" value="#{clienteMB.endereco.numero}" styleClass="largura40" /></td>
+							<td><p:inputText id="bairro" value="#{clienteMB.endereco.bairro}" styleClass="largura180 maiusculo" /></td>
+							<td><p:inputMask id="cep" value="#{clienteMB.endereco.cep}" styleClass="largura65" mask="99999999" /></td>
+							<td><p:inputText id="cidade" value="#{clienteMB.endereco.cidade}" styleClass="largura150 maiusculo" /></td>
 							<td>
 					            <p:selectOneMenu value="#{clienteMB.endereco.uf}" id="uf" style="margin: 0 0 -8px 0;" converter="simpleIndexConverter">
 					            	<f:selectItem itemLabel="Selecione" noSelectionOption="true"/>
 					            	<f:selectItems  value="#{clienteMB.carregaUfs()}" var="uf" itemLabel="#{uf.sigla}" itemValue="#{uf}"/>
 					            </p:selectOneMenu>							
 							</td>
-							<td>
-								<p:commandButton id="add-endereco" value="Adicionar" icon="ui-icon-check"
-								                 actionListener="#{clienteMB.adicionarEndereco}"
-												 ajax="true" update="form-novo-endereco" />
-							</td>
 						</tr>
 						<tr>
-							<td>Complemento</td><td colspan="2">Ponto de Referência</td><td></td><td></td><td></td><td></td>
+							<td>Complemento</td><td colspan="4">Ponto de Referência</td>
 						</tr>
 						<tr>
 							<td><p:inputText id="complemento-endereco" value="#{clienteMB.endereco.rua}" styleClass="largura250 maiusculo"/></td>
-							<td colspan="3"><p:inputText id="ponto-de-referencia" value="#{clienteMB.endereco.rua}" styleClass="largura250 maiusculo"/></td><td></td><td></td><td></td>
+							<td colspan="4">
+								<p:inputText id="ponto-de-referencia" value="#{clienteMB.endereco.rua}" styleClass="largura250 maiusculo"/><p:spacer width="3" />
+								<p:commandButton id="add-endereco" value="Adicionar" icon="ui-icon-check"
+								                 actionListener="#{clienteMB.adicionarEndereco}"
+												 ajax="true" update="enderecos" />							
+							</td>
 						</tr>
 					</table>
-					<br />
-					<p:dataTable var="endereco_incluir" value="#{clienteMB.enderecos}" styleClass="lista-enderecos-inclusos"
-					             rendered="#{not empty clienteMB.enderecos}" style="width: 900px;">
-						<f:facet name="header">
-							<h:outputText value="Relação de Endereços inclusos" />
-						</f:facet>
-						<p:column headerText="Rua">
-							<h:outputText value="#{endereco_incluir.rua}" />
-						</p:column>
-						<p:column headerText="Número" style="width: 40px;">
-							<h:outputText value="#{endereco_incluir.numero}" />
-						</p:column>
-						<p:column headerText="Bairro" style="width: 150px;">
-							<h:outputText value="#{endereco_incluir.bairro}" />
-						</p:column>
-						<p:column headerText="CEP" style="width: 50px;">
-							<h:outputText value="#{endereco_incluir.cep}"/>
-						</p:column>
-						<p:column headerText="Cidade" style="width: 150px;">
-							<h:outputText value="#{endereco_incluir.cidade}" />
-						</p:column>				
-					</p:dataTable>				
 				</p:panel>
 		    	<br />
-		    	
 		    	<!-- RELAÇÃO DE ENDEREÇOS CADASTRADOS -->
 		        <h:panelGrid id="grid-enderecos">
 		        	<p:dataTable id="enderecos" var="endereco" value="#{clienteMB.pessoa.enderecos}"
@@ -299,7 +271,7 @@
 		
 		<br />	
 		<p:commandButton value="Gravar" icon="ui-icon-disk" actionListener="#{clienteMB.gravar}"
-			update=":form-geral" oncomplete="abas.select(0)" />
+			update=":form-geral"  />
 		<p:commandButton value="Novo" icon="ui-icon-circle-plus" actionListener="#{clienteMB.criarNovo}"
 			update=":form-geral" process="@this" oncomplete="abas.select(0)"/>
 		<br />
