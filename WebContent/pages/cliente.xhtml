@@ -24,7 +24,9 @@
 		.clear{clear: both;}
 		
 		.tab{min-height: 270px;}
-  		
+		
+		.ui-dialog-content{margin-bottom: 10px !important;}
+		  		
   	</style>
   	
   	<ui:param name="pagina-titulo" value="Cadastro de Cliente" />
@@ -98,9 +100,9 @@
 							<td>Complemento</td><td colspan="4">Ponto de Referência</td>
 						</tr>
 						<tr>
-							<td><p:inputText id="complemento-endereco" value="#{clienteMB.endereco.rua}" styleClass="largura250 maiusculo"/></td>
+							<td><p:inputText id="complemento-endereco" value="#{clienteMB.endereco.complemento}" styleClass="largura250 maiusculo"/></td>
 							<td colspan="4">
-								<p:inputText id="ponto-de-referencia" value="#{clienteMB.endereco.rua}" styleClass="largura250 maiusculo"/><p:spacer width="3" />
+								<p:inputText id="ponto-de-referencia" value="#{clienteMB.endereco.pontoDeReferencia}" styleClass="largura250 maiusculo"/><p:spacer width="3" />
 								<p:commandButton id="add-endereco" value="Adicionar" icon="ui-icon-check"
 								                 actionListener="#{clienteMB.adicionarEndereco}"
 												 ajax="true" update="enderecos" />							
@@ -279,6 +281,7 @@
 			update=":form-geral"  />
 		<p:commandButton value="Novo" icon="ui-icon-circle-plus" actionListener="#{clienteMB.criarNovo}"
 			update=":form-geral" process="@this" oncomplete="abas.select(0)" ajax="true"/>
+		<p:commandButton value="Pesquisar Pessoa" icon="ui-icon-search" onclick="modalPesquisaPessoa.show()" type="button"/>			
 		<br />
 		<br />
 		
@@ -287,7 +290,7 @@
 		<p:dataTable var="cliente" value="#{clienteMB.clientes}" emptyMessage="Nenhum registro encontrado" style="width: 100%;"
 		   paginator="true" rows="10"
 		   paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-		   rowKey="#{cliente}" selection="#{clienteMB.cliente}" selectionMode="single" paginatorPosition="bottom"
+		   rowKey="#{cliente.id}" selection="#{clienteMB.cliente}" selectionMode="single" paginatorPosition="bottom"
 		   rowsPerPageTemplate="5,10,15,20,25,30,40,50">
 			<p:ajax event="rowSelect" listener="#{clienteMB.prepararEdicao()}" update=":form-geral" oncomplete="abas.select(indexAbaSelecionada)" />
 							
@@ -308,8 +311,45 @@
 			</p:column>				
 			<p:column headerText="Data Cadastro">
 				<h:outputText value="#{cliente.pessoa.dataCadastro}" />
-			</p:column>								
+			</p:column>
 		</p:dataTable>
+
+ 		<!-- MODAL DE PESQUISA DE PESSOAS -->
+		<p:dialog id="modal-pesquisa-pessoa" header="Pesquisa de Pessoa" widgetVar="modalPesquisaPessoa"
+			modal="true" height="420" width="600" position="top" style="margin: 100px 0 0 0;">
+			<fieldset>
+				<legend>Filtros da Pesquisa</legend>
+			    <h:panelGrid columns="2">
+			    	<h:outputText value="Nome.: " />
+			    	<p:inputText id="pesquisa-nome" value="#{pesquisaPessoaMB.nome}" styleClass="largura250" />
+			    	
+			    	<h:outputText value="CPF.: " />
+			    	<p:inputMask id="pesquisa-cpf" value="#{pesquisaPessoaMB.cpf}"
+			    		styleClass="largura80" mask="99999999999" />
+	
+			    	<h:outputText value="CNPJ.: " />
+			    	<p:inputMask id="pesquisa-cnpj" value="#{pesquisaPessoaMB.cnpj}"
+			    		styleClass="largura100" mask="99999999999999" />
+			    	
+			    	<p:commandButton value="Pesquisar" icon="ui-icon-search" update="modal-pesquisa-pessoa"
+			    		actionListener="#{pesquisaPessoaMB.pesquisar}" process="@this" oncomplete="modalPesquisaPessoa.show()"/>
+			    </h:panelGrid>
+		    </fieldset>
+			<br/>
+			<p:dataTable id="pessoas-listagem-pesquisa" var="pessoa" value="#{pesquisaPessoaMB.pessoasListagem}"
+				rendered="#{not empty pesquisaPessoaMB.pessoasListagem}" paginator="true" rows="10"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				paginatorPosition="bottom" rowKey="#{pessoa.id}" selection="#{clienteMB.pessoaPesquisa}" selectionMode="single">
+				
+				<p:ajax event="rowSelect" listener="#{clienteMB.selecionarPessoa}" oncomplete="modalPesquisaPessoa.hide()" update=":form-geral"/>
+				
+				<f:facet name="header">Clique Para Selecionar a Pessoa</f:facet>
+				<p:column headerText="Nome">#{pessoa.nome}</p:column>
+				<p:column headerText="CPF">#{pessoa.cpf}</p:column>
+				<p:column headerText="CNPJ">#{pessoa.cnpj}</p:column>
+            </p:dataTable>			    
+		</p:dialog>
+		
     </h:form>
   </ui:define>
 </ui:composition>

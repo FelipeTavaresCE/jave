@@ -246,8 +246,8 @@ INSERT INTO tb_uf VALUES(nextval('seq_id_uf'), 'Ceará', 'CE');
 INSERT INTO tb_uf VALUES(nextval('seq_id_uf'), 'Bahia', 'BA');
 INSERT INTO tb_uf VALUES(nextval('seq_id_uf'), 'Pernambuco', 'PE');
 
-INSERT INTO tb_pessoa(id, nome) values (nextval('seq_id_pessoa'),'Administrador do Sistema');
-INSERT INTO tb_pessoa(id, nome) values (nextval('seq_id_pessoa'),'Cadastro');
+INSERT INTO tb_pessoa(id, nome, sexo, datacadastro) values (nextval('seq_id_pessoa'),'Administrador do Sistema', 'MASCULINO', now());
+INSERT INTO tb_pessoa(id, nome, sexo, datacadastro) values (nextval('seq_id_pessoa'),'Cadastro', 'MASCULINO', now());
 
 INSERT INTO tb_perfil_acesso values('ROLE_ADMIN');
 INSERT INTO tb_perfil_acesso values('ROLE_CADASTRO');

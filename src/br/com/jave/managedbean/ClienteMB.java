@@ -55,6 +55,8 @@ public class ClienteMB implements Serializable{
 	private DefaultStreamedContent fotoGerada;
 	private byte[] conteudoDoArquivo;
 	
+	private Pessoa pessoaPesquisa = new Pessoa();
+	
 	public ClienteMB(){}
 	
 	@Autowired
@@ -114,8 +116,8 @@ public class ClienteMB implements Serializable{
 	public void adicionarEndereco(){
 		if(this.pessoa.getEnderecos() == null)
 			this.pessoa.setEnderecos(new ArrayList<Endereco>());
-		this.endereco.setPessoa(this.pessoa);
-		this.pessoa.getEnderecos().add(endereco);
+		//this.endereco.setPessoa(this.pessoa);
+		this.pessoa.getEnderecos().add(this.endereco);
 
 		this.endereco = new Endereco();
 	}
@@ -186,6 +188,11 @@ public class ClienteMB implements Serializable{
 		this.conteudoDoArquivo = event.getFile().getContents();
 		this.fotoGerada = UploadDeImagem.gerarApresentacaoTela(this.conteudoDoArquivo);
 		this.pessoa.setFoto(this.conteudoDoArquivo);
+	}
+	
+	public void selecionarPessoa() throws NoResultException, Exception{
+		System.out.println("Pessoa selecionada: " + pessoaPesquisa.getNome());
+		pessoa = pessoaDao.pesquisarPorId(pessoaPesquisa.getId());
 	}
 	
 	/*Métodos e get e set*/
@@ -272,5 +279,13 @@ public class ClienteMB implements Serializable{
 
 	public void setFotoGerada(DefaultStreamedContent fotoGerada) {
 		this.fotoGerada = fotoGerada;
+	}
+
+	public Pessoa getPessoaPesquisa() {
+		return pessoaPesquisa;
+	}
+
+	public void setPessoaPesquisa(Pessoa pessoaPesquisa) {
+		this.pessoaPesquisa = pessoaPesquisa;
 	}
 }
