@@ -1,13 +1,16 @@
 package br.com.jave.managedbean;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import br.com.jave.fachada.UsuarioSistemaFachadaImpl;
+import br.com.jave.dao.UsuarioSistemaDao;
+import br.com.jave.modelo.UsuarioSistema;
 import br.com.jave.util.FacesMessageUtil;
 
 @ManagedBean
@@ -15,53 +18,43 @@ import br.com.jave.util.FacesMessageUtil;
 @Controller
 public class UsuarioSistemaMB implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;	
+	private UsuarioSistemaDao usuarioSistemaDao;
+	private List<UsuarioSistema> usuariosSistemaListagem;
+	private UsuarioSistema usuarioSistema;
 	
-	private UsuarioSistemaFachadaImpl usuarioSistema = new UsuarioSistemaFachadaImpl();
-	private String login;
-	private String senha;
-
-	public String validaUsuario(){
-		String retorno = null;
-		if(usuarioSistema.validarUsuario(login, senha) == true){
-			retorno = "inicial";
-		}else{
-			FacesMessageUtil.erro("Dados de login incorretos");
-			retorno = "";
+	public UsuarioSistemaMB(){}
+	
+	@Autowired
+	public UsuarioSistemaMB(UsuarioSistemaDao usuarioSistemaDao){
+		this.usuarioSistemaDao = usuarioSistemaDao;
+	}
+	
+	public List<UsuarioSistema> listarUsuarios(){
+		try {
+			usuariosSistemaListagem = usuarioSistemaDao.listarTodos();
+		} catch (Exception e) {
+			FacesMessageUtil.erro("Erro ao Listar os clientes.", e.getMessage());
+			e.printStackTrace();
 		}
-		return retorno;
-	}
-	
-	public String sairDoSistema(){
-		String retorno = "login";
-		return retorno;
-	}
-	
-	public String getLogin() {
-		return login;
+		return usuariosSistemaListagem;
 	}
 
-	public void setLogin(String login) {
-		this.login = login;
+	public List<UsuarioSistema> getUsuariosSistemaListagem() {
+		return usuariosSistemaListagem;
 	}
 
-	public String getSenha() {
-		return senha;
+	public void setUsuariosSistemaListagem(
+			List<UsuarioSistema> usuariosSistemaListagem) {
+		this.usuariosSistemaListagem = usuariosSistemaListagem;
 	}
 
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
-	public UsuarioSistemaFachadaImpl getUsuarioSistema() {
+	public UsuarioSistema getUsuarioSistema() {
 		return usuarioSistema;
 	}
 
-	public void setUsuarioSistema(UsuarioSistemaFachadaImpl usuarioSistema) {
+	public void setUsuarioSistema(UsuarioSistema usuarioSistema) {
 		this.usuarioSistema = usuarioSistema;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}	
 }

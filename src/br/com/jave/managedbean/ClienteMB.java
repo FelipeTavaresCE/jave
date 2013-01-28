@@ -85,8 +85,8 @@ public class ClienteMB implements Serializable{
 			if(cliente == null){
 				cliente = new Cliente();
 				cliente.setDataCadastro(new Date());
-				cliente.setPessoa(pessoa);
 			}
+			cliente.setPessoa(pessoa);
 			cliente = clienteDao.gravarRetorno(cliente);
 			FacesMessageUtil.mensagem("Cliente Gravado com sucesso.");
 		}catch(DataIntegrityViolationException e){

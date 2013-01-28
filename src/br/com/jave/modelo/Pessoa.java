@@ -28,7 +28,8 @@ import br.com.jave.enums.Sexo;
 @Table(name = "tb_pessoa")
 @NamedQueries({
 	@NamedQuery(name = "pessoaListarTodos", query = "SELECT p FROM Pessoa p"),
-	@NamedQuery(name = "pessoaPesquisarPorId", query = "SELECT p FROM Pessoa p WHERE p.id = :id")
+	@NamedQuery(name = "pessoaPesquisarPorNomeCpfCnpj",
+				query = "SELECT p FROM Pessoa p WHERE (p.nome like :nome) or (p.cpf = :cpf) or (p.cnpj = :cnpj)")
 })
 public class Pessoa implements Serializable{
 	

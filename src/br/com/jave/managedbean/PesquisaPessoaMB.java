@@ -22,7 +22,7 @@ public class PesquisaPessoaMB implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private PessoaDao pessoaDao;
-	private String Nome;
+	private String nome;
 	private String cpf;
 	private String cnpj;
 	private List<Pessoa> pessoasListagem = new ArrayList<Pessoa>();
@@ -36,8 +36,11 @@ public class PesquisaPessoaMB implements Serializable{
 	
 	public void pesquisar() {
 		System.out.println("Entrou na função de pesquisa.");
+		System.out.println(nome);
+		System.out.println(cpf);
+		System.out.println(cnpj);
 		try {
-			pessoasListagem = pessoaDao.listarTodos();
+			pessoasListagem = pessoaDao.pesquisarPorNomeCpfCnpj("PAULO", cpf, cnpj);
 		} catch (Exception e) {
 			FacesMessageUtil.aviso("Erro ao Listar as pessoas.");
 			e.printStackTrace();
@@ -45,11 +48,11 @@ public class PesquisaPessoaMB implements Serializable{
 	}
 
 	public String getNome() {
-		return Nome;
+		return nome;
 	}
 
 	public void setNome(String nome) {
-		Nome = nome;
+		this.nome = nome;
 	}
 
 	public String getCpf() {

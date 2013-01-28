@@ -18,7 +18,8 @@
 				<p:tab title="Dados do Usuário">
 			        <h:panelGrid columns="2">		          
 			            <h:outputText value="Nome.: "/>
-			            <p:inputText value="#{clienteMB.pessoa.nome}" id="nome" styleClass="elemento-form-input largura250"
+			            <p:inputText value="#{usuarioSistemaMB.usuarioSistema.pessoa.nome}" id="nome"
+			            	styleClass="elemento-form-input largura250"
 			            	required="true" requiredMessage="Informe o nome do Cliente" />
 
 			            <h:outputText value="CPF.: "/>
