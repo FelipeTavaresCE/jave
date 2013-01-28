@@ -9,9 +9,9 @@
 
 	<ui:define name="corpo-pagina">
 		<p:growl globalOnly="false" id="mensagens"/>
-		<h:form id="form-geral">
-			<p:tabView id="tabPRoduto" >		
-				<p:tab id="tab-dados-produto" title="Produto" >  
+		<h:form id="form-geral" prependId="false">
+			<p:tabView id="tabProduto" >		
+				<p:tab id="tab-dados-produto" title="Produto">  
 				    
 					<h:panelGrid id="panelProduto" columns="2">
 			            <h:outputText value="Nome.: "/>
@@ -30,16 +30,20 @@
 			            <p:inputText id="cdREf" value="#{produtoMB.produto.codigoReferencia}" styleClass="elemento-form-input largura250"/>
 			            
 			            <h:outputText value="Lote.: "/>
-			            <p:inputText id="lote" value="#{produtoMB.produto.lote}" styleClass="elemento-form-input largura250"/>
+			            <p:inputText id="lote" value="#{produtoMB.produto.lote}" styleClass="elemento-form-input largura150" />
 			            
-			            <h:outputText value="Perecível.: "/>
-			            <p:inputText id="perecivel" value="#{produtoMB.produto.perecivel}" styleClass="elemento-form-input largura250"/>
+						<h:outputText value="Perecível.: "/>
+
+					    <h:selectOneRadio id="radioPerecivel" value="#{produtoMB.produto.perecivel}" styleClass="radioJSF" >  
+						        <f:selectItem itemLabel="Sim" itemValue="true" />  
+						        <f:selectItem itemLabel="Não" itemValue="false" />  						
+					    </h:selectOneRadio>  
 			            
 			            <h:outputText value="Tipo de Medida.: "/>
-			            <p:inputText id="tpMedida" value="#{produtoMB.produto.tipoMedida}" styleClass="elemento-form-input largura250"/>
+			            <p:inputText id="tpMedida" value="#{produtoMB.produto.tipoMedida}" styleClass="elemento-form-input largura150"/>
 			            
 			            <h:outputText value="Qtd Volume.: "/>
-			            <p:inputText id="qtdVolume" value="#{produtoMB.produto.quantidadeVolume}" styleClass="elemento-form-input largura250"/>
+			            <p:inputText id="qtdVolume" value="#{produtoMB.produto.quantidadeVolume}" styleClass="elemento-form-input largura65"/>
 			            
 			            <h:outputText value="Preço.: "/>
 			            <p:inputText id="preco" value="#{produtoMB.produto.preco}" styleClass="elemento-form-input largura65">
@@ -52,17 +56,26 @@
 			            </p:inputText>
 			            
 			            <h:outputText value="Qtd Disponível.: "/>
-			            <p:inputText id="qtdDisponivel" value="#{produtoMB.produto.quantidadeDisponivel}" styleClass="elemento-form-input largura250"/>
+			            <p:inputText id="qtdDisponivel" value="#{produtoMB.produto.quantidadeDisponivel}" styleClass="elemento-form-input largura65">
+			            	  <f:converter converterId="MoedaConverter" />
+			            </p:inputText>
 			            
 			            <h:outputText value="Estoque Mínimo.: "/>
-			            <p:inputText id="estoqueDisp" value="#{produtoMB.produto.estoqueMinimo}" styleClass="elemento-form-input largura250"/>
+			            <p:inputText id="estoqueDisp" value="#{produtoMB.produto.estoqueMinimo}" styleClass="elemento-form-input largura150"/>
 			            
 			            <h:outputText value="Ativo.: "/>
-			            <p:inputText id="ativo" value="#{produtoMB.produto.ativo}" styleClass="elemento-form-input largura250"/>
+			            <h:selectOneRadio id="radioStatus" value="#{produtoMB.produto.ativo}" styleClass="radioJSF" >
+			                 <f:selectItem itemLabel="Sim" itemValue="true" />  
+						     <f:selectItem itemLabel="Não" itemValue="false" /> 
+			            </h:selectOneRadio>
 		
 					</h:panelGrid>
 				</p:tab>
 			</p:tabView>
+			<p:commandButton value="Gravar" icon="ui-icon-disk" actionListener="#{produtoMB.gravar}"
+			update=":form-geral"  />
+		<p:commandButton value="Novo" icon="ui-icon-circle-plus" actionListener="#{produtoMB.criarNovo}"
+			update=":form-geral" />
 		</h:form>
 	</ui:define>
 

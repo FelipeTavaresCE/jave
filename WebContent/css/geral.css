@@ -121,3 +121,23 @@
 	margin-left: 5px;
 	border: 0px solid gray;
 }
+
+/* Radio para Primafaces */
+.radioAll { margin: 4px 0px 6px 0px;}
+.radioAll label{
+	
+		float:left;
+		line-height:18px;		
+		font-weight:bolder;
+		font-size:100%;
+		color:#333;
+		margin: 0px 5px 0px 5px;
+		
+}
+
+.radioJSF { margin: 4px 0px 6px 0px; width:80%;font-weight:bolder;font-size:100%;	}
+.radioJSF input{			
+		left:-3px;
+		position: relative;
+		top:3.5px;		
+}
