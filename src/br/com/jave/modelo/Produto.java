@@ -3,6 +3,7 @@ package br.com.jave.modelo;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,19 +27,42 @@ public class Produto implements Serializable{
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id_produto")
 	private Long id;	
 	
+	
 	private String nome;
+	
+	@Column(name="codigo_de_barras")
 	private String codigoDeBarras;
+	
+	@Column(name="qr_code")
 	private String qrCode;
+	
+	@Column(name="nome_fabricante")
 	private String nomeFabricante;
+	
+	@Column(name="codigo_referencia")
 	private String codigoReferencia;
+	
 	private String lote;
+	
 	private Boolean perecivel;
+	
+	@Column(name="tipo_medida")
 	private String tipoMedida; //criar um ENUM de unidade de medida ou uma tabela de medida (quilo, unidade, litro e etc)
+	
+	@Column(name="quantidade_volume")
 	private Float quantidadeVolume;
+	
 	private BigDecimal preco;
+	
+	@Column(name="desconto_percentual")
 	private Float descontoPercentual;
+	
+	@Column(name="quantidade_disponivel")
 	private Integer quantidadeDisponivel;
+	
+	@Column(name="estoque_minimo")
 	private Integer estoqueMinimo;
+	
 	private Boolean ativo;
 	
 	

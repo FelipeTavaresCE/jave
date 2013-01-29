@@ -182,18 +182,18 @@ DROP TABLE IF EXISTS tb_produto;
 CREATE TABLE tb_produto(
     id bigint not null,
     nome varchar(60) not null,
-    codigoDeBarras varchar(50) null,
-    qrCode varchar(50),
-    nomeFabricante varchar(50),
-    codigoReferencia varchar(30),
+    codigo_de_barras varchar(50) null,
+    qr_code varchar(50),
+    nome_fabricante varchar(50),
+    codigo_referencia varchar(30),
     lote varchar(30),
     perecivel boolean,
-    tipoMedida varchar(20),
-    quantidadeVolume numeric,
+    tipo_medida varchar(20),
+    quantidade_volume numeric,
     preco numeric,
-    descontoPercentual numeric,
-    quantidadeDisponivel integer,
-    estoqueMinimo integer,
+    desconto_percentual numeric,
+    quantidade_disponivel integer,
+    estoque_minimo integer,
     ativo boolean
 );
 

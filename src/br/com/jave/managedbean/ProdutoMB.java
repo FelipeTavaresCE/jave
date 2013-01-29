@@ -6,11 +6,13 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import br.com.jave.dao.ProdutoDao;
 import br.com.jave.modelo.Produto;
+import br.com.jave.util.FacesMessageUtil;
 
-
+@Controller
 @ManagedBean
 @RequestScoped
 public class ProdutoMB implements Serializable{
@@ -31,8 +33,9 @@ public class ProdutoMB implements Serializable{
 	
 	}
 
-	public void gravar(Produto produto) throws Exception {
+	public void gravar() throws Exception {
 		produtoDao.gravar(produto);
+		FacesMessageUtil.mensagem("Produto gravado com sucesso!");
 	}
 	
 	public String criarNovo(){

@@ -8,15 +8,17 @@
 	<ui:define name="pagina-titulo">Insira o titulo da página</ui:define>
 
 	<ui:define name="corpo-pagina">
-		<p:growl globalOnly="false" id="mensagens"/>
 		<h:form id="form-geral" prependId="false">
+			<p:growl globalOnly="false" id="mensagens"/>
 			<p:tabView id="tabProduto" >		
 				<p:tab id="tab-dados-produto" title="Produto">  
 				    
 					<h:panelGrid id="panelProduto" columns="2">
 			            <h:outputText value="Nome.: "/>
+			            <h:panelGrid columns="2">
 			            <p:inputText id="nome" value="#{produtoMB.produto.nome}" styleClass="elemento-form-input largura250" />
-			            
+			            <p:commandButton id="basic" value="" icon="ui-icon-search" onclick="dlgPesquisa.show();" type="button" style="height:25px;width:35px;top:8.3px;"/>  
+			            </h:panelGrid>
 			            <h:outputText value="Código de Barras.: "/>
 			            <p:inputText id="cdBarras" value="#{produtoMB.produto.codigoDeBarras}" styleClass="elemento-form-input largura250" />
 			            
@@ -77,6 +79,11 @@
 		<p:commandButton value="Novo" icon="ui-icon-circle-plus" actionListener="#{produtoMB.criarNovo}"
 			update=":form-geral" />
 		</h:form>
+		<p:dialog id="basicDialog" header="Pesquisa Produto" widgetVar="dlgPesquisa" height="600" width="800" 
+					modal="true" resizable="false" >  
+			    <h:outputText value="Teste!" />  
+		</p:dialog>  
+		
 	</ui:define>
 
 </ui:composition>
