@@ -70,6 +70,15 @@ CREATE SEQUENCE seq_id_configuracoes_sistema
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
+
+DROP SEQUENCE IF EXISTS seq_id_produto;
+
+CREATE SEQUENCE seq_id_produto
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
     
 --------------Fim Criação das Sequences------------------------
 
@@ -168,6 +177,27 @@ CREATE TABLE tb_pessoa (
     foto bytea
 );
 
+DROP TABLE IF EXISTS tb_produto;
+
+CREATE TABLE tb_produto(
+    id bigint not null,
+    nome varchar(60) not null,
+    codigoDeBarras varchar(50) null,
+    qrCode varchar(50),
+    nomeFabricante varchar(50),
+    codigoReferencia varchar(30),
+    lote varchar(30),
+    perecivel boolean,
+    tipoMedida varchar(20),
+    quantidadeVolume numeric,
+    preco numeric,
+    descontoPercentual numeric,
+    quantidadeDisponivel integer,
+    estoqueMinimo integer,
+    ativo boolean
+);
+
+
 --------------Fim da Criação das tabelas------------------------
 
 -------------- Criação das Primary Keys ------------------------
@@ -196,7 +226,10 @@ ALTER TABLE tb_cliente
     ADD CONSTRAINT pk_cliente PRIMARY KEY (id);
 
 ALTER TABLE tb_configuracoes_sistema
-    ADD CONSTRAINT pk_config_sistema PRIMARY KEY (id);    
+    ADD CONSTRAINT pk_config_sistema PRIMARY KEY (id);
+
+ALTER TABLE tb_produto
+    ADD CONSTRAINT pk_produto PRIMARY KEY (id);   
 
 -------------- Fim da Criação das Primary Keys ------------------------
 
