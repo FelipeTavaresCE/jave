@@ -313,13 +313,12 @@
 				<h:outputText value="#{cliente.pessoa.dataCadastro}" />
 			</p:column>
 		</p:dataTable>
-
  		<!-- MODAL DE PESQUISA DE PESSOAS -->
 		<p:dialog id="modal-pesquisa-pessoa" header="Pesquisa de Pessoa" widgetVar="modalPesquisaPessoa"
 			modal="true" height="420" width="600" position="top" style="margin: 100px 0 0 0;">
 			<fieldset>
 				<legend>Filtros da Pesquisa</legend>
-			    <h:panelGrid columns="2">
+			    <h:panelGrid id="form-pesquisa" columns="2">
 			    	<h:outputText value="Nome.: " />
 			    	<p:inputText id="pesquisa-nome" value="#{pesquisaPessoaMB.nome}" styleClass="largura250" />
 			    	
@@ -332,7 +331,7 @@
 			    		styleClass="largura100" mask="99999999999999" />
 			    	
 			    	<p:commandButton value="Pesquisar" icon="ui-icon-search" update="modal-pesquisa-pessoa"
-			    		actionListener="#{pesquisaPessoaMB.pesquisar}" process="@this" oncomplete="modalPesquisaPessoa.show()"/>
+			    		actionListener="#{pesquisaPessoaMB.pesquisar}" process="form-pesquisa" oncomplete="modalPesquisaPessoa.show()"/>
 			    </h:panelGrid>
 		    </fieldset>
 			<br/>
@@ -344,6 +343,7 @@
 				<p:ajax event="rowSelect" listener="#{clienteMB.selecionarPessoa}" oncomplete="modalPesquisaPessoa.hide()" update=":form-geral"/>
 				
 				<f:facet name="header">Clique Para Selecionar a Pessoa</f:facet>
+				<p:column headerText="Cód.">#{pessoa.id}</p:column>
 				<p:column headerText="Nome">#{pessoa.nome}</p:column>
 				<p:column headerText="CPF">#{pessoa.cpf}</p:column>
 				<p:column headerText="CNPJ">#{pessoa.cnpj}</p:column>

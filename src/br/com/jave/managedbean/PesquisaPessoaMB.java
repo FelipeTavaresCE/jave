@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +16,7 @@ import br.com.jave.util.FacesMessageUtil;
 
 @Controller
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class PesquisaPessoaMB implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -35,12 +35,8 @@ public class PesquisaPessoaMB implements Serializable{
 	}
 	
 	public void pesquisar() {
-		System.out.println("Entrou na função de pesquisa.");
-		System.out.println(nome);
-		System.out.println(cpf);
-		System.out.println(cnpj);
 		try {
-			pessoasListagem = pessoaDao.pesquisarPorNomeCpfCnpj("PAULO", cpf, cnpj);
+			pessoasListagem = pessoaDao.pesquisarPorNomeCpfCnpj(nome.toUpperCase(), cpf, cnpj);
 		} catch (Exception e) {
 			FacesMessageUtil.aviso("Erro ao Listar as pessoas.");
 			e.printStackTrace();
@@ -79,9 +75,5 @@ public class PesquisaPessoaMB implements Serializable{
 		this.pessoasListagem = pessoasListagem;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-	
 	
 }

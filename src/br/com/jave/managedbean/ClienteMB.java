@@ -79,8 +79,6 @@ public class ClienteMB implements Serializable{
 	
 	public void gravar(){
 		try {			
-			pessoaDao.gravar(this.pessoa);
-			this.fotoGerada = UploadDeImagem.gerarApresentacaoTela(this.pessoa.getFoto());
 			//criarNovo(); //Descomentar se quiser que a tela seja limpada após a gravação
 			if(cliente == null){
 				cliente = new Cliente();
@@ -88,6 +86,9 @@ public class ClienteMB implements Serializable{
 			}
 			cliente.setPessoa(pessoa);
 			cliente = clienteDao.gravarRetorno(cliente);
+			if(this.pessoa.getFoto() != null)
+				this.fotoGerada = UploadDeImagem.gerarApresentacaoTela(this.pessoa.getFoto());
+			
 			FacesMessageUtil.mensagem("Cliente Gravado com sucesso.");
 		}catch(DataIntegrityViolationException e){
 			FacesMessageUtil.erro("ERRO: Já existe um cliente associado a esta pessoa. " +
