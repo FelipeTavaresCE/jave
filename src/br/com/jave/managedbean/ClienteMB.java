@@ -47,6 +47,9 @@ public class ClienteMB implements Serializable{
 	private Cliente cliente = new Cliente();
 	private Endereco endereco = new Endereco();
 	private List<Cliente> clientes = null;
+	
+	private List<Cliente> clientesFiltrados;
+	
 	private List<Sexo> sexo;
 	private List<Uf> ufListagem;
 	private Endereco enderecoParaExcluir;
@@ -105,7 +108,8 @@ public class ClienteMB implements Serializable{
 			cliente = clienteDao.pesquisarPorId(cliente.getId());
 			//this.pessoa = pessoaDao.pesquisarPorId(cliente.getPessoa().getId());
 			this.pessoa = cliente.getPessoa();
-			this.fotoGerada = UploadDeImagem.gerarApresentacaoTela(this.pessoa.getFoto());
+			if(this.pessoa.getFoto() != null)
+				this.fotoGerada = UploadDeImagem.gerarApresentacaoTela(this.pessoa.getFoto());
 		} catch (NoResultException e) {
 			e.printStackTrace();
 			FacesMessageUtil.mensagem("Pessoa não encontrada");
@@ -288,5 +292,13 @@ public class ClienteMB implements Serializable{
 
 	public void setPessoaPesquisa(Pessoa pessoaPesquisa) {
 		this.pessoaPesquisa = pessoaPesquisa;
+	}
+
+	public List<Cliente> getClientesFiltrados() {
+		return clientesFiltrados;
+	}
+
+	public void setClientesFiltrados(List<Cliente> clientesFiltrados) {
+		this.clientesFiltrados = clientesFiltrados;
 	}
 }

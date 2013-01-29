@@ -293,14 +293,18 @@
 		   rowKey="#{cliente.id}" selection="#{clienteMB.cliente}" selectionMode="single" paginatorPosition="bottom"
 		   rowsPerPageTemplate="5,10,15,20,25,30,40,50">
 			<p:ajax event="rowSelect" listener="#{clienteMB.prepararEdicao()}" update=":form-geral" oncomplete="abas.select(indexAbaSelecionada)" />
+
+			<p:column headerText="Código" style="width: 60px;" filterBy="#{cliente.id}" filterStyleClass="input-filter" filterStyle="width:50px !important;">
+				<h:outputText value="#{cliente.id}" />
+			</p:column>  				
 							
-			<p:column headerText="Nome" width="150">
+			<p:column headerText="Nome" width="150" filterBy="#{cliente.pessoa.nome}" filterStyleClass="input-filter" >
 				<h:outputText value="#{cliente.pessoa.nome}" />
 			</p:column>  				
-			<p:column headerText="CPF">
+			<p:column headerText="CPF" filterBy="#{cliente.pessoa.cpf}" filterStyleClass="input-filter">
 				<h:outputText value="#{cliente.pessoa.cpf}" />
 			</p:column>				
-			<p:column headerText="CNPJ">
+			<p:column headerText="CNPJ" filterBy="#{cliente.pessoa.cnpj}" filterStyleClass="input-filter" >
 				<h:outputText value="#{cliente.pessoa.cnpj}" />
 			</p:column>				
 			<p:column headerText="Sexo">
@@ -310,7 +314,7 @@
 				<h:outputText value="#{cliente.pessoa.dataNascimento}" />
 			</p:column>				
 			<p:column headerText="Data Cadastro">
-				<h:outputText value="#{cliente.pessoa.dataCadastro}" />
+				<h:outputText value="#{cliente.dataCadastro}" />
 			</p:column>
 		</p:dataTable>
  		<!-- MODAL DE PESQUISA DE PESSOAS -->

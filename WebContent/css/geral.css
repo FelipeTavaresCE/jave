@@ -150,3 +150,8 @@ legend{
 		position: relative;
 		top:3.5px;		
 }
+
+.input-filter{
+	margin-top: 2px !important;
+	width: 90% !important;
+}

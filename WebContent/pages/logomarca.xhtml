@@ -14,10 +14,10 @@
 			.clear{clear: both;}
 		</style>
 	
-		<h:form enctype="multipart/form-data" id="formulario">  
+		<h:form enctype="multipart/form-data" id="formulario">
 		    <p:fileUpload fileUploadListener="#{logomarcaUpload.upload}" mode="advanced"   
 		                  update="foto" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-		                  cancelLabel="Cancelar" label="Escolha" uploadLabel="Carregar" />  
+		                  cancelLabel="Cancelar" label="Escolha" uploadLabel="Carregar" auto="true"/>  
 		    <p:growl id="mensagens"/>
 		    
 			<f:event listener="#{logomarcaUpload.carregarConfiguracoes()}" type="preRenderView" />		    
