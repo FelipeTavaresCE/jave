@@ -12,8 +12,8 @@
 			.senhas{padding: 50px 0 20px 0;}
 		</style>
 		
-		<p:growl globalOnly="false" id="mensagens"/>
 		<h:form id="form-geral">
+			<p:growl globalOnly="false" id="mensagens"/>
 			<p:tabView>
 				<p:tab title="Dados do Usuário">
 			        <h:panelGrid columns="2">		          
@@ -25,41 +25,81 @@
 			            <h:outputText value="CPF.: "/>
 			            
 			            <h:panelGroup>
-				            <p:inputMask value="#{clienteMB.pessoa.cpf}" id="cpf" styleClass="elemento-form-input largura80" mask="99999999999"/>
+				            <p:inputMask value="#{usuarioSistemaMB.usuarioSistema.pessoa.cpf}" id="cpf" styleClass="elemento-form-input largura80" mask="99999999999"/>
 				            <h:outputText value="CNPJ.:"/>
-				            <p:inputMask value="#{clienteMB.pessoa.cnpj}" id="cnpj" styleClass="elemento-form-input largura100" mask="99999999999999" />
+				            <p:inputMask value="#{usuarioSistemaMB.usuarioSistema.pessoa.cnpj}" id="cnpj" styleClass="elemento-form-input largura100" mask="99999999999999" />
 			            </h:panelGroup>
 		
 			            <h:outputText value="Nascimento.: "/>
 			            <h:panelGroup>
-				            <p:inputMask value="#{clienteMB.pessoa.dataNascimento}" id="data-nascimento" styleClass="elemento-form-input largura65" mask="99/99/9999" />
-				            <h:outputText value="Sexo.: "/>
-				            <p:selectOneMenu value="#{clienteMB.pessoa.sexo}" id="sexo" styleClass="elemento-form-input" style="margin-bottom:-7px;">
-				            	<f:selectItems  value="#{clienteMB.sexo}" var="sexo" itemLabel="#{sexo.toString()}" itemValue="#{sexo}"/>
-				            </p:selectOneMenu>
+				            <p:inputMask value="#{usuarioSistemaMB.usuarioSistema.pessoa.dataNascimento}" id="data-nascimento" styleClass="elemento-form-input largura65" mask="99/99/9999" />
+				            <h:outputText value="Data Cadastro.: "/>
+				            <p:inputText value="#{usuarioSistemaMB.usuarioSistema.pessoa.dataCadastro}" id="data-cadastro" disabled="true" styleClass="elemento-form-input largura65" />
 			            </h:panelGroup>
-			            
-			            <h:outputText value="Data Cadastro.: "/>
-			            <p:inputText value="#{clienteMB.pessoa.dataCadastro}" id="data-cadastro" disabled="true" styleClass="elemento-form-input largura65" />
 		
 						<h:outputText value="Login.: "/>
-						<p:inputText id="login" styleClass="elemento-form-input largura200" />
+						<p:inputText id="login" value="#{usuarioSistemaMB.usuarioSistema.login}" styleClass="elemento-form-input largura200" />
 						
 						<h:outputText value="Senha.: "/>
-						<p:password id="senha1" match="senha2" label="Password 1" required="true" styleClass="elemento-form-input"
-						 	goodLabel="Bom" promptLabel="Informe a senha" strongLabel="Forte" weakLabel="Fraca" />
+						<p:password id="senha1" match="senha2" required="true" styleClass="elemento-form-input"
+						 	goodLabel="Bom" promptLabel="Informe a senha" strongLabel="Forte" weakLabel="Fraca"
+						 	validatorMessage="Senhas divergentes" value="#{usuarioSistemaMB.usuarioSistema.senha}"/>
 						
 						<h:outputText value="Repita a Senha.: " styleClass="senhas"/>
-						<p:password id="senha2" match="senha2" label="Password 2" required="true" styleClass="elemento-form-input"
+						<p:password id="senha2" match="senha2" required="true" styleClass="elemento-form-input" value="#{usuarioSistemaMB.senhaDeConfirmacao}"
 							goodLabel="Bom" promptLabel="Repita a senha" strongLabel="Forte" weakLabel="Fraca"/>
 		
 						<h:outputText value="Ativo.: "/>
-			            <p:selectBooleanButton onLabel="Sim" offLabel="Não" styleClass="elemento-form-input largura200"/>
+			            <h:selectOneRadio id="radioStatus" styleClass="radioJSF" value="#{usuarioSistemaMB.usuarioSistema.ativo}">
+			                 <f:selectItem itemLabel="Sim" itemValue="true" />  
+						     <f:selectItem itemLabel="Não" itemValue="false" /> 
+			            </h:selectOneRadio>
 		
 			        </h:panelGrid>
 		        </p:tab>
 	        </p:tabView>
+	        <br />
+	        <p:commandButton value="Gravar" icon="ui-icon-disk" update="form-geral" actionListener="#{usuarioSistemaMB.gravar}"/><p:spacer width="3" />
+	        <p:commandButton value="Novo" icon="ui-icon-circle-plus" /><p:spacer width="3" />
+	        <p:commandButton value="Pesquisar Pessoa" icon="ui-icon-search" process="@this" type="button" onclick="modalPesquisaPessoa.show()"/>
 
+
+	 		<!-- MODAL DE PESQUISA DE PESSOAS -->
+			<p:dialog id="modal-pesquisa-pessoa" header="Pesquisa de Pessoa" widgetVar="modalPesquisaPessoa"
+				modal="true" height="420" width="600" position="top" style="margin: 100px 0 0 0;">
+				<fieldset>
+					<legend>Filtros da Pesquisa</legend>
+				    <h:panelGrid id="form-pesquisa" columns="2">
+				    	<h:outputText value="Nome.: " />
+				    	<p:inputText id="pesquisa-nome" value="#{pesquisaPessoaMB.nome}" styleClass="largura250" />
+				    	
+				    	<h:outputText value="CPF.: " />
+				    	<p:inputMask id="pesquisa-cpf" value="#{pesquisaPessoaMB.cpf}"
+				    		styleClass="largura80" mask="99999999999" />
+		
+				    	<h:outputText value="CNPJ.: " />
+				    	<p:inputMask id="pesquisa-cnpj" value="#{pesquisaPessoaMB.cnpj}"
+				    		styleClass="largura100" mask="99999999999999" />
+				    	
+				    	<p:commandButton value="Pesquisar" icon="ui-icon-search" update="modal-pesquisa-pessoa"
+				    		actionListener="#{pesquisaPessoaMB.pesquisar}" process="form-pesquisa" oncomplete="modalPesquisaPessoa.show()"/>
+				    </h:panelGrid>
+			    </fieldset>
+				<br/>
+				<p:dataTable id="pessoas-listagem-pesquisa" var="pessoa" value="#{pesquisaPessoaMB.pessoasListagem}"
+					rendered="#{not empty pesquisaPessoaMB.pessoasListagem}" paginator="true" rows="10"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					paginatorPosition="bottom" rowKey="#{pessoa.id}" selection="#{usuarioSistemaMB.usuarioSistema.pessoa}" selectionMode="single">
+					
+					<p:ajax event="rowSelect" oncomplete="modalPesquisaPessoa.hide()" update=":form-geral"/>
+					
+					<f:facet name="header">Clique Para Selecionar a Pessoa</f:facet>
+					<p:column headerText="Cód.">#{pessoa.id}</p:column>
+					<p:column headerText="Nome">#{pessoa.nome}</p:column>
+					<p:column headerText="CPF">#{pessoa.cpf}</p:column>
+					<p:column headerText="CNPJ">#{pessoa.cnpj}</p:column>
+	            </p:dataTable>			    
+			</p:dialog>
 		</h:form>
 	</ui:define>
 

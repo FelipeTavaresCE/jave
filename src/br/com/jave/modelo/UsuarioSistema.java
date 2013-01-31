@@ -14,6 +14,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.springframework.stereotype.Component;
+
 import br.com.jave.util.Criptografia;
 
 @Entity
@@ -23,6 +25,7 @@ import br.com.jave.util.Criptografia;
 	@NamedQuery(name = "usuarioSistemaValidarUsuario",
 	            query = "SELECT u FROM UsuarioSistema u WHERE u.login = :login and u.senha = :senha and u.ativo = 'true'")
 })
+@Component
 public class UsuarioSistema implements Serializable{
 	
 	@Transient
