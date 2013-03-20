@@ -54,15 +54,17 @@
 			                 <f:selectItem itemLabel="Sim" itemValue="true" />  
 						     <f:selectItem itemLabel="Não" itemValue="false" /> 
 			            </h:selectOneRadio>
-		
 			        </h:panelGrid>
+		        </p:tab>
+		        <p:tab title="Perfies do Usuário">
+		        	<p:pickList id="pickList" value="#{usuarioSistemaMB.perfiesDeAcesso}" var="perfilDeAcesso"   
+	                	itemLabel="#{perfilDeAcesso.nome}" itemValue="#{perfilDeAcesso}" />
 		        </p:tab>
 	        </p:tabView>
 	        <br />
 	        <p:commandButton value="Gravar" icon="ui-icon-disk" update="form-geral" actionListener="#{usuarioSistemaMB.gravar}"/><p:spacer width="3" />
-	        <p:commandButton value="Novo" icon="ui-icon-circle-plus" /><p:spacer width="3" />
+	        <p:commandButton value="Novo" icon="ui-icon-circle-plus" actionListener="#{usuarioSistemaMB.adicionarNovoUsuario}" update="form-geral" process="@this"/><p:spacer width="3" />
 	        <p:commandButton value="Pesquisar Pessoa" icon="ui-icon-search" process="@this" type="button" onclick="modalPesquisaPessoa.show()"/>
-
 
 	 		<!-- MODAL DE PESQUISA DE PESSOAS -->
 			<p:dialog id="modal-pesquisa-pessoa" header="Pesquisa de Pessoa" widgetVar="modalPesquisaPessoa"

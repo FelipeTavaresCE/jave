@@ -1,16 +1,20 @@
 package br.com.jave.managedbean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
+import org.primefaces.model.DualListModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.jave.dao.PerfilDeAcessoDao;
 import br.com.jave.dao.UsuarioSistemaDao;
 import br.com.jave.enums.Sexo;
+import br.com.jave.modelo.PerfilDeAcesso;
 import br.com.jave.modelo.UsuarioSistema;
 import br.com.jave.util.FacesMessageUtil;
 
@@ -23,15 +27,30 @@ public class UsuarioSistemaMB implements Serializable {
 	private UsuarioSistemaDao usuarioSistemaDao;
 	private List<UsuarioSistema> usuariosSistemaListagem;
 	private UsuarioSistema usuarioSistema;
+	private PerfilDeAcessoDao perfilDeAcessoDao;
 	private String senhaDeConfirmacao;
 	private Sexo sexo;
+	
+	private DualListModel<PerfilDeAcesso> perfiesDeAcesso;
 	
 	public UsuarioSistemaMB(){}
 	
 	@Autowired
-	public UsuarioSistemaMB(UsuarioSistemaDao usuarioSistemaDao, UsuarioSistema usuarioSistema){
+	public UsuarioSistemaMB(UsuarioSistemaDao usuarioSistemaDao, UsuarioSistema usuarioSistema, PerfilDeAcessoDao perfilDeAcessoDao){
 		this.usuarioSistemaDao = usuarioSistemaDao;
 		this.usuarioSistema = usuarioSistema;
+		this.perfilDeAcessoDao = perfilDeAcessoDao;
+		
+        try{
+    		List<PerfilDeAcesso> perfiesDeAcessoOrigem = perfilDeAcessoDao.listarTodos();  
+            List<PerfilDeAcesso> perfiesDeAcessoDestino = new ArrayList<PerfilDeAcesso>();
+            setPerfiesDeAcesso(new DualListModel<PerfilDeAcesso>(perfiesDeAcessoOrigem, perfiesDeAcessoDestino));
+        	
+        }catch(Exception e){
+        	System.out.println("ERRO AO LISTAR OS PERFIES DE ACESSOS" + e.getMessage());
+        	e.printStackTrace();
+        }
+        
 	}
 	
 	public void gravar(){
@@ -52,6 +71,13 @@ public class UsuarioSistemaMB implements Serializable {
 			e.printStackTrace();
 		}
 		return usuariosSistemaListagem;
+	}
+	
+	public void adicionarNovoUsuario(){
+		usuarioSistema = new UsuarioSistema();
+		senhaDeConfirmacao = null;
+		sexo = null;
+		System.out.println("Entrou na função de adicionar novo usuario.");
 	}
 	
 	public void selecionarPessoa(){
@@ -89,6 +115,14 @@ public class UsuarioSistemaMB implements Serializable {
 
 	public void setSexo(Sexo sexo) {
 		this.sexo = sexo;
+	}
+
+	public DualListModel<PerfilDeAcesso> getPerfiesDeAcesso() {
+		return perfiesDeAcesso;
+	}
+
+	public void setPerfiesDeAcesso(DualListModel<PerfilDeAcesso> perfiesDeAcesso) {
+		this.perfiesDeAcesso = perfiesDeAcesso;
 	}
 
 }

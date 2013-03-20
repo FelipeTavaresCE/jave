@@ -1,12 +1,15 @@
 package br.com.jave.modelo;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -35,12 +38,23 @@ public class UsuarioSistema implements Serializable{
 	@SequenceGenerator(name = "seq_id_usuario_sistema", sequenceName = "seq_id_usuario_sistema", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id_usuario_sistema")
 	private Long id;
+	
 	private String login;
+	
 	private String senha;
+	
 	@ManyToOne
 	@JoinColumn(name = "pessoa_id")
 	private Pessoa pessoa;
+	
 	private Boolean ativo;
+	@ManyToMany
+	@JoinTable(name="tb_usuario_sistema_perfil_acesso",
+		joinColumns={@JoinColumn(name="usuario_login")},
+		inverseJoinColumns={@JoinColumn(name="perfil_acesso_nome")}
+	)
+	private List<PerfilDeAcesso> perfilDeAcesso; 
+	
 	public Long getId() {
 		return id;
 	}
@@ -73,6 +87,12 @@ public class UsuarioSistema implements Serializable{
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}	
+	public List<PerfilDeAcesso> getPerfilDeAcesso() {
+		return perfilDeAcesso;
+	}
+	public void setPerfilDeAcesso(List<PerfilDeAcesso> perfilDeAcesso) {
+		this.perfilDeAcesso = perfilDeAcesso;
 	}
 	@Override
 	public int hashCode() {
