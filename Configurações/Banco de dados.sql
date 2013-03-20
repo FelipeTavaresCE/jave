@@ -135,7 +135,8 @@ CREATE TABLE tb_usuario_sistema(
 DROP TABLE IF EXISTS tb_perfil_acesso;
 
 CREATE TABLE tb_perfil_acesso(
-    nome varchar(20) not null
+    nome varchar(20) not null,
+    descricao varchar(50) NOT NULL
 );
 
 DROP TABLE IF EXISTS tb_cliente;
@@ -282,8 +283,9 @@ INSERT INTO tb_uf VALUES(nextval('seq_id_uf'), 'Pernambuco', 'PE');
 INSERT INTO tb_pessoa(id, nome, sexo, datacadastro) values (nextval('seq_id_pessoa'),'Administrador do Sistema', 'MASCULINO', now());
 INSERT INTO tb_pessoa(id, nome, sexo, datacadastro) values (nextval('seq_id_pessoa'),'Cadastro', 'MASCULINO', now());
 
-INSERT INTO tb_perfil_acesso values('ROLE_ADMIN');
-INSERT INTO tb_perfil_acesso values('ROLE_CADASTRO');
+INSERT INTO tb_perfil_acesso values('ROLE_ADMIN', 'Administrador');
+INSERT INTO tb_perfil_acesso values('ROLE_CADASTRO', 'Cadastro');
+INSERT INTO tb_perfil_acesso values('ROLE_GERENCIA', 'Gerência');
 
 INSERT INTO tb_usuario_sistema values(nextval('seq_id_usuario_sistema'), 'admin', md5('admin'), true, 1);
 INSERT INTO tb_usuario_sistema values(nextval('seq_id_usuario_sistema'), 'cadastro', md5('cadastro'), true, 1);

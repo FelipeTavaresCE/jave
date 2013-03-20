@@ -18,6 +18,8 @@ public class PerfilDeAcesso implements Serializable{
 	@Id
 	private String nome;
 	
+	private String descricao;
+	
 	@ManyToMany(mappedBy = "perfilDeAcesso")
 	private List<UsuarioSistema> usuarioSistema;
 	
@@ -52,6 +54,14 @@ public class PerfilDeAcesso implements Serializable{
 		} else if (!nome.equals(other.nome))
 			return false;
 		return true;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 	
 }
