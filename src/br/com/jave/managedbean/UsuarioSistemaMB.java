@@ -30,6 +30,8 @@ public class UsuarioSistemaMB implements Serializable {
 	private PerfilDeAcessoDao perfilDeAcessoDao;
 	private String senhaDeConfirmacao;
 	private Sexo sexo;
+	private List<PerfilDeAcesso> perfiesDeAcessoOrigem;  
+    private List<PerfilDeAcesso> perfiesDeAcessoDestino;	
 	
 	private DualListModel<PerfilDeAcesso> perfiesDeAcesso;
 	
@@ -42,8 +44,8 @@ public class UsuarioSistemaMB implements Serializable {
 		this.perfilDeAcessoDao = perfilDeAcessoDao;
 		
         try{
-    		List<PerfilDeAcesso> perfiesDeAcessoOrigem = perfilDeAcessoDao.listarTodos();  
-            List<PerfilDeAcesso> perfiesDeAcessoDestino = new ArrayList<PerfilDeAcesso>();
+    		perfiesDeAcessoOrigem = perfilDeAcessoDao.listarTodos();  
+            perfiesDeAcessoDestino = new ArrayList<PerfilDeAcesso>();
             setPerfiesDeAcesso(new DualListModel<PerfilDeAcesso>(perfiesDeAcessoOrigem, perfiesDeAcessoDestino));
         	
         }catch(Exception e){
