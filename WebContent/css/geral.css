@@ -131,6 +131,11 @@ legend{
 	border: 0px solid gray;
 }
 
+#menu-relogio{
+	position: relative;
+	top: -5px;
+}
+
 /* Radio para Primafaces */
 .radioAll { margin: 4px 0px 6px 0px;}
 .radioAll label{
