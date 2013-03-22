@@ -16,17 +16,13 @@
   		td{border: 0; padding: 2px 3px 0 0;}
   		#div-usuario-selecionado{height: 15px; margin: 5px 0 0 0}
   		#nome-usuario-selecionado{font-weight: bold; padding: 0; margin: 0;}
-
 		.foto{width: 250px;}
 		#div-foto{ width: 200px; height: 200px; float: left;}
 		.cantos-arredondados{border: 1px solid #A8A8A8; border-radius: 3px 3px 3px 3px; padding: 5px; margin: 4px 4px 0 0;}
 		#div-inputs{float: left; margin: 8px 0 0 3px;}
 		.clear{clear: both;}
-		
 		.tab{min-height: 270px;}
-		
 		.ui-dialog-content{margin-bottom: 10px !important;}
-		  		
   	</style>
   	
   	<ui:param name="pagina-titulo" value="Cadastro de Cliente" />
@@ -67,7 +63,6 @@
 		            <p:inputText value="#{clienteMB.cliente.dataCadastro}" id="data-cadastro" readonly="true" styleClass="elemento-form-input largura65" />
 		            
 		            <p:growl id="mensagens" life="10000" showDetail="true"/>
-	
 		        </h:panelGrid>		        
 		    </p:tab>
 		    
@@ -111,6 +106,7 @@
 					</table>
 				</p:panel>
 		    	<br />
+		    	
 		    	<!-- RELAÇÃO DE ENDEREÇOS CADASTRADOS -->
 		        <h:panelGrid id="grid-enderecos">
 		        	<p:dataTable id="enderecos" var="endereco" value="#{clienteMB.pessoa.enderecos}"
@@ -216,7 +212,6 @@
 							<h:outputText value="DDD" />
 							<h:outputText value="Número" />
 							<h:outputText value="" styleClass="btn"/>
-							
 							<p:inputText value="#{clienteMB.telefoneAdicionar.codigoDeArea}" id="ddd" styleClass="largura40"/>
 							<p:inputText value="#{clienteMB.telefoneAdicionar.numero}" id="numero-contato" styleClass="largura65"/>
 							<p:commandButton actionListener="#{clienteMB.adicionarTelefone}" update="fieldset-telefone" 
@@ -257,21 +252,12 @@
 				<div id="div-foto" class="cantos-arredondados">
 					<p:graphicImage value="#{clienteMB.fotoGerada}" id="foto" styleClass="foto" style="width: 100%; height: 100%;"/>
 				</div>
-
 			    <div id="div-inputs" >
 			    	<h:panelGrid columns="1">
-						<p:fileUpload   
-						            mode="advanced"  
-						            update="foto"  
-						            auto="true"
-						            allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-						            cancelLabel="Cancelar"
-						            label="Escolher a Foto"
-						            uploadLabel="Carregar"
-						            fileUploadListener="#{clienteMB.carregarFoto}"/>
+						<p:fileUpload mode="advanced" update="foto" auto="true" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+						            cancelLabel="Cancelar" label="Escolher a Foto" uploadLabel="Carregar" fileUploadListener="#{clienteMB.carregarFoto}"/>
 			    	</h:panelGrid>
 			    </div>		
-				
 				<div class="clear"></div>
 		    </p:tab>		  
 		</p:tabView>
@@ -317,6 +303,7 @@
 				<h:outputText value="#{cliente.dataCadastro}" />
 			</p:column>
 		</p:dataTable>
+		
  		<!-- MODAL DE PESQUISA DE PESSOAS -->
 		<p:dialog id="modal-pesquisa-pessoa" header="Pesquisa de Pessoa" widgetVar="modalPesquisaPessoa"
 			modal="true" height="420" width="600" position="top" style="margin: 100px 0 0 0;">
