@@ -90,7 +90,7 @@
 							<td><p:inputMask id="cep" value="#{clienteMB.endereco.cep}" styleClass="largura65" mask="99999999" /></td>
 							<td><p:inputText id="cidade" value="#{clienteMB.endereco.cidade}" styleClass="largura150 maiusculo" /></td>
 							<td>
-					            <p:selectOneMenu value="#{clienteMB.endereco.uf}" id="uf" style="margin: 0 0 -8px 0;" converter="simpleIndexConverter">
+					            <p:selectOneMenu value="#{clienteMB.endereco.uf}" id="uf" style="width: 90px;" converter="simpleIndexConverter">
 					            	<f:selectItem itemLabel="Selecione" noSelectionOption="true"/>
 					            	<f:selectItems  value="#{clienteMB.carregaUfs()}" var="uf" itemLabel="#{uf.sigla}" itemValue="#{uf}"/>
 					            </p:selectOneMenu>							
