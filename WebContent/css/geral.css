@@ -136,6 +136,11 @@ legend{
 	top: -5px;
 }
 
+#menu-icone-usuario-logado{
+	position: relative;
+	top: 2px;
+}
+
 /* Radio para Primafaces */
 .radioAll { margin: 4px 0px 6px 0px;}
 .radioAll label{
