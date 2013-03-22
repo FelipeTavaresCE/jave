@@ -1,20 +1,19 @@
 package br.com.jave.managedbean;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
-import org.primefaces.model.DualListModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import br.com.jave.dao.PerfilDeAcessoDao;
 import br.com.jave.dao.UsuarioSistemaDao;
 import br.com.jave.enums.Sexo;
-import br.com.jave.modelo.PerfilDeAcesso;
+import br.com.jave.modelo.Pessoa;
 import br.com.jave.modelo.UsuarioSistema;
 import br.com.jave.util.FacesMessageUtil;
 
@@ -30,37 +29,30 @@ public class UsuarioSistemaMB implements Serializable {
 	private PerfilDeAcessoDao perfilDeAcessoDao;
 	private String senhaDeConfirmacao;
 	private Sexo sexo;
-	private List<PerfilDeAcesso> perfiesDeAcessoOrigem;  
-    private List<PerfilDeAcesso> perfiesDeAcessoDestino;	
-	
-	private DualListModel<PerfilDeAcesso> perfiesDeAcesso;
 	
 	public UsuarioSistemaMB(){}
 	
 	@Autowired
-	public UsuarioSistemaMB(UsuarioSistemaDao usuarioSistemaDao, UsuarioSistema usuarioSistema, PerfilDeAcessoDao perfilDeAcessoDao){
+	public UsuarioSistemaMB(UsuarioSistemaDao usuarioSistemaDao, UsuarioSistema usuarioSistema){
 		this.usuarioSistemaDao = usuarioSistemaDao;
 		this.usuarioSistema = usuarioSistema;
-		this.perfilDeAcessoDao = perfilDeAcessoDao;
-		
-        try{
-    		perfiesDeAcessoOrigem = perfilDeAcessoDao.listarTodos();  
-            perfiesDeAcessoDestino = new ArrayList<PerfilDeAcesso>();
-            setPerfiesDeAcesso(new DualListModel<PerfilDeAcesso>(perfiesDeAcessoOrigem, perfiesDeAcessoDestino));
-        	
-        }catch(Exception e){
-        	System.out.println("ERRO AO LISTAR OS PERFIES DE ACESSOS" + e.getMessage());
-        	e.printStackTrace();
-        }
-        
 	}
 	
 	public void gravar(){
 		try{
+			Pessoa pessoa = new Pessoa();
+			pessoa.setNome("teste manual");
+			pessoa.setSexo(Sexo.MASCULINO);
+			pessoa.setCpf("00434926302");
+			pessoa.setCnpj("00000000000");
+			pessoa.setDataNascimento(new Date());
+			
+			usuarioSistema.setPessoa(pessoa);
 			usuarioSistemaDao.gravar(usuarioSistema);
-			FacesMessageUtil.mensagem("Usuário do sistema gravado com sucesso.");
+			FacesMessageUtil.mensagem("Usuário do sistema gravado com sucesso.", null);
 		}catch(Exception e){
-			FacesMessageUtil.erro("Erro ao gravar o usuario", e.getMessage());
+			FacesMessageUtil.erro("Erro ao gravar o usuario: \n", e.getMessage());
+			System.out.println("Erro ao gravar o usuario: \n" +  e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -77,15 +69,12 @@ public class UsuarioSistemaMB implements Serializable {
 	
 	public void adicionarNovoUsuario(){
 		usuarioSistema = new UsuarioSistema();
+		usuarioSistema.setPessoa(new Pessoa());
 		senhaDeConfirmacao = null;
 		sexo = null;
 		System.out.println("Entrou na função de adicionar novo usuario.");
 	}
 	
-	public void selecionarPessoa(){
-		
-	}
-
 	public List<UsuarioSistema> getUsuariosSistemaListagem() {
 		return usuariosSistemaListagem;
 	}
@@ -118,13 +107,4 @@ public class UsuarioSistemaMB implements Serializable {
 	public void setSexo(Sexo sexo) {
 		this.sexo = sexo;
 	}
-
-	public DualListModel<PerfilDeAcesso> getPerfiesDeAcesso() {
-		return perfiesDeAcesso;
-	}
-
-	public void setPerfiesDeAcesso(DualListModel<PerfilDeAcesso> perfiesDeAcesso) {
-		this.perfiesDeAcesso = perfiesDeAcesso;
-	}
-
 }

@@ -13,14 +13,14 @@
 		</style>
 		
 		<h:form id="form-geral">
-			<p:growl globalOnly="false" id="mensagens"/>
+			<p:growl globalOnly="false" id="mensagens" showDetail="true" showSummary="true"/>
 			<p:tabView>
 				<p:tab title="Dados do Usuário">
 			        <h:panelGrid columns="2">		          
 			            <h:outputText value="Nome.: "/>
 			            <p:inputText value="#{usuarioSistemaMB.usuarioSistema.pessoa.nome}" id="nome"
 			            	styleClass="elemento-form-input largura250"
-			            	required="true" requiredMessage="Informe o nome do Cliente" />
+			            	required="true" requiredMessage="Informe o nome do usuário" />
 
 			            <h:outputText value="CPF.: "/>
 			            
@@ -57,8 +57,6 @@
 			        </h:panelGrid>
 		        </p:tab>
 		        <p:tab title="Perfies do Usuário">
-		        	<p:pickList id="pickList" value="#{usuarioSistemaMB.perfiesDeAcesso}" var="perfilDeAcesso"   
-	                	itemLabel="#{perfilDeAcesso.descricao}" itemValue="#{perfilDeAcesso}" />
 		        </p:tab>
 	        </p:tabView>
 	        <br />

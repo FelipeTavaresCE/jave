@@ -20,7 +20,7 @@ public class UsuarioSistemaDaoImpl implements UsuarioSistemaDao{
 
 	@PersistenceContext
 	EntityManager entityManager;
-	List<UsuarioSistema> usuarios;
+	//List<UsuarioSistema> usuarios;
 	
 	@Override
 	public void gravar(UsuarioSistema usuarioSistema) throws Exception {
