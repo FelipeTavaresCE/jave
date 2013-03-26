@@ -13,6 +13,7 @@
 		</style>
 		
 		<h:form id="form-geral">
+			
 			<p:growl globalOnly="false" id="mensagens" showDetail="true" showSummary="true"/>
 			<p:tabView>
 				<p:tab title="Dados do Usuário">
@@ -38,16 +39,19 @@
 			            </h:panelGroup>
 		
 						<h:outputText value="Login.: "/>
-						<p:inputText id="login" value="#{usuarioSistemaMB.usuarioSistema.login}" styleClass="elemento-form-input largura200" />
+						<p:inputText id="login" value="#{usuarioSistemaMB.usuarioSistema.login}" styleClass="elemento-form-input largura200"
+							required="true" requiredMessage="Informe o login do usuário"/>
 						
 						<h:outputText value="Senha.: "/>
 						<p:password id="senha1" match="senha2" required="true" styleClass="elemento-form-input"
 						 	goodLabel="Bom" promptLabel="Informe a senha" strongLabel="Forte" weakLabel="Fraca"
-						 	validatorMessage="Senhas divergentes" value="#{usuarioSistemaMB.usuarioSistema.senha}"/>
+						 	validatorMessage="Senhas divergentes" value="#{usuarioSistemaMB.usuarioSistema.senha}"
+						 	requiredMessage="Informe a senha"/>
 						
 						<h:outputText value="Repita a Senha.: " styleClass="senhas"/>
-						<p:password id="senha2" match="senha2" required="true" styleClass="elemento-form-input" value="#{usuarioSistemaMB.senhaDeConfirmacao}"
-							goodLabel="Bom" promptLabel="Repita a senha" strongLabel="Forte" weakLabel="Fraca"/>
+						<p:password id="senha2" match="senha2" required="true" styleClass="elemento-form-input"
+							value="#{usuarioSistemaMB.senhaDeConfirmacao}" goodLabel="Bom" promptLabel="Repita a senha"
+							strongLabel="Forte" weakLabel="Fraca" requiredMessage="Informe a senha de verificação"/>
 		
 						<h:outputText value="Ativo.: "/>
 			            <h:selectOneRadio id="radioStatus" styleClass="radioJSF" value="#{usuarioSistemaMB.usuarioSistema.ativo}">
@@ -89,9 +93,9 @@
 				<p:dataTable id="pessoas-listagem-pesquisa" var="pessoa" value="#{pesquisaPessoaMB.pessoasListagem}"
 					rendered="#{not empty pesquisaPessoaMB.pessoasListagem}" paginator="true" rows="10"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-					paginatorPosition="bottom" rowKey="#{pessoa.id}" selection="#{usuarioSistemaMB.usuarioSistema.pessoa}" selectionMode="single">
+					paginatorPosition="bottom" rowKey="#{pessoa.id}" selection="#{usuarioSistemaMB.pessoaJaExistente}" selectionMode="single">
 					
-					<p:ajax event="rowSelect" oncomplete="modalPesquisaPessoa.hide()" update=":form-geral"/>
+					<p:ajax event="rowSelect" listener="#{usuarioSistemaMB.selecionarPessoaJaExistente()}" oncomplete="modalPesquisaPessoa.hide()" update=":form-geral"/>
 					
 					<f:facet name="header">Clique Para Selecionar a Pessoa</f:facet>
 					<p:column headerText="Cód.">#{pessoa.id}</p:column>

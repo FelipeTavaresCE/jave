@@ -1,7 +1,7 @@
 package br.com.jave.managedbean;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Controller;
 
 import br.com.jave.dao.PerfilDeAcessoDao;
 import br.com.jave.dao.UsuarioSistemaDao;
-import br.com.jave.enums.Sexo;
+import br.com.jave.modelo.PerfilDeAcesso;
 import br.com.jave.modelo.Pessoa;
 import br.com.jave.modelo.UsuarioSistema;
 import br.com.jave.util.FacesMessageUtil;
@@ -23,31 +23,27 @@ import br.com.jave.util.FacesMessageUtil;
 public class UsuarioSistemaMB implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private UsuarioSistemaDao usuarioSistemaDao;
-	private List<UsuarioSistema> usuariosSistemaListagem;
-	private UsuarioSistema usuarioSistema;
-	private PerfilDeAcessoDao perfilDeAcessoDao;
-	private String senhaDeConfirmacao;
-	private Sexo sexo;
 	
-	public UsuarioSistemaMB(){}
+	private UsuarioSistemaDao usuarioSistemaDao;
+	private UsuarioSistema usuarioSistema = new UsuarioSistema();
+	private String senhaDeConfirmacao;
+	private Pessoa pessoaJaExistente;
+	private PerfilDeAcessoDao perfilDeAcessoDao;
+	
+	public UsuarioSistemaMB(){
+		System.out.println("Entrou no construtor padrão do cadastro de usuário do sistema.");
+	}
 	
 	@Autowired
-	public UsuarioSistemaMB(UsuarioSistemaDao usuarioSistemaDao, UsuarioSistema usuarioSistema){
+	public UsuarioSistemaMB(UsuarioSistemaDao usuarioSistemaDao, PerfilDeAcessoDao perfilDeAcessoDao){
 		this.usuarioSistemaDao = usuarioSistemaDao;
-		this.usuarioSistema = usuarioSistema;
+		this.perfilDeAcessoDao = perfilDeAcessoDao;
+		adicionarNovoUsuario();
 	}
 	
 	public void gravar(){
 		try{
-			Pessoa pessoa = new Pessoa();
-			pessoa.setNome("teste manual");
-			pessoa.setSexo(Sexo.MASCULINO);
-			pessoa.setCpf("00434926302");
-			pessoa.setCnpj("00000000000");
-			pessoa.setDataNascimento(new Date());
-			
-			usuarioSistema.setPessoa(pessoa);
+			//usuarioSistema.setPerfilDeAcesso(adicionarPerfilDeAcesso());
 			usuarioSistemaDao.gravar(usuarioSistema);
 			FacesMessageUtil.mensagem("Usuário do sistema gravado com sucesso.", null);
 		}catch(Exception e){
@@ -57,33 +53,25 @@ public class UsuarioSistemaMB implements Serializable {
 		}
 	}
 	
-	public List<UsuarioSistema> listarUsuarios(){
-		try {
-			usuariosSistemaListagem = usuarioSistemaDao.listarTodos();
-		} catch (Exception e) {
-			FacesMessageUtil.erro("Erro ao Listar os clientes.", e.getMessage());
-			e.printStackTrace();
-		}
-		return usuariosSistemaListagem;
+	public void selecionarPessoaJaExistente(){
+		this.usuarioSistema.setPessoa(pessoaJaExistente);		
 	}
 	
 	public void adicionarNovoUsuario(){
 		usuarioSistema = new UsuarioSistema();
-		usuarioSistema.setPessoa(new Pessoa());
-		senhaDeConfirmacao = null;
-		sexo = null;
-		System.out.println("Entrou na função de adicionar novo usuario.");
 	}
 	
-	public List<UsuarioSistema> getUsuariosSistemaListagem() {
-		return usuariosSistemaListagem;
+	private List<PerfilDeAcesso> adicionarPerfilDeAcesso(){
+		if(usuarioSistema.getPerfilDeAcesso() == null)
+			usuarioSistema.setPerfilDeAcesso(new ArrayList<PerfilDeAcesso>());
+		
+		List<PerfilDeAcesso> perfilDeAcessoUsuario = new ArrayList<PerfilDeAcesso>();		
+		perfilDeAcessoUsuario.add(perfilDeAcessoDao.pesquisarPorNome("ROLE_ADMIN"));
+		
+		return perfilDeAcessoUsuario;
 	}
 
-	public void setUsuariosSistemaListagem(
-			List<UsuarioSistema> usuariosSistemaListagem) {
-		this.usuariosSistemaListagem = usuariosSistemaListagem;
-	}
-
+	//Métodos GET e SET
 	public UsuarioSistema getUsuarioSistema() {
 		return usuarioSistema;
 	}
@@ -100,11 +88,11 @@ public class UsuarioSistemaMB implements Serializable {
 		this.senhaDeConfirmacao = senhaDeConfirmacao;
 	}
 
-	public Sexo getSexo() {
-		return sexo;
+	public Pessoa getPessoaJaExistente() {
+		return pessoaJaExistente;
 	}
 
-	public void setSexo(Sexo sexo) {
-		this.sexo = sexo;
+	public void setPessoaJaExistente(Pessoa pessoaJaExistente) {
+		this.pessoaJaExistente = pessoaJaExistente;
 	}
 }

@@ -69,6 +69,7 @@ public class Pessoa implements Serializable{
 	
 	public Pessoa(){
 		this.dataCadastro = new Date();
+		System.out.println("NOVA PESSOA PARA USUARIO SISTEMA CRiADO.");
 	}
 	
 	/*Metodos Get e Set*/

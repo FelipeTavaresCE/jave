@@ -18,8 +18,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.springframework.stereotype.Component;
-
 import br.com.jave.util.Criptografia;
 
 @Entity
@@ -29,7 +27,6 @@ import br.com.jave.util.Criptografia;
 	@NamedQuery(name = "usuarioSistemaValidarUsuario",
 	            query = "SELECT u FROM UsuarioSistema u WHERE u.login = :login and u.senha = :senha and u.ativo = 'true'")
 })
-@Component
 public class UsuarioSistema implements Serializable{
 	
 	@Transient
@@ -54,7 +51,12 @@ public class UsuarioSistema implements Serializable{
 		joinColumns={@JoinColumn(name="usuario_login")},
 		inverseJoinColumns={@JoinColumn(name="perfil_acesso_nome")}
 	)
-	private List<PerfilDeAcesso> perfilDeAcesso; 
+	private List<PerfilDeAcesso> perfilDeAcesso;
+	
+	public UsuarioSistema(){
+		setAtivo(true);
+		setPessoa(new Pessoa());
+	}
 	
 	public Long getId() {
 		return id;
