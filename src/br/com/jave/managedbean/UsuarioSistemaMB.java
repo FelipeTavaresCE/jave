@@ -43,7 +43,7 @@ public class UsuarioSistemaMB implements Serializable {
 	
 	public void gravar(){
 		try{
-			//usuarioSistema.setPerfilDeAcesso(adicionarPerfilDeAcesso());
+			usuarioSistema.setPerfilDeAcesso(adicionarPerfilDeAcesso());
 			usuarioSistemaDao.gravar(usuarioSistema);
 			FacesMessageUtil.mensagem("Usuário do sistema gravado com sucesso.", null);
 		}catch(Exception e){

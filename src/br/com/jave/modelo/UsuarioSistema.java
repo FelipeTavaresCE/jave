@@ -32,11 +32,11 @@ public class UsuarioSistema implements Serializable{
 	@Transient
 	private static final long serialVersionUID = 1L;
 
+//	@SequenceGenerator(name = "seq_id_usuario_sistema", sequenceName = "seq_id_usuario_sistema", allocationSize = 1)
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id_usuario_sistema")
+//	private Long id;
+
 	@Id
-	@SequenceGenerator(name = "seq_id_usuario_sistema", sequenceName = "seq_id_usuario_sistema", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id_usuario_sistema")
-	private Long id;
-	
 	private String login;
 	
 	private String senha;
@@ -58,12 +58,12 @@ public class UsuarioSistema implements Serializable{
 		setPessoa(new Pessoa());
 	}
 	
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
+//	public Long getId() {
+//		return id;
+//	}
+//	public void setId(Long id) {
+//		this.id = id;
+//	}
 	public String getLogin() {
 		return login;
 	}
@@ -102,7 +102,7 @@ public class UsuarioSistema implements Serializable{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((ativo == null) ? 0 : ativo.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+//		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
 		result = prime * result + ((pessoa == null) ? 0 : pessoa.hashCode());
 		result = prime * result + ((senha == null) ? 0 : senha.hashCode());
@@ -122,11 +122,11 @@ public class UsuarioSistema implements Serializable{
 				return false;
 		} else if (!ativo.equals(other.ativo))
 			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
+//		if (id == null) {
+//			if (other.id != null)
+//				return false;
+//		} else if (!id.equals(other.id))
+//			return false;
 		if (login == null) {
 			if (other.login != null)
 				return false;

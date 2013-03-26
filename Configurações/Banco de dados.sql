@@ -125,7 +125,7 @@ CREATE TABLE tb_usuario_sistema_perfil_acesso(
 DROP TABLE IF EXISTS tb_usuario_sistema;
 
 CREATE TABLE tb_usuario_sistema(
-    id bigint NOT NULL,
+    --id bigint NOT NULL,
     login varchar(50) not null,
     senha varchar(100) not null,
     ativo boolean not null,
@@ -218,7 +218,7 @@ ALTER TABLE ONLY tb_uf
     ADD CONSTRAINT pk_tb_uf PRIMARY KEY (id);
 
 ALTER TABLE ONLY tb_usuario_sistema
-    ADD CONSTRAINT pk_usuario_sistema PRIMARY KEY (id);
+    ADD CONSTRAINT pk_usuario_sistema PRIMARY KEY (login);
 
 ALTER TABLE ONLY tb_perfil_acesso
     ADD CONSTRAINT pk_perfil_acesso PRIMARY KEY (nome);
@@ -235,7 +235,7 @@ ALTER TABLE tb_produto
 -------------- Fim da Criação das Primary Keys ------------------------
 
 -------------- Criação dos indices ---------------------------------
-CREATE UNIQUE INDEX unq_idx_login ON tb_usuario_sistema(login);
+--CREATE UNIQUE INDEX unq_idx_login ON tb_usuario_sistema(id);
 CREATE UNIQUE INDEX unq_idx_pessoa_cliente ON tb_cliente(pessoa_id);
 -------------- Fim da Criação dos indices --------------------------
 
@@ -287,8 +287,8 @@ INSERT INTO tb_perfil_acesso values('ROLE_ADMIN', 'Administrador');
 INSERT INTO tb_perfil_acesso values('ROLE_CADASTRO', 'Cadastro');
 INSERT INTO tb_perfil_acesso values('ROLE_GERENCIA', 'Gerência');
 
-INSERT INTO tb_usuario_sistema values(nextval('seq_id_usuario_sistema'), 'admin', md5('admin'), true, 1);
-INSERT INTO tb_usuario_sistema values(nextval('seq_id_usuario_sistema'), 'cadastro', md5('cadastro'), true, 2);
+INSERT INTO tb_usuario_sistema values(/*nextval('seq_id_usuario_sistema'), */'admin', md5('admin'), true, 1);
+INSERT INTO tb_usuario_sistema values(/*nextval('seq_id_usuario_sistema'),*/ 'cadastro', md5('cadastro'), true, 2);
 
 INSERT INTO tb_usuario_sistema_perfil_acesso values('admin', 'ROLE_ADMIN');
 INSERT INTO tb_usuario_sistema_perfil_acesso values('cadastro', 'ROLE_CADASTRO');
