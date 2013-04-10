@@ -5,21 +5,20 @@
   xmlns:ui="http://java.sun.com/jsf/facelets"
   xmlns:p="http://primefaces.org/ui">
 
-	<ui:define name="pagina-titulo">Insira o titulo da página</ui:define>
+	<ui:define name="pagina-titulo">Cadastro de Produto</ui:define>
 
 	<ui:define name="corpo-pagina">
 		<h:form id="form-geral" prependId="false">
+		
 			<p:growl globalOnly="false" id="mensagens"/>
+	
 			<p:tabView id="tabProduto" >		
 				<p:tab id="tab-dados-produto" title="Produto">  
 				    
 					<h:panelGrid id="panelProduto" columns="2">
 			            <h:outputText value="Nome.: "/>
-			            <h:panelGroup columns="2">
 			            <p:inputText id="nome" value="#{produtoMB.produto.nome}" styleClass="elemento-form-input largura250" />
-			            <p:commandButton id="basic" value="" icon="ui-icon-search" onclick="dlgPesquisa.show();" type="button"
-			            	style="height:25px;width:35px;top:0; margin: 0 0 -8px 0;"/>
-			            </h:panelGroup>
+			          
 			            <h:outputText value="Código de Barras.: "/>
 			            <p:inputText id="cdBarras" value="#{produtoMB.produto.codigoDeBarras}" styleClass="elemento-form-input largura250" />
 			            
@@ -49,22 +48,28 @@
 			            <p:inputText id="qtdVolume" value="#{produtoMB.produto.quantidadeVolume}" styleClass="elemento-form-input largura65"/>
 			            
 			            <h:outputText value="Preço.: "/>
+			            
+			            <h:panelGroup >
 			            <p:inputText id="preco" value="#{produtoMB.produto.preco}" styleClass="elemento-form-input largura65">
 				             <f:converter converterId="MoedaConverter" />
 			             </p:inputText>
 			            
-			            <h:outputText value="Desconto %.: "/>
-			            <p:inputText id="desconto" maxlength="6" value="#{produtoMB.produto.descontoPercentual}" styleClass="elemento-form-input largura65">
+			            <h:outputText value="Desconto %.: " style="margin-left:10px;"/>
+			            <p:inputText id="desconto" maxlength="6" value="#{produtoMB.produto.descontoPercentual}" styleClass="elemento-form-input largura65" style="margin-left:22px;">
 			            	  <f:converter converterId="MoedaConverter" />
 			            </p:inputText>
+			            </h:panelGroup>
 			            
 			            <h:outputText value="Qtd Disponível.: "/>
+			            
+			            <h:panelGroup>
 			            <p:inputText id="qtdDisponivel" value="#{produtoMB.produto.quantidadeDisponivel}" styleClass="elemento-form-input largura65">
 			            	  <f:converter converterId="MoedaConverter" />
 			            </p:inputText>
 			            
-			            <h:outputText value="Estoque Mínimo.: "/>
-			            <p:inputText id="estoqueDisp" value="#{produtoMB.produto.estoqueMinimo}" styleClass="elemento-form-input largura150"/>
+			            <h:outputText value="Estoque Mínimo.: " style="margin-left:10px;"/>
+			            <p:inputText id="estoqueDisp" value="#{produtoMB.produto.estoqueMinimo}" styleClass="elemento-form-input largura65"/>
+			            </h:panelGroup>
 			            
 			            <h:outputText value="Ativo.: "/>
 			            <h:selectOneRadio id="radioStatus" value="#{produtoMB.produto.ativo}" styleClass="radioJSF" >
@@ -76,14 +81,46 @@
 				</p:tab>
 			</p:tabView>
 			<p:commandButton value="Gravar" icon="ui-icon-disk" actionListener="#{produtoMB.gravar}"
-			update=":form-geral"  />
+			update=":form-geral" />
 		<p:commandButton value="Novo" icon="ui-icon-circle-plus" actionListener="#{produtoMB.criarNovo}"
 			update=":form-geral" />
+		<br />
+		<br />
+		
+			<!-- LISTAGEM DOS PRODUTOS CADASTRADOS NA BASE DE DADOS -->
+		<f:event listener="#{produtoMB.listarProdutos}" type="preRenderView" />
+		<p:dataTable id="dataProduto" var="produto" value="#{produtoMB.produtos}" emptyMessage="Nenhum registro encontrado" style="width: 100%;"
+		   paginator="true" rows="10"
+		   paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		   rowKey="#{produto.id}" selection="#{produtoMB.produtoSelection}" selectionMode="single" paginatorPosition="bottom"
+		   rowsPerPageTemplate="5,10,15,20">
+			<p:ajax event="rowSelect" listener="#{produtoMB.prepararEdicao()}" update=":form-geral" />
+
+			<p:column headerText="Código" style="width: 60px;" filterBy="#{produto.id}" filterStyleClass="input-filter" filterStyle="width:50px !important;">
+				<h:outputText value="#{produto.id}" />
+			</p:column>  				
+							
+			<p:column headerText="Nome" width="150" filterBy="#{produto.nome}" filterStyleClass="input-filter" >
+				<h:outputText value="#{produto.nome}" />
+			</p:column>  				
+			<p:column headerText="Nome do Fabricante" filterBy="#{produto.nomeFabricante}" filterStyleClass="input-filter">
+				<h:outputText value="#{produto.nomeFabricante}" />
+			</p:column>				
+			<p:column headerText="Preço" filterBy="#{produto.preco}" filterStyleClass="input-filter" >
+				<h:outputText value="#{produto.preco}" />
+			</p:column>				
+			<p:column headerText="Pericivel">
+				<h:outputText value="#{produto.perecivel}" />
+			</p:column>				
+			<p:column headerText="Cod. de Barras">
+				<h:outputText value="#{produto.codigoDeBarras}" />
+			</p:column>				
+		</p:dataTable>	
+			
 		</h:form>
-		<p:dialog id="basicDialog" header="Pesquisa Produto" widgetVar="dlgPesquisa" height="600" width="800" 
-					modal="true" resizable="false">  
-			    <h:outputText value="Teste!" />  
-		</p:dialog>  
+				
+		<br />
+		
 		
 	</ui:define>
 
