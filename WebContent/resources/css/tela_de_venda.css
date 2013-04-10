@@ -1,0 +1,51 @@
+@CHARSET "UTF-8";
+
+.flutuar-esquerda{float: left;}
+
+.flutuar-direita{float: right;}
+
+.clear{clear: both;}
+
+#div-formulario{
+	width: 500px;
+	height: 100px;
+	border: 1px solid gray;
+}
+#div-cupom{
+	width: 450px;
+	border: 0px solid gray;
+	margin: 0 0 0 20px;
+}
+#cupom-top{
+	border: 0 solid gray;
+	height: 13px;
+	background-image: url("../imagens/cupom-img.png");
+	background-position:0 0;
+	background-repeat: no-repeat;
+}
+
+#cupom-bottom{
+	border: 0 solid gray;
+	height: 10px;
+	background-image: url("../imagens/cupom-img.png");
+	background-position:0 -261px;
+	background-repeat: no-repeat;
+}
+
+#cupom-conteudo{
+	background-image: url("../imagens/cupom-img-conteudo.png");
+	background-position:0 0;
+	border: 0px solid gray;
+	background-repeat: repeat-y;
+}
+
+#cabecalho-cupom-fiscal{
+	padding: 15px 20px 10px 20px;
+	border:0px solid gray;
+}
+
+#cabecalho-cupom-fiscal #nome-empresa{
+	font-weight: bold;
+	text-transform: uppercase;
+	text-align: center;
+}
