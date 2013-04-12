@@ -80,9 +80,37 @@ CREATE SEQUENCE seq_id_produto
     NO MAXVALUE
     CACHE 1;
     
+DROP SEQUENCE IF EXISTS seq_id_pedido;
+
+CREATE SEQUENCE seq_id_pedido
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+DROP SEQUENCE IF EXISTS seq_id_pedido_item;
+
+CREATE SEQUENCE seq_id_pedido_item
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+DROP SEQUENCE IF EXISTS seq_id_estoque;
+
+CREATE SEQUENCE seq_id_estoque
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
 --------------Fim Criação das Sequences------------------------
 
 --------------Criação das tabelas------------------------
+--tb_telefone
 DROP TABLE IF EXISTS tb_telefone;
 
 CREATE TABLE tb_telefone (
@@ -92,6 +120,7 @@ CREATE TABLE tb_telefone (
     pessoa_id bigint
 );
 
+--tb_email
 DROP TABLE IF EXISTS tb_email;
 
 CREATE TABLE tb_email (
@@ -100,6 +129,7 @@ CREATE TABLE tb_email (
     pessoa_id bigint
 );
 
+--tb_endereco
 DROP TABLE IF EXISTS tb_endereco cascade;
 
 CREATE TABLE tb_endereco (
@@ -115,6 +145,7 @@ CREATE TABLE tb_endereco (
     uf_id bigint
 );
 
+--tb_usuario_sistema_perfil_acesso
 DROP TABLE IF EXISTS tb_usuario_sistema_perfil_acesso;
 
 CREATE TABLE tb_usuario_sistema_perfil_acesso(
@@ -122,16 +153,17 @@ CREATE TABLE tb_usuario_sistema_perfil_acesso(
    perfil_acesso_nome varchar(20) not null
 );
 
+--tb_usuario_sistema
 DROP TABLE IF EXISTS tb_usuario_sistema;
 
 CREATE TABLE tb_usuario_sistema(
-    --id bigint NOT NULL,
     login varchar(50) not null,
     senha varchar(100) not null,
     ativo boolean not null,
     pessoa_id bigint not null
 );
 
+--tb_perfil_acesso
 DROP TABLE IF EXISTS tb_perfil_acesso;
 
 CREATE TABLE tb_perfil_acesso(
@@ -139,7 +171,8 @@ CREATE TABLE tb_perfil_acesso(
     descricao varchar(50) NOT NULL
 );
 
-DROP TABLE IF EXISTS tb_cliente;
+--tb_cliente
+DROP TABLE IF EXISTS tb_cliente CASCADE;
 
 CREATE TABLE tb_cliente(
     id bigint not null,
@@ -147,6 +180,7 @@ CREATE TABLE tb_cliente(
     pessoa_id bigint not null
 );
 
+--tb_uf
 DROP TABLE IF EXISTS tb_uf;
 
 CREATE TABLE tb_uf (
@@ -155,6 +189,7 @@ CREATE TABLE tb_uf (
     sigla varchar(2)
 );
 
+--tb_configuracoes_sistema
 DROP TABLE IF EXISTS tb_configuracoes_sistema;
 
 CREATE TABLE tb_configuracoes_sistema(
@@ -165,6 +200,7 @@ CREATE TABLE tb_configuracoes_sistema(
     
 );
 
+--tb_pessoa
 DROP TABLE IF EXISTS tb_pessoa;
 
 CREATE TABLE tb_pessoa (
@@ -178,7 +214,8 @@ CREATE TABLE tb_pessoa (
     foto bytea
 );
 
-DROP TABLE IF EXISTS tb_produto;
+--tb_produto
+DROP TABLE IF EXISTS tb_produto CASCADE;
 
 CREATE TABLE tb_produto(
     id bigint not null,
@@ -196,6 +233,48 @@ CREATE TABLE tb_produto(
     quantidade_disponivel integer,
     estoque_minimo integer,
     ativo boolean
+);
+
+--tb_status_pedido
+DROP TABLE IF EXISTS tb_status_pedido CASCADE;
+
+CREATE TABLE tb_status_pedido(
+    id int not null,
+    descricao varchar(50) not null
+);
+
+--tb_pedido
+DROP TABLE IF EXISTS tb_pedido CASCADE;
+
+CREATE TABLE tb_pedido(
+    id bigint not null,
+    data_hora timestamp without time zone not null, 
+    valor_total numeric not null,
+    vlr_desconto numeric null,
+    status_pedido_id integer not null,
+    cliente_id bigint null
+);
+
+--tb_pedido_item
+DROP TABLE IF EXISTS tb_pedido_item;
+
+CREATE TABLE tb_pedido_item(
+    id bigint not null,
+    quantidade integer not null,
+    pedido_id bigint not null,
+    produto_id bigint null
+);
+
+--tb_estoque
+DROP TABLE IF EXISTS tb_estoque;
+
+CREATE TABLE tb_estoque(
+    id bigint not null,
+    qtd_disponivel integer not null,
+    preco_custo numeric not null,
+    preco_venda numeric not null,
+    data_reposicao timestamp without time zone,
+    produto_id bigint null
 );
 
 
@@ -230,12 +309,20 @@ ALTER TABLE tb_configuracoes_sistema
     ADD CONSTRAINT pk_config_sistema PRIMARY KEY (id);
 
 ALTER TABLE tb_produto
-    ADD CONSTRAINT pk_produto PRIMARY KEY (id);   
+    ADD CONSTRAINT pk_produto PRIMARY KEY (id);
+
+ALTER TABLE tb_status_pedido
+    ADD CONSTRAINT pk_status_pedido PRIMARY KEY (id);
+
+ALTER TABLE tb_pedido
+    ADD CONSTRAINT pk_pedido PRIMARY KEY (id);
+
+ALTER TABLE tb_pedido_item
+    ADD CONSTRAINT pk_pedido_item PRIMARY KEY (id);
 
 -------------- Fim da Criação das Primary Keys ------------------------
 
 -------------- Criação dos indices ---------------------------------
---CREATE UNIQUE INDEX unq_idx_login ON tb_usuario_sistema(id);
 CREATE UNIQUE INDEX unq_idx_pessoa_cliente ON tb_cliente(pessoa_id);
 -------------- Fim da Criação dos indices --------------------------
 
@@ -263,6 +350,18 @@ ALTER TABLE ONLY tb_usuario_sistema_perfil_acesso
 
 ALTER TABLE tb_cliente
     ADD CONSTRAINT fk_cliente_pessoa FOREIGN KEY (pessoa_id) REFERENCES tb_pessoa (id);
+
+ALTER TABLE tb_pedido
+    ADD CONSTRAINT fk_pedido_status FOREIGN KEY (status_pedido_id) REFERENCES tb_status_pedido(id);
+
+ALTER TABLE tb_pedido
+    ADD CONSTRAINT fk_pedido_cliente FOREIGN KEY (cliente_id) REFERENCES tb_cliente(id);
+
+ALTER TABLE tb_pedido_item
+    ADD CONSTRAINT fk_pedido_item_pedido FOREIGN KEY (pedido_id) REFERENCES tb_pedido(id);
+
+ALTER TABLE tb_pedido_item
+    ADD CONSTRAINT fk_pedido_item_produto FOREIGN KEY (produto_id) REFERENCES tb_produto(id);
 
 -------------- Fim Criação das Foreign Keys ------------------------
 
@@ -294,3 +393,7 @@ INSERT INTO tb_usuario_sistema_perfil_acesso values('admin', 'ROLE_ADMIN');
 INSERT INTO tb_usuario_sistema_perfil_acesso values('cadastro', 'ROLE_CADASTRO');
 
 INSERT INTO tb_configuracoes_sistema values(1, null, 'Nome da Empresa','Slogan da Empresa');
+
+INSERT INTO tb_status_pedido values (0, 'Orçamento');
+INSERT INTO tb_status_pedido values (1, 'Concretizado');
+INSERT INTO tb_status_pedido values (2, 'Cancelado');

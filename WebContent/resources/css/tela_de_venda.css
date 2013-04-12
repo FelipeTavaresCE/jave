@@ -9,7 +9,7 @@
 #div-formulario{
 	width: 500px;
 	height: 100px;
-	border: 1px solid gray;
+	border: 0 solid gray;
 }
 #div-cupom{
 	width: 450px;
@@ -48,4 +48,30 @@
 	font-weight: bold;
 	text-transform: uppercase;
 	text-align: center;
+}
+#endereco-empresa{
+	text-align: center;
+	padding: 1px;
+}
+
+#bairro-cidade-empresa{
+	text-align: center;
+	padding: 1px;
+}
+
+#cnpj-empresa{	
+	text-align: center;
+	padding: 1px;
+}
+
+#descricao-produto{
+	min-height: 30px;
+	border-radius: 3px 3px 3px 3px;
+	width: 100%;
+	padding: 7px 0 0 5px;
+	font-size: 1.8em;
+}
+
+#div-formulario table tbody tr td{
+	padding: 2px 0 2px 0;
 }

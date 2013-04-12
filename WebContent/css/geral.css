@@ -102,9 +102,13 @@ legend{
 	width: 250px;
 }
 
+.input-altura30{
+	height: 30px;
+	font-size: 1.8em !important;
+}
+
 #menu-conteiner{
 	border: 0;
-	
 }
 
 #menu-usuario-dados{
