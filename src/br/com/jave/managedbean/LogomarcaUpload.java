@@ -2,8 +2,8 @@ package br.com.jave.managedbean;
 
 import java.io.Serializable;
 
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.persistence.NoResultException;
 
 import org.primefaces.event.FileUploadEvent;
@@ -17,7 +17,7 @@ import br.com.jave.util.FacesMessageUtil;
 import br.com.jave.util.UploadDeImagem;
 
 @ManagedBean
-@SessionScoped
+@ApplicationScoped
 @Component
 public class LogomarcaUpload implements Serializable{
 

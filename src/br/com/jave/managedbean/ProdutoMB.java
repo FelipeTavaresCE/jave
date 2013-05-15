@@ -26,7 +26,7 @@ public class ProdutoMB implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private ProdutoDao produtoDao;
 	private Produto produto = new Produto();
-	private Produto produtoSelection = new Produto();
+	private Long produtoSelection;
 	private List<Produto> produtos = new ArrayList<>();
 	
 	public ProdutoMB() {}
@@ -49,8 +49,7 @@ public class ProdutoMB implements Serializable{
 	
 	public void prepararEdicao() {
 		try {
-			
-			produto = produtoDao.pesquisarPorId(produtoSelection.getId());
+			produto = produtoDao.pesquisarPorId(produtoSelection);
 		} catch (NoResultException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -111,12 +110,12 @@ public class ProdutoMB implements Serializable{
 	}
 
 
-	public Produto getProdutoSelection() {
+	public Long getProdutoSelection() {
 		return produtoSelection;
 	}
 
 
-	public void setProdutoSelection(Produto produtoSelection) {
+	public void setProdutoSelection(Long produtoSelection) {
 		this.produtoSelection = produtoSelection;
 	}
 		
