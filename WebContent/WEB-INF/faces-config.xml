@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <faces-config
     xmlns="http://java.sun.com/xml/ns/javaee"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -7,52 +6,26 @@
     version="2.1">
     
     <converter>
-    <converter-id>MoedaConverter</converter-id>
-
- 	 <converter-class>br.com.jave.util.MoedaConverter</converter-class>
-      
-	</converter>
+    	<converter-id>MoedaConverter</converter-id>
+    	<converter-class>br.com.jave.util.MoedaConverter</converter-class>
+    </converter>
 	
   <application>
 		<!-- Spring EL Resolver -->
-		<el-resolver>
-			org.springframework.web.jsf.el.SpringBeanFacesELResolver
-		</el-resolver>
-
+		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+		
 		<locale-config>
 			<default-locale>pt_BR</default-locale>
 			<supported-locale>pt_BR</supported-locale>
 		</locale-config>
+
+		<resource-bundle>
+			<base-name>br.com.jave.resource.mensagens</base-name>
+			<var>msgs</var>
+		</resource-bundle>
     </application>
     
-    
-<!-- 	<navigation-rule> -->
-<!-- 		<display-name>login.xhtml</display-name> -->
-<!-- 		<from-view-id>/login.xhtml</from-view-id> -->
-<!-- 		<navigation-case> -->
-<!-- 			<from-action>#{usuarioSistemaMB.validaUsuario}</from-action> -->
-<!-- 			<from-outcome>inicial</from-outcome> -->
-<!-- 			<to-view-id>/inicial.xhtml</to-view-id> -->
-<!-- 			<redirect /> -->
-<!-- 		</navigation-case> -->
-<!-- 	</navigation-rule> -->
-<!-- 	<navigation-rule> -->
-<!-- 		<display-name>menu.xhtml</display-name> -->
-<!-- 		<from-view-id>/menu.xhtml</from-view-id> -->
-<!-- 		<navigation-case> -->
-<!-- 			<from-action>#{usuarioSistemaMB.sairDoSistema}</from-action> -->
-<!-- 			<from-outcome>login</from-outcome> -->
-<!-- 			<to-view-id>/login.xhtml</to-view-id> -->
-<!-- 			<redirect /> -->
-<!-- 		</navigation-case> -->
-<!-- 	</navigation-rule> -->
-<application>
-	<resource-bundle>
-		<base-name>br.com.jave.resource.mensagens</base-name>
-		<var>msgs</var>
-	</resource-bundle>
-</application>
-<navigation-rule>
+    <navigation-rule>
 		<from-view-id>*</from-view-id>
 		<navigation-case>
 			<from-outcome>login</from-outcome>

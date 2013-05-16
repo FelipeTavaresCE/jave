@@ -25,11 +25,12 @@
   </context-param>
   
   <!-- Exibe menssagens de erro mais detalhadas  -->
+<!-- 
   <context-param>
   	<param-name>javax.faces.PROJECT_STAGE</param-name>
   	<param-value>Development</param-value>
   </context-param>
-  
+ -->  
   <filter>
     <filter-name>springSecurityFilterChain</filter-name>
     <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>

@@ -2,13 +2,12 @@ package br.com.jave.managedbean;
 
 import java.io.Serializable;
 
-import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.ManagedBean;
 import javax.persistence.NoResultException;
 
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import br.com.jave.dao.ConfiguracoesDoSistemaDao;
@@ -16,16 +15,15 @@ import br.com.jave.modelo.ConfiguracoesDoSistema;
 import br.com.jave.util.FacesMessageUtil;
 import br.com.jave.util.UploadDeImagem;
 
-@ManagedBean
-@ApplicationScoped
 @Component
+@Scope("singleton")
 public class LogomarcaUpload implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private DefaultStreamedContent fotoGerada;
 	private ConfiguracoesDoSistemaDao configuracoesDoSistemaDao;
 	private ConfiguracoesDoSistema configuracoesDoSistema;
-	private boolean logoAlterada = true;
+	private boolean logoAlterada = false;
 	private byte[] conteudoDoArquivo;
 	
 	public LogomarcaUpload(){
@@ -37,7 +35,7 @@ public class LogomarcaUpload implements Serializable{
 	}	
 	
 	public void upload(FileUploadEvent event) throws Exception {
-		this.logoAlterada = false;
+		this.logoAlterada = true;
 		this.conteudoDoArquivo = event.getFile().getContents();		
 		this.fotoGerada = UploadDeImagem.gerarApresentacaoTela(this.conteudoDoArquivo);
     }
@@ -46,11 +44,15 @@ public class LogomarcaUpload implements Serializable{
 		try {
 			this.configuracoesDoSistema = configuracoesDoSistemaDao.pesquisarPorId(1L);
 			if(this.configuracoesDoSistema == null){
-				//throw new NullPointerException();
 				FacesMessageUtil.aviso("Por favor inserir logomarca!");
-			}
-			if(logoAlterada) 
-				this.fotoGerada = UploadDeImagem.gerarApresentacaoTela(configuracoesDoSistema.getLogomarca());
+		}
+		
+		if(logoAlterada == false){
+			this.fotoGerada = UploadDeImagem.gerarApresentacaoTela(configuracoesDoSistema.getLogomarca());
+		}else{
+			this.fotoGerada = UploadDeImagem.gerarApresentacaoTela(this.conteudoDoArquivo);
+		}
+		
 		} catch (NoResultException e) {
 			FacesMessageUtil.aviso("As configurações do sistema ainda não foram setadas!");
 		}
@@ -65,14 +67,21 @@ public class LogomarcaUpload implements Serializable{
 	
 	public void gravarConfiguracoes(){
 		try {
-			configuracoesDoSistema.setLogomarca(conteudoDoArquivo);
+			if(logoAlterada == true){
+				configuracoesDoSistema.setLogomarca(conteudoDoArquivo);
+			}
 			this.configuracoesDoSistemaDao.gravar(configuracoesDoSistema);
+			logoAlterada = false;
 			FacesMessageUtil.mensagem("Configurações gravadas com sucesso!");
-			logoAlterada = true;
 		} catch (Exception e) {
 			FacesMessageUtil.erro("Erro ao gravar as configurações.\n" + e.getMessage());
 			e.printStackTrace();
 		}
+	}
+	
+	public void removerLogo(){
+		this.conteudoDoArquivo = null;
+		logoAlterada = true;		
 	}
 
 	public DefaultStreamedContent getFotoGerada() {

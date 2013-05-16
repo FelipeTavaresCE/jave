@@ -94,6 +94,14 @@
 <!-- 	Exception translation bean post processor -->
 	<b:bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 	
-
+	<b:bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+		<b:property name="scopes">
+			<b:map>
+				<b:entry key="view">
+					<b:bean class="br.com.jave.spring.customscope.ViewScope" />
+				</b:entry>
+			</b:map>
+		</b:property>
+	</b:bean>
 	
 </b:beans>

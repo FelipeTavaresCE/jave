@@ -1,0 +1,22 @@
+<ui:composition template="/WEB-INF/templates/principal.xhtml"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core" 
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:p="http://primefaces.org/ui">
+
+  <ui:define name="corpo-pagina">
+  	<h:form>
+  		<h:panelGrid columns="1">
+  			<h:outputText value="Nome:" />
+  			<h:inputText value="#{uiViewRootMB.nome}" id="nome"/>
+  			
+  			<h:outputText value="CPF:" />
+  			<h:inputText value="#{uiViewRootMB.cpf}" id="cpf"/>
+  			
+  			<h:commandButton actionListener="#{uiViewRootMB.testar()}" value="Testar" id="botao" />
+  			
+  		</h:panelGrid>
+  	</h:form>
+  </ui:define>
+</ui:composition>

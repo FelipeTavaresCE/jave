@@ -21,7 +21,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "tb_cliente")
 @NamedQueries({
-	@NamedQuery(name = "clienteListarTodos", query = "SELECT c FROM Cliente c join c.pessoa p"),
+	@NamedQuery(name = "clienteListarTodos", query = "SELECT c FROM Cliente c join fetch c.pessoa p"),
 	@NamedQuery(name = "clientePesquisarPorCodigo", query = "SELECT c FROM Cliente c WHERE c.id = :codigoCliente"),
 })
 public class Cliente implements Serializable{

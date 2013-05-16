@@ -6,16 +6,16 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.annotation.PostConstruct;
 import javax.persistence.NoResultException;
 
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Component;
 
 import br.com.jave.dao.ClienteDao;
 import br.com.jave.dao.EnderecoDao;
@@ -32,9 +32,8 @@ import br.com.jave.modelo.Uf;
 import br.com.jave.util.FacesMessageUtil;
 import br.com.jave.util.UploadDeImagem;
 
-@Controller
-@ManagedBean
-@RequestScoped
+@Component
+@Scope("session")
 public class ClienteMB implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -57,7 +56,6 @@ public class ClienteMB implements Serializable{
 	private Email emailAdicionar = new Email();
 	private DefaultStreamedContent fotoGerada;
 	private byte[] conteudoDoArquivo;
-	
 	private Pessoa pessoaPesquisa = new Pessoa();
 	
 	public ClienteMB(){}
@@ -82,7 +80,6 @@ public class ClienteMB implements Serializable{
 	
 	public void gravar(){
 		try {			
-			//criarNovo(); //Descomentar se quiser que a tela seja limpada após a gravação
 			if(cliente == null){
 				cliente = new Cliente();
 				cliente.setDataCadastro(new Date());
@@ -91,7 +88,7 @@ public class ClienteMB implements Serializable{
 			cliente = clienteDao.gravarRetorno(cliente);
 			if(this.pessoa.getFoto() != null)
 				this.fotoGerada = UploadDeImagem.gerarApresentacaoTela(this.pessoa.getFoto());
-			
+			criarNovo();//Descomentar se quiser que a tela seja limpada após a gravação
 			FacesMessageUtil.mensagem("Cliente Gravado com sucesso.");
 		}catch(DataIntegrityViolationException e){
 			FacesMessageUtil.erro("ERRO: Já existe um cliente associado a esta pessoa. " +
@@ -106,7 +103,6 @@ public class ClienteMB implements Serializable{
 	public void prepararEdicao(){
 		try {
 			cliente = clienteDao.pesquisarPorId(cliente.getId());
-			//this.pessoa = pessoaDao.pesquisarPorId(cliente.getPessoa().getId());
 			this.pessoa = cliente.getPessoa();
 			if(this.pessoa.getFoto() != null)
 				this.fotoGerada = UploadDeImagem.gerarApresentacaoTela(this.pessoa.getFoto());
@@ -117,15 +113,6 @@ public class ClienteMB implements Serializable{
 			e.printStackTrace();
 		}
 	}	
-	
-	public void adicionarEndereco(){
-		if(this.pessoa.getEnderecos() == null)
-			this.pessoa.setEnderecos(new ArrayList<Endereco>());
-		//this.endereco.setPessoa(this.pessoa);
-		this.pessoa.getEnderecos().add(this.endereco);
-
-		this.endereco = new Endereco();
-	}
 	
 	public void editarEndereco(RowEditEvent event){
 		Endereco enderecoEditado = (Endereco)event.getObject();
@@ -146,6 +133,10 @@ public class ClienteMB implements Serializable{
 		this.pessoa            = new Pessoa();
 		this.endereco          = new Endereco();
 		this.cliente           = new Cliente();
+		this.telefoneAdicionar = new Telefone();
+		this.emailAdicionar = new Email();
+		this.fotoGerada = null;
+		this.conteudoDoArquivo = null;
 	}
 	
 	public void excluirEndereco(){
@@ -161,14 +152,26 @@ public class ClienteMB implements Serializable{
 		}
 	}
 	
+	@PostConstruct
 	public List<Cliente> listarClientes(){
 		try {
-			this.clientes = clienteDao.listarTodos();			
+			//if(this.clientes == null){
+			this.clientes = clienteDao.listarTodos();
+			//}
 		} catch (Exception e) {
 			FacesMessageUtil.erro("erro ao carregar os clientes.");
 			e.printStackTrace();
 		}
 		return this.clientes;
+	}
+	
+	public void adicionarEndereco(){
+		if(this.pessoa.getEnderecos() == null)
+			this.pessoa.setEnderecos(new ArrayList<Endereco>());
+		
+		endereco.setPessoa(this.pessoa);
+		this.pessoa.getEnderecos().add(this.endereco);
+		this.endereco = new Endereco();
 	}
 	
 	public void adicionarTelefone(){
@@ -201,7 +204,6 @@ public class ClienteMB implements Serializable{
 	}
 	
 	/*Métodos e get e set*/
-	
 	public Pessoa getPessoa() {
 		return pessoa;
 	}

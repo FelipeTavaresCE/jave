@@ -3,21 +3,18 @@ package br.com.jave.managedbean;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.persistence.NoResultException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import br.com.jave.dao.UfDao;
 import br.com.jave.modelo.Uf;
 import br.com.jave.util.FacesMessageUtil;
 
-
-@Controller
-@ManagedBean
-@ViewScoped
+@Component
+@Scope("view")
 public class UfMB implements Serializable{
 
 	/**
