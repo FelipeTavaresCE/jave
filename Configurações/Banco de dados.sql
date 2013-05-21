@@ -107,6 +107,16 @@ CREATE SEQUENCE seq_id_estoque
     NO MAXVALUE
     CACHE 1;
 
+DROP SEQUENCE IF EXISTS seq_id_tipo_medida;
+
+CREATE SEQUENCE seq_id_tipo_medida
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
 --------------Fim Criação das Sequences------------------------
 
 --------------Criação das tabelas------------------------
@@ -226,7 +236,7 @@ CREATE TABLE tb_produto(
     codigo_referencia varchar(30),
     lote varchar(30),
     perecivel boolean,
-    tipo_medida varchar(20),
+    tipo_medida_id bigint,
     quantidade_volume numeric,
     preco numeric,
     desconto_percentual numeric,
@@ -234,6 +244,9 @@ CREATE TABLE tb_produto(
     estoque_minimo integer,
     ativo boolean
 );
+
+--ALTER TABLE tb_produto ALTER COLUMN tipo_medida TYPE bigint USING CAST(tipo_medida AS bigint);
+--ALTER TABLE tb_produto RENAME COLUMN tipo_medida to tipo_medida_id;
 
 --tb_status_pedido
 DROP TABLE IF EXISTS tb_status_pedido CASCADE;
@@ -277,6 +290,15 @@ CREATE TABLE tb_estoque(
     produto_id bigint null
 );
 
+--tb_tipo_medida
+DROP TABLE IF EXISTS tb_tipo_medida CASCADE;
+
+CREATE TABLE tb_tipo_medida(
+    id bigint not null,
+    descricao varchar(40) not null,
+    sigla varchar(5) not null,
+    fl_ativo boolean not null
+);
 
 --------------Fim da Criação das tabelas------------------------
 
@@ -320,10 +342,15 @@ ALTER TABLE tb_pedido
 ALTER TABLE tb_pedido_item
     ADD CONSTRAINT pk_pedido_item PRIMARY KEY (id);
 
+ALTER TABLE tb_tipo_medida
+    ADD CONSTRAINT pk_tipo_medida PRIMARY KEY (id);
 -------------- Fim da Criação das Primary Keys ------------------------
 
 -------------- Criação dos indices ---------------------------------
 CREATE UNIQUE INDEX unq_idx_pessoa_cliente ON tb_cliente(pessoa_id);
+
+--não cadastrar medidas duplicadas
+CREATE UNIQUE INDEX unq_idx_sigla_tp_medida ON tb_tipo_medida(sigla);
 -------------- Fim da Criação dos indices --------------------------
 
 -------------- Criação das Foreign Keys ------------------------
@@ -363,6 +390,9 @@ ALTER TABLE tb_pedido_item
 ALTER TABLE tb_pedido_item
     ADD CONSTRAINT fk_pedido_item_produto FOREIGN KEY (produto_id) REFERENCES tb_produto(id);
 
+ALTER TABLE tb_produto
+    ADD CONSTRAINT fk_produto_tipo_medida FOREIGN KEY (tipo_medida_id) REFERENCES tb_tipo_medida(id);
+
 -------------- Fim Criação das Foreign Keys ------------------------
 
 --------------Criação do Usuario---------------------------
@@ -397,3 +427,9 @@ INSERT INTO tb_configuracoes_sistema values(1, null, 'Nome da Empresa','Slogan d
 INSERT INTO tb_status_pedido values (0, 'Orçamento');
 INSERT INTO tb_status_pedido values (1, 'Concretizado');
 INSERT INTO tb_status_pedido values (2, 'Cancelado');
+
+--casdastro de tipos de medidas
+INSERT INTO tb_tipo_medida(id, descricao, sigla, fl_ativo) values(nextval('seq_id_tipo_medida'), 'KILO GRAMA', 'kg', true);
+INSERT INTO tb_tipo_medida(id, descricao, sigla, fl_ativo) values(nextval('seq_id_tipo_medida'), 'GRAMA', 'g', true);
+INSERT INTO tb_tipo_medida(id, descricao, sigla, fl_ativo) values(nextval('seq_id_tipo_medida'), 'METRO', 'm', true);
+INSERT INTO tb_tipo_medida(id, descricao, sigla, fl_ativo) values(nextval('seq_id_tipo_medida'), 'CENTIMETRO', 'cm', true);
