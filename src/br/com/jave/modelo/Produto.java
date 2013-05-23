@@ -3,15 +3,20 @@ package br.com.jave.modelo;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import br.com.jave.converter.BaseEntity;
 
 @Entity
 @Table(name="tb_produto")
@@ -46,8 +51,9 @@ public class Produto implements Serializable{
 	
 	private Boolean perecivel;
 	
-	@Column(name="tipo_medida")
-	private String tipoMedida; //criar um ENUM de unidade de medida ou uma tabela de medida (quilo, unidade, litro e etc)
+	@JoinColumn(name = "tipo_medida_id")
+	@ManyToOne(cascade = CascadeType.ALL)
+	private TipoDeMedida tipoMedida;
 	
 	@Column(name="quantidade_volume")
 	private Float quantidadeVolume;
@@ -114,10 +120,10 @@ public class Produto implements Serializable{
 	public void setPerecivel(Boolean perecivel) {
 		this.perecivel = perecivel;
 	}
-	public String getTipoMedida() {
+	public TipoDeMedida getTipoMedida() {
 		return tipoMedida;
 	}
-	public void setTipoMedida(String tipoMedida) {
+	public void setTipoMedida(TipoDeMedida tipoMedida) {
 		this.tipoMedida = tipoMedida;
 	}
 	public Float getQuantidadeVolume() {
