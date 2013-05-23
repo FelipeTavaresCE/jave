@@ -429,7 +429,9 @@ INSERT INTO tb_status_pedido values (1, 'Concretizado');
 INSERT INTO tb_status_pedido values (2, 'Cancelado');
 
 --casdastro de tipos de medidas
-INSERT INTO tb_tipo_medida(id, descricao, sigla, fl_ativo) values(nextval('seq_id_tipo_medida'), 'KILO GRAMA', 'kg', true);
-INSERT INTO tb_tipo_medida(id, descricao, sigla, fl_ativo) values(nextval('seq_id_tipo_medida'), 'GRAMA', 'g', true);
-INSERT INTO tb_tipo_medida(id, descricao, sigla, fl_ativo) values(nextval('seq_id_tipo_medida'), 'METRO', 'm', true);
-INSERT INTO tb_tipo_medida(id, descricao, sigla, fl_ativo) values(nextval('seq_id_tipo_medida'), 'CENTIMETRO', 'cm', true);
+INSERT INTO tb_tipo_medida(id, descricao, sigla, fl_ativo) values(nextval('seq_id_tipo_medida'), 'KILO GRAMA', 'KG', true);
+INSERT INTO tb_tipo_medida(id, descricao, sigla, fl_ativo) values(nextval('seq_id_tipo_medida'), 'GRAMA', 'G', true);
+INSERT INTO tb_tipo_medida(id, descricao, sigla, fl_ativo) values(nextval('seq_id_tipo_medida'), 'METRO', 'M', true);
+INSERT INTO tb_tipo_medida(id, descricao, sigla, fl_ativo) values(nextval('seq_id_tipo_medida'), 'CENTIMETRO', 'CM', true);
+INSERT INTO tb_tipo_medida(id, descricao, sigla, fl_ativo) values(nextval('seq_id_tipo_medida'), 'UNIDADE', 'UN', true);
+INSERT INTO tb_tipo_medida(id, descricao, sigla, fl_ativo) values(nextval('seq_id_tipo_medida'), 'LITRO', 'L', true);

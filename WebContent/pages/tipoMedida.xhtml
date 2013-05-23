@@ -1,0 +1,59 @@
+<ui:composition template="/WEB-INF/templates/principal.xhtml"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core" 
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="pagina-titulo">INFORME O TITULO DA PAGINA</ui:define>
+
+	<ui:define name="corpo-pagina">
+		<h:form id="form-geral">
+		<p:growl globalOnly="false" id="mensagens"/>
+			<p:tabView id="tabView">  
+			    <p:tab id="ID-tab" title="Cadastro de Tipos de Medida">
+			    	<h:panelGrid columns="2">
+			    		<h:outputLabel value="Descrição:" for="descricao"/>
+			    		<p:inputText value="#{tipoDeMedidaMB.tipoDeMedida.descricao}" id="descricao" required="true"
+			    			styleClass="elemento-form-input largura200" label="Descrição"/>
+			    		<h:outputLabel value="Sigla:" for="sigla"/>
+			    		<p:inputText value="#{tipoDeMedidaMB.tipoDeMedida.sigla}" id="sigla" required="true"
+			    			styleClass="elemento-form-input largura20" label="Sigla"/>
+						<h:outputLabel value="Ativo:" for="radioTipoAtivo"/>
+					    <h:selectOneRadio id="radioTipoAtivo" value="#{tipoDeMedidaMB.tipoDeMedida.fl_ativo}"
+					    	styleClass="radioJSF" required="true" label="Ativo">  
+						        <f:selectItem itemLabel="Sim" itemValue="true" />  
+						        <f:selectItem itemLabel="Não" itemValue="false" />  						
+					    </h:selectOneRadio>  
+			    			
+			    		<h:panelGroup></h:panelGroup>
+			    		<h:panelGroup>
+				    		<p:commandButton value="Gravar" actionListener="#{tipoDeMedidaMB.gravar()}" update=":form-geral :form-listagem-medidas" ajax="true"/>
+				    		<p:commandButton value="Novo" actionListener="#{tipoDeMedidaMB.criarNovo()}" update=":form-geral :form-listagem-medidas" ajax="true" process="@this"/>
+			    		</h:panelGroup>
+			    	</h:panelGrid>
+			    </p:tab>  
+			</p:tabView> 		
+		</h:form>
+		<br />
+		<h:form id="form-listagem-medidas">
+			<p:dataTable var="tipoMedida" value="#{tipoDeMedidaMB.tipoDeMedidaListagem}" emptyMessage="Nenhum registro encontrado"
+				style="width: 250px;" paginator="true" rows="10"
+			   paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			   rowKey="#{tipoMedida.id}" selection="#{tipoDeMedidaMB.tipoDeMedida}" selectionMode="single" paginatorPosition="bottom"
+			   rowsPerPageTemplate="5,10,15,20,25,30,40,50">
+			   
+				<p:ajax event="rowSelect" listener="#{tipoDeMedidaMB.prepararEdicao}" update=":form-geral" />
+				<f:event listener="#{tipoDeMedidaMB.listar}" type="preRenderView"/>
+								
+				<p:column headerText="Descruição" width="150">
+					<h:outputText value="#{tipoMedida.descricao}" />
+				</p:column>  				
+				<p:column headerText="Sigla" width="80">
+					<h:outputText value="#{tipoMedida.sigla}" />
+				</p:column>				
+						
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

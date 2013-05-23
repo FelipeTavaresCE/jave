@@ -14,13 +14,16 @@
 		<!-- Spring EL Resolver -->
 		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
 		
+		<message-bundle>br.com.jave.resources.mensagens</message-bundle>
+		
+		
 		<locale-config>
 			<default-locale>pt_BR</default-locale>
 			<supported-locale>pt_BR</supported-locale>
 		</locale-config>
 
 		<resource-bundle>
-			<base-name>br.com.jave.resource.mensagens</base-name>
+			<base-name>br.com.jave.resources.mensagensApp</base-name>
 			<var>msgs</var>
 		</resource-bundle>
     </application>

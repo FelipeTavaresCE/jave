@@ -8,11 +8,13 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.jave.excecoes.ExclusaoNaoPermitidaException;
 import br.com.jave.modelo.TipoDeMedida;
 
 @Repository
+@Transactional
 public class TipoDeMedidaDaoImpl implements TipoDeMedidaDao{
 	
 	@PersistenceContext

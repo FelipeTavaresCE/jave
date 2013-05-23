@@ -11,9 +11,12 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.springframework.stereotype.Component;
+
+@Component
 @Entity
 @Table(name = "tb_tipo_medida")
-@NamedQuery(name = "tipoDeMedidaListarTodos", query = "SELECT tm FROM TipoDeMedida tm")
+@NamedQuery(name = "tipoDeMedidaListarTodos", query = "SELECT tm FROM TipoDeMedida tm ORDER BY tm.descricao")
 public class TipoDeMedida implements Serializable{
 
 	@Transient
@@ -25,6 +28,10 @@ public class TipoDeMedida implements Serializable{
     private String descricao;
     private String sigla;
     private Boolean fl_ativo;
+    
+    public TipoDeMedida(){
+    	setFl_ativo(true);
+    }
     
 	public Long getId() {
 		return id;
