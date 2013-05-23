@@ -42,26 +42,20 @@
 					    </h:selectOneRadio>  
 			            
 			            <h:outputText value="Tipo de Medida.: "/>
-			            <h:selectOneMenu id="tpMedida"  value="#{produtoMB.produto.tipoMedida}"
-			   	 						 converter="simpleIndexConverter" required="true"  
-                						 requiredMessage="Valor é obrigatório" styleClass="elemento-form-input largura150">  
-                						 <f:selectItem itemValue="" itemLabel="Selecione uma Medida"/>  
-                		                 <f:selectItems value="#{produtoMB.tpMedidas}" var="medida" itemLabel="#{medida.descricao}" itemValue="#{medida}"/>  
-            			</h:selectOneMenu>  
+			            <p:inputText id="tpMedida" value="#{produtoMB.produto.tipoMedida}" styleClass="elemento-form-input largura150"/>
 			            
 			            <h:outputText value="Qtd Volume.: "/>
-			            <p:inputText id="qtdVolume" value="#{produtoMB.produto.quantidadeVolume}" onkeypress="mascara(this, valor);" styleClass="elemento-form-input largura65"/>
+			            <p:inputText id="qtdVolume" value="#{produtoMB.produto.quantidadeVolume}" styleClass="elemento-form-input largura65"/>
 			            
 			            <h:outputText value="Preço.: "/>
 			            
 			            <h:panelGroup >
-			            <p:inputText id="preco" value="#{produtoMB.produto.preco}" onkeypress="mascara(this, valor);" styleClass="elemento-form-input largura65">
+			            <p:inputText id="preco" value="#{produtoMB.produto.preco}" styleClass="elemento-form-input largura65">
 				             <f:converter converterId="MoedaConverter" />
 			             </p:inputText>
 			            
 			            <h:outputText value="Desconto %.: " style="margin-left:10px;"/>
-			            <p:inputText id="desconto" maxlength="6" value="#{produtoMB.produto.descontoPercentual}" onkeypress="mascara(this, valor);" 
-			            			 styleClass="elemento-form-input largura65" style="margin-left:22px;">
+			            <p:inputText id="desconto" maxlength="6" value="#{produtoMB.produto.descontoPercentual}" styleClass="elemento-form-input largura65" style="margin-left:22px;">
 			            	  <f:converter converterId="MoedaConverter" />
 			            </p:inputText>
 			            </h:panelGroup>

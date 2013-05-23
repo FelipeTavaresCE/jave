@@ -13,13 +13,11 @@ import javax.persistence.Transient;
 
 import org.springframework.stereotype.Component;
 
-import br.com.jave.converter.BaseEntity;
-
 @Component
 @Entity
 @Table(name = "tb_tipo_medida")
 @NamedQuery(name = "tipoDeMedidaListarTodos", query = "SELECT tm FROM TipoDeMedida tm ORDER BY tm.descricao")
-public class TipoDeMedida implements BaseEntity,Serializable{
+public class TipoDeMedida implements Serializable{
 
 	@Transient
 	private static final long serialVersionUID = 1L;

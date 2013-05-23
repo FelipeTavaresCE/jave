@@ -12,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import br.com.jave.dao.ProdutoDao;
-import br.com.jave.dao.TipoDeMedidaDao;
 import br.com.jave.modelo.Produto;
-import br.com.jave.modelo.TipoDeMedida;
 import br.com.jave.util.FacesMessageUtil;
 
 @Controller
@@ -27,28 +25,16 @@ public class ProdutoMB implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private ProdutoDao produtoDao;
-	private TipoDeMedidaDao tpMedidaDao;
 	private Produto produto = new Produto();
-	private Produto produtoSelection;
+	private Long produtoSelection;
 	private List<Produto> produtos = new ArrayList<>();
-	private List<TipoDeMedida> tpMedidas = new ArrayList<>();
 	
-	public ProdutoMB() {
-		
-		try {
-			tpMedidas = tpMedidaDao.listarTodos();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
+	public ProdutoMB() {}
 	
 	
 	@Autowired
-	public ProdutoMB(ProdutoDao produtoDao,TipoDeMedidaDao tpMedidaDao) {
+	public ProdutoMB(ProdutoDao produtoDao) {
 		this.produtoDao = produtoDao;	
-		this.tpMedidaDao = tpMedidaDao;
 	}
 
 	public void gravar() {
@@ -63,7 +49,7 @@ public class ProdutoMB implements Serializable{
 	
 	public void prepararEdicao() {
 		try {
-			produto = produtoDao.pesquisarPorId(produtoSelection.getId());
+			produto = produtoDao.pesquisarPorId(produtoSelection);
 		} catch (NoResultException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -78,13 +64,13 @@ public class ProdutoMB implements Serializable{
 		
 		try {
 			produtos = produtoDao.listarTodos();
-			tpMedidas = tpMedidaDao.listarTodos();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return produtos;
 	}
+	
 	
 	public String criarNovo(){
 		produto = new Produto();
@@ -124,32 +110,13 @@ public class ProdutoMB implements Serializable{
 	}
 
 
-	public Produto getProdutoSelection() {
+	public Long getProdutoSelection() {
 		return produtoSelection;
 	}
 
 
-	public void setProdutoSelection(Produto produtoSelection) {
+	public void setProdutoSelection(Long produtoSelection) {
 		this.produtoSelection = produtoSelection;
-	}
-
-
-	public List<TipoDeMedida> getTpMedidas() {
-		return tpMedidas;
-	}
-
-	public void setTpMedidas(List<TipoDeMedida> tpMedidas) {
-		this.tpMedidas = tpMedidas;
-	}
-
-
-	public TipoDeMedidaDao getTpMedidaDao() {
-		return tpMedidaDao;
-	}
-
-
-	public void setTpMedidaDao(TipoDeMedidaDao tpMedidaDao) {
-		this.tpMedidaDao = tpMedidaDao;
 	}
 		
 	
