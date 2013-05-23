@@ -12,7 +12,7 @@ import br.com.jave.excecoes.ExclusaoNaoPermitidaException;
 import br.com.jave.modelo.TipoDeMedida;
 
 @Component
-public class TipoDeMedidaFachadaImpl implements Fachada<TipoDeMedida> {
+public class TipoDeMedidaFachadaImpl implements TipoDeMedidaFachada {
 	
 	private TipoDeMedidaDao tipoDeMedidaDao;
 	

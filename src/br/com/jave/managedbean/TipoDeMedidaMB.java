@@ -3,42 +3,34 @@ package br.com.jave.managedbean;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
 import javax.persistence.NoResultException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
-import br.com.jave.fachada.TipoDeMedidaFachadaImpl;
+import br.com.jave.fachada.TipoDeMedidaFachada;
 import br.com.jave.modelo.TipoDeMedida;
 import br.com.jave.util.FacesMessageUtil;
 
-@Component
+@Controller
 @Scope("view")
-@ManagedBean
 public class TipoDeMedidaMB implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private TipoDeMedidaFachadaImpl tipoDeMedidaFachada;
+	@Autowired
+	private TipoDeMedidaFachada tipoDeMedidaFachada;
 	private List<TipoDeMedida> tipoDeMedidaListagem;
+	@Autowired
 	private TipoDeMedida tipoDeMedida;
 	
-	@Autowired
-	public TipoDeMedidaMB(TipoDeMedidaFachadaImpl tipoDeMedidaFachada,
-						  TipoDeMedida tipoDeMedida){
-		this.tipoDeMedidaFachada = tipoDeMedidaFachada;
-		this.tipoDeMedida = tipoDeMedida;
-	}
-	
-	public TipoDeMedidaMB(){}
 	
 	public void gravar(){
 		try {
 			tipoDeMedidaFachada.gravar(tipoDeMedida);
 			criarNovo();
-			FacesMessageUtil.mensagem("Operação realizada com sucesso.");
+			FacesMessageUtil.mensagem("OperaÃ§Ã£o realizada com sucesso.");
 		} catch (Exception e) {
 			FacesMessageUtil.erro("erro ao gravar os dados.", e.getMessage());
 			e.printStackTrace();

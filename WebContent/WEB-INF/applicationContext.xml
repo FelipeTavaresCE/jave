@@ -19,7 +19,7 @@
 	<!-- Scans for @Repository, @Service and @Component -->
 	<context:component-scan base-package="br.com.jave" />
 	<!-- Enable @Transactional support -->
-	<tx:annotation-driven transaction-manager="transactionManager" />
+	<tx:annotation-driven />
 	
     <http auto-config="true" access-denied-page="/login.xhtml" use-expressions="true"> 
 		<intercept-url pattern="inicial.xhtml" access="hasRole('ROLE_ADMIN')" />
