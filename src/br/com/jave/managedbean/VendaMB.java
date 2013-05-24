@@ -4,25 +4,27 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.persistence.NoResultException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import br.com.jave.dao.ProdutoDao;
 import br.com.jave.modelo.Pedido;
 import br.com.jave.modelo.PedidoItem;
 import br.com.jave.modelo.Produto;
 
+
+@Component
+@Scope("view")
 @ManagedBean
-@ViewScoped
-@Controller
 public class VendaMB implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private ProdutoDao produtoDao;
 	private Long codigoProdutoPesquisa;
+	private String codigoBarrasPesquisa;
 	private Pedido pedido = new Pedido();
 	private Produto produto = new Produto();
 	private PedidoItem pedidoItens = new PedidoItem();
@@ -36,31 +38,39 @@ public class VendaMB implements Serializable{
 	public VendaMB(){}
 	
 	public void pesquisarProduto(){
-		try {
-			produto = produtoDao.pesquisarPorId(codigoProdutoPesquisa);
-		} catch (NoResultException e) {
-			System.out.println("ERRO AO PESQUISAR PRODUTO" + e.getMessage());
-			e.printStackTrace();
-		} catch (Exception e) {
-			System.out.println("ERRO AO PESQUISAR PRODUTO" + e.getMessage());
-			e.printStackTrace();
+		if(produto.getId() != null){
+			try {
+				produto = produtoDao.pesquisarPorId(produto.getId());
+			} catch (NoResultException e) {
+				System.out.println("ERRO AO PESQUISAR PRODUTO" + e.getMessage());
+				e.printStackTrace();
+			} catch (Exception e) {
+				System.out.println("ERRO AO PESQUISAR PRODUTO" + e.getMessage());
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void pesquisaPorCodigoBarras(){
+		if(produto.getCodigoDeBarras() != null){
+			produto = produtoDao.pesquisarProdutoCodigoDeBarras(produto.getCodigoDeBarras());
 		}
 	}
 	
 	public void adicionarProduto(){
-		pedidoItens.setProduto(produto);
-		pedidoItens.setQuantidade(quantidade);
-		if(pedido.getPedidoItens() == null){
-			pedido.setPedidoItens(new ArrayList<PedidoItem>());
+		if(quantidade != null && quantidade != 0){
+			pedidoItens.setProduto(produto);
+			pedidoItens.setQuantidade(quantidade);
+			if(pedido.getPedidoItens() == null){
+				pedido.setPedidoItens(new ArrayList<PedidoItem>());
+			}
+			pedido.getPedidoItens().add(pedidoItens);
+			
+			pedidoItens = new PedidoItem();
+			produto = new Produto();
+			codigoProdutoPesquisa = null;
+			quantidade = null;
 		}
-		pedido.getPedidoItens().add(pedidoItens);
-		
-		pedidoItens = new PedidoItem();
-		produto = new Produto();
-		codigoProdutoPesquisa = null;
-		quantidade = null;
-		
-		System.out.println("produto incluido ao pedido.");
 	}
 
 	public Long getCodigoProdutoPesquisa() {
@@ -102,8 +112,12 @@ public class VendaMB implements Serializable{
 	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
 	}
-	
-	
 
+	public String getCodigoBarrasPesquisa() {
+		return codigoBarrasPesquisa;
+	}
 
+	public void setCodigoBarrasPesquisa(String codigoBarrasPesquisa) {
+		this.codigoBarrasPesquisa = codigoBarrasPesquisa;
+	}
 }

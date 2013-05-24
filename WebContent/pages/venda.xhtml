@@ -34,19 +34,27 @@
 							</div>
 						</h:panelGroup>
 						<h:outputText value="Código de Barras."/>
-						<p:inputText styleClass="largura250 input-altura30" id="cod-barras"></p:inputText>
+						<p:inputText styleClass="largura250 input-altura30" id="cod-barras" value="#{vendaMB.produto.codigoDeBarras}"
+							onkeyup="dispararPesquisa(event)">
+							<p:ajax event="blur" global="false" listener="#{vendaMB.pesquisaPorCodigoBarras}"
+							update="ds-produto preco-produto cod-produto"/>
+						</p:inputText>
 						
 						<h:outputText value="Código Produto."/>
-						<p:inputText value="#{vendaMB.codigoProdutoPesquisa}" id="cod-produto" styleClass="largura100 input-altura30" onkeyup="dispararPesquisa(event)">
-							<p:ajax event="blur" global="false" listener="#{vendaMB.pesquisarProduto}" update="ds-produto preco-produto"/>
+						<p:inputText value="#{vendaMB.produto.id}" id="cod-produto" styleClass="largura100 input-altura30"
+							onkeyup="dispararPesquisa(event)">
+							<p:ajax event="blur" global="false" listener="#{vendaMB.pesquisarProduto}"
+							update="ds-produto preco-produto cod-barras"/>
 						</p:inputText>
 						
 						<h:outputText value="Preço."/>
 						<p:inputText value="#{vendaMB.produto.preco}" id="preco-produto" styleClass="largura100 input-altura30" />
 						
 						<h:outputText value="Quantidade."/>
-						<p:inputText value="#{vendaMB.quantidade}" styleClass="largura100 input-altura30" id="qtd-produto" onkeyup="adicionarProduto(event)">
-							<p:ajax event="blur" listener="#{vendaMB.adicionarProduto}" update="pedido-itens ds-produto preco-produto qtd-produto cod-produto"/>
+						<p:inputText value="#{vendaMB.quantidade}" styleClass="largura100 input-altura30" id="qtd-produto"
+							onkeyup="adicionarProduto(event, this.value)">
+							<p:ajax event="blur" listener="#{vendaMB.adicionarProduto}"
+							update="pedido-itens ds-produto preco-produto qtd-produto cod-produto"/>
 						</p:inputText>
 					</h:panelGrid>
 				</div>
@@ -59,7 +67,8 @@
 							<div id="bairro-cidade-empresa">Aldeota - Fortaleza - CE</div>
 							<div id="cnpj-empresa">CNPJ: 47.508.411/0935-70</div>
 							.......................................................................................................
-							<p:dataTable value="#{vendaMB.pedido.pedidoItens}" var="item" id="pedido-itens" rowIndexVar="rowIndex" styleClass="noheader">
+							<p:dataTable value="#{vendaMB.pedido.pedidoItens}" var="item" id="pedido-itens" rowIndexVar="rowIndex"
+								styleClass="noheader" emptyMessage="o pedido não possue item">
 								<p:column style="width: 0;">#{rowIndex+1}</p:column>
 								<p:column style="width: 0;">#{item.produto.nome}</p:column>
 								<p:column style="width: 0;">#{item.quantidade}</p:column>
@@ -79,9 +88,13 @@
 				}
 			}
 			
-			function adicionarProduto(evento){
+			function adicionarProduto(evento, campoChamador){
 				if(evento.keyCode == 13){
-					document.getElementById('formulario-venda:cod-barras').focus();
+					if(campoChamador != 0){
+						campo = document.getElementById('formulario-venda:cod-barras');
+						campo.focus();
+						campo.value = '';
+					}
 				}
 			}
 			
