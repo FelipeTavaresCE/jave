@@ -24,6 +24,8 @@
      	</style>	
 	
 		<h:form id="formulario-venda">
+			<p:focus for="cod-barras" />
+			<p:growl globalOnly="false" showDetail="true"/>
 			<div class="clear"></div>
 			<div id="conteiner-venda">
 				<div id="div-formulario" class="flutuar-esquerda">
@@ -37,14 +39,14 @@
 						<p:inputText styleClass="largura250 input-altura30" id="cod-barras" value="#{vendaMB.produto.codigoDeBarras}"
 							onkeyup="dispararPesquisa(event)">
 							<p:ajax event="blur" global="false" listener="#{vendaMB.pesquisaPorCodigoBarras}"
-							update="ds-produto preco-produto cod-produto"/>
+							update="ds-produto preco-produto cod-produto" process="@this"/>
 						</p:inputText>
 						
 						<h:outputText value="Código Produto."/>
 						<p:inputText value="#{vendaMB.produto.id}" id="cod-produto" styleClass="largura100 input-altura30"
 							onkeyup="dispararPesquisa(event)">
 							<p:ajax event="blur" global="false" listener="#{vendaMB.pesquisarProduto}"
-							update="ds-produto preco-produto cod-barras"/>
+							update="ds-produto preco-produto cod-barras" process="@this"/>
 						</p:inputText>
 						
 						<h:outputText value="Preço."/>
@@ -53,10 +55,15 @@
 						<h:outputText value="Quantidade."/>
 						<p:inputText value="#{vendaMB.quantidade}" styleClass="largura100 input-altura30" id="qtd-produto"
 							onkeyup="adicionarProduto(event, this.value)">
-							<p:ajax event="blur" listener="#{vendaMB.adicionarProduto}"
+							<p:ajax event="blur" listener="#{vendaMB.adicionarProduto}" process="@this"
 							update="pedido-itens ds-produto preco-produto qtd-produto cod-produto"/>
 						</p:inputText>
 					</h:panelGrid>
+					<div>
+						<p:commandButton value="Finalizar" actionListener="#{vendaMB.finalizarPedido}" update="formulario-venda"/>
+						<p:commandButton value="Nova"/>
+						<p:commandButton value="Cancelar"/>
+					</div>
 				</div>
 				<div id="div-cupom" class="flutuar-esquerda" >
 					<div id="cupom-top"></div>

@@ -11,11 +11,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.springframework.stereotype.Component;
 
 @Entity
 @Table(name = "tb_pedido_item")
+@Component
 public class PedidoItem implements Serializable{
 
+	@Transient
 	private static final long serialVersionUID = 1L;
 
 	@SequenceGenerator(name = "seq_id_pedido_item", sequenceName = "seq_id_pedido_item")

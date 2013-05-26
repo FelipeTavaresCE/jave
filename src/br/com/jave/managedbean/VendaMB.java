@@ -3,7 +3,6 @@ package br.com.jave.managedbean;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import javax.faces.bean.ManagedBean;
 import javax.persistence.NoResultException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,49 +10,61 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import br.com.jave.dao.ProdutoDao;
+import br.com.jave.fachada.PedidoFachada;
 import br.com.jave.modelo.Pedido;
 import br.com.jave.modelo.PedidoItem;
 import br.com.jave.modelo.Produto;
+import br.com.jave.util.FacesMessageUtil;
 
 
 @Component
 @Scope("view")
-@ManagedBean
 public class VendaMB implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
+	@Autowired
 	private ProdutoDao produtoDao;
-	private Long codigoProdutoPesquisa;
-	private String codigoBarrasPesquisa;
-	private Pedido pedido = new Pedido();
+	@Autowired
+	private Pedido pedido;
 	private Produto produto = new Produto();
-	private PedidoItem pedidoItens = new PedidoItem();
+	@Autowired
+	private PedidoFachada pedidoFachada;
+	@Autowired
+	private PedidoItem pedidoItens;
 	private Integer quantidade;
 	
-	@Autowired
-	public VendaMB(ProdutoDao produtoDao){
-		this.produtoDao = produtoDao;
+	public void finalizarPedido(){
+		try {
+			pedidoFachada.gravar(pedido);
+			FacesMessageUtil.mensagem("Pedigo gravad com sucesso.");
+		} catch (Exception e) {
+			FacesMessageUtil.erro("erro ao gravar o pedido.", e.getMessage());
+			e.printStackTrace();
+		}
 	}
-	
-	public VendaMB(){}
 	
 	public void pesquisarProduto(){
 		if(produto.getId() != null){
 			try {
 				produto = produtoDao.pesquisarPorId(produto.getId());
 			} catch (NoResultException e) {
-				System.out.println("ERRO AO PESQUISAR PRODUTO" + e.getMessage());
+				System.out.println("ERRO AO PESQUISAR PRODUTO POR CODIGO" + e.getMessage());
 				e.printStackTrace();
 			} catch (Exception e) {
-				System.out.println("ERRO AO PESQUISAR PRODUTO" + e.getMessage());
+				System.out.println("ERRO AO PESQUISAR PRODUTO POR CODIGO" + e.getMessage());
 				e.printStackTrace();
 			}
 		}
 	}
 	
 	public void pesquisaPorCodigoBarras(){
-		if(produto.getCodigoDeBarras() != null){
-			produto = produtoDao.pesquisarProdutoCodigoDeBarras(produto.getCodigoDeBarras());
+		if(!produto.getCodigoDeBarras().isEmpty()){
+			try {
+				produto = produtoDao.pesquisarProdutoCodigoDeBarras(produto.getCodigoDeBarras());
+			} catch (Exception e) {
+				System.out.println("ERRO AO PESQUISAR PRODUTO POR CODIGO DE BARRAS" + e.getMessage());
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -68,17 +79,8 @@ public class VendaMB implements Serializable{
 			
 			pedidoItens = new PedidoItem();
 			produto = new Produto();
-			codigoProdutoPesquisa = null;
 			quantidade = null;
 		}
-	}
-
-	public Long getCodigoProdutoPesquisa() {
-		return codigoProdutoPesquisa;
-	}
-
-	public void setCodigoProdutoPesquisa(Long codigoProdutoPesquisa) {
-		this.codigoProdutoPesquisa = codigoProdutoPesquisa;
 	}
 
 	public Pedido getPedido() {
@@ -113,11 +115,4 @@ public class VendaMB implements Serializable{
 		this.quantidade = quantidade;
 	}
 
-	public String getCodigoBarrasPesquisa() {
-		return codigoBarrasPesquisa;
-	}
-
-	public void setCodigoBarrasPesquisa(String codigoBarrasPesquisa) {
-		this.codigoBarrasPesquisa = codigoBarrasPesquisa;
-	}
 }

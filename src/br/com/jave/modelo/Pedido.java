@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -18,10 +19,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.springframework.stereotype.Component;
+
 import br.com.jave.enums.StatusPedido;
 
 @Entity
 @Table(name = "tb_pedido")
+@Component
 public class Pedido implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -48,7 +52,7 @@ public class Pedido implements Serializable{
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
     
-    @OneToMany(mappedBy = "pedido")
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
     private List<PedidoItem> pedidoItens;
     
     public Pedido(){
