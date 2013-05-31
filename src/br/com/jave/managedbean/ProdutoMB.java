@@ -77,7 +77,8 @@ public class ProdutoMB implements Serializable{
 	public List<Produto> listarProdutos(){
 		
 		try {
-			produtos = produtoDao.listarTodos();
+			if(produtos.isEmpty())
+				produtos = produtoDao.listarTodos();
 			tpMedidas = tpMedidaDao.listarTodos();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

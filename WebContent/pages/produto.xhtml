@@ -36,24 +36,25 @@
 			            
 						<h:outputText value="Perecível.: "/>
 
-					    <h:selectOneRadio id="radioPerecivel" value="#{produtoMB.produto.perecivel}" styleClass="radioJSF" >  
+					    <p:selectOneRadio id="radioPerecivel" value="#{produtoMB.produto.perecivel}" styleClass="radioJSF" >  
 						        <f:selectItem itemLabel="Sim" itemValue="true" />  
 						        <f:selectItem itemLabel="Não" itemValue="false" />  						
-					    </h:selectOneRadio>  
+					    </p:selectOneRadio>  
 			            
 			            <h:outputText value="Tipo de Medida.: "/>
-			            <h:selectOneMenu id="tpMedida"  value="#{produtoMB.produto.tipoMedida}"
+			            <p:selectOneMenu id="tpMedida"  value="#{produtoMB.produto.tipoMedida}"
 			   	 						 converter="simpleIndexConverter" required="true"  
                 						 requiredMessage="Valor é obrigatório" styleClass="elemento-form-input largura150">  
                 						 <f:selectItem itemValue="" itemLabel="Selecione uma Medida"/>  
                 		                 <f:selectItems value="#{produtoMB.tpMedidas}" var="medida" itemLabel="#{medida.descricao}" itemValue="#{medida}"/>  
-            			</h:selectOneMenu>  
+            			</p:selectOneMenu>  
 			            
 			            <h:outputText value="Qtd Volume.: "/>
 			            <p:inputText id="qtdVolume" value="#{produtoMB.produto.quantidadeVolume}" onkeypress="mascara(this, valor);" styleClass="elemento-form-input largura65"/>
-			            
-			            <h:outputText value="Preço.: "/>
-			            
+			                  <f:converter converterId="MoedaConverter" />
+			            </p:inputText>
+			             
+			            <h:outputText value="Preço.: "/>			            
 			            <h:panelGroup >
 			            <p:inputText id="preco" value="#{produtoMB.produto.preco}" onkeypress="mascara(this, valor);" styleClass="elemento-form-input largura65">
 				             <f:converter converterId="MoedaConverter" />
@@ -78,10 +79,10 @@
 			            </h:panelGroup>
 			            
 			            <h:outputText value="Ativo.: "/>
-			            <h:selectOneRadio id="radioStatus" value="#{produtoMB.produto.ativo}" styleClass="radioJSF" >
+			            <p:selectOneRadio id="radioStatus" value="#{produtoMB.produto.ativo}" styleClass="radioJSF" >
 			                 <f:selectItem itemLabel="Sim" itemValue="true" />  
 						     <f:selectItem itemLabel="Não" itemValue="false" /> 
-			            </h:selectOneRadio>
+			            </p:selectOneRadio>
 		
 					</h:panelGrid>
 				</p:tab>
