@@ -8,7 +8,7 @@
 	<ui:define name="pagina-titulo">Cadastro de Produto</ui:define>
 
 	<ui:define name="corpo-pagina">
-		<h:form id="form-geral" prependId="false">
+		<h:form id="form-geral" >
 		
 			<p:growl globalOnly="false" id="mensagens"/>
 	
@@ -50,7 +50,7 @@
             			</p:selectOneMenu>  
 			            
 			            <h:outputText value="Qtd Volume.: "/>
-			            <p:inputText id="qtdVolume" value="#{produtoMB.produto.quantidadeVolume}" onkeypress="mascara(this, valor);" styleClass="elemento-form-input largura65"/>
+			            <p:inputText id="qtdVolume" value="#{produtoMB.produto.quantidadeVolume}" onkeypress="mascara(this, valor);" styleClass="elemento-form-input largura65">
 			                  <f:converter converterId="MoedaConverter" />
 			            </p:inputText>
 			             

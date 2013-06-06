@@ -9,6 +9,7 @@ import javax.faces.bean.RequestScoped;
 import javax.persistence.NoResultException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import br.com.jave.dao.ProdutoDao;
@@ -19,13 +20,14 @@ import br.com.jave.util.FacesMessageUtil;
 
 @Controller
 @ManagedBean
-@RequestScoped
+@Scope("view")
 public class ProdutoMB implements Serializable{
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private boolean alter = false;
 	private ProdutoDao produtoDao;
 	private TipoDeMedidaDao tpMedidaDao;
 	private Produto produto = new Produto();
@@ -54,6 +56,8 @@ public class ProdutoMB implements Serializable{
 	public void gravar() {
 		try {
 			produtoDao.gravar(produto);
+			criarNovo();
+			alter = true;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -77,8 +81,8 @@ public class ProdutoMB implements Serializable{
 	public List<Produto> listarProdutos(){
 		
 		try {
-			if(produtos.isEmpty())
-				produtos = produtoDao.listarTodos();
+			  if(produtos.isEmpty() && alter == true)
+				  produtos = produtoDao.listarTodos();
 			tpMedidas = tpMedidaDao.listarTodos();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -87,9 +91,8 @@ public class ProdutoMB implements Serializable{
 		return produtos;
 	}
 	
-	public String criarNovo(){
+	public void criarNovo(){
 		produto = new Produto();
-		return "novo";
 	}
 	
 	
